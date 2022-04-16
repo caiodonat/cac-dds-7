@@ -48,6 +48,9 @@
         ],
         "start-serve": [
             "php artisan serve --host 127.0.0.1 --port 8844"
+        ],
+        "start-serve-home": [
+            "php artisan serve --host 192.168.0.3 --port 8844"
         ]
     },
     "extra": {
