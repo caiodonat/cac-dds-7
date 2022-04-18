@@ -16,44 +16,39 @@ class AtendimentoController extends Controller
         $atendimentos = Atendimento::all();
         return json_encode($atendimentos, JSON_PRETTY_PRINT);
     }
+    /*
+    public function __invoke(){ 
+        $atendimentos = Atendimento::all();
+        return json_encode($atendimentos, JSON_PRETTY_PRINT);}
+    */
+    public function get($id_atendimento){
+        $atendimento = Atendimento::findOrFail($id_atendimento);
+        return json_encode($atendimento, JSON_PRETTY_PRINT);
+    }
 
     /**
      * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
      */
-    public function create()
-    {
+    public function create(){
         //
     }
 
     /**
      * Store a newly created resource in storage.
-     *
-     * @param  \App\Http\Requests\StoreAtendimentoRequest  $request
-     * @return \Illuminate\Http\Response
      */
-    public function store(StoreAtendimentoRequest $request)
-    {
+    public function store(StoreAtendimentoRequest $request){
         //
     }
 
     /**
      * Display the specified resource.
-     *
-     * @param  \App\Models\Atendimento  $atendimento
-     * @return \Illuminate\Http\Response
      */
-    public function show(Atendimento $atendimento)
-    {
+    public function show(Atendimento $atendimento){
         //
     }
 
     /**
      * Show the form for editing the specified resource.
-     *
-     * @param  \App\Models\Atendimento  $atendimento
-     * @return \Illuminate\Http\Response
      */
     public function edit(Atendimento $atendimento)
     {

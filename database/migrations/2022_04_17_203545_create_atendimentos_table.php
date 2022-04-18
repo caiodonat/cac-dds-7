@@ -13,19 +13,22 @@ class CreateAtendimentosTable extends Migration
      */
     public function up()
     {
-        Schema::create('atendimentos', function (Blueprint $table) {
-            $table->id();
-            $table->timestamps();
+        Schema::create('tb_atendimento', function (Blueprint $table) {
+            $table->increments('id_atendimento')->first();
+            $table->string('cpf');
+            $table->string('numero_atendimento');
+            $table->enum('sufixo_atendimento', ['PDG', 'FCR', 'DRT', 'OTS']);
+            $table->string('observacoes')->nullable();
+            $table->date('data_atendimento');
+            $table->time('emissao_atendimento');
+            $table->time('inicio_atendimento')->nullable();
+            $table->time('fim_atendimento')->nullable();
+            $table->enum('estado_fim_atendimento', ['nao_concluido', 'concluido'])->nullable();
         });
     }
-
-    /**
-     * Reverse the migrations.
-     *
-     * @return void
-     */
+    
     public function down()
     {
-        Schema::dropIfExists('atendimentos');
+        Schema::dropIfExists('tb_atendimentos');
     }
 }
