@@ -17,11 +17,13 @@ class AtendimentoController extends Controller
         $atendimentos = Atendimento::all();
         return json_encode($atendimentos, JSON_PRETTY_PRINT);
     }
+    
     /*
     public function __invoke(){ 
         $atendimentos = Atendimento::all();
         return json_encode($atendimentos, JSON_PRETTY_PRINT);}
     */
+
     public function get($id_atendimento){
         $atendimento = Atendimento::findOrFail($id_atendimento);
         return json_encode($atendimento, JSON_PRETTY_PRINT);
