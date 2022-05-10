@@ -8,7 +8,7 @@ class CreateRoomsTable extends Migration
 {
     /**
      * The database connection thar should be used by the migration.
-     * 
+     *
      * @var string
      */
     protected $connection = 'mysql';
@@ -22,6 +22,7 @@ class CreateRoomsTable extends Migration
      */
     public function up()
     {
+
         Schema::create('rooms', function (Blueprint $table) {
             $table->id();
             $table->string('data');
@@ -35,8 +36,7 @@ class CreateRoomsTable extends Migration
             $table->string('tipo');
             $table->timestamps();
         });
-        
-        /*
+
         Schema::create('rooms', function (Blueprint $table) {
             $table->id();
             $table->string('start_time');
@@ -46,7 +46,7 @@ class CreateRoomsTable extends Migration
             $table->enum('bloc', ['A', 'B', 'C', 'D'])->default('A');
             $table->timestamps();
         });
-        */
+
     }
 
     /**
@@ -56,6 +56,8 @@ class CreateRoomsTable extends Migration
      */
     public function down()
     {
+
         Schema::dropIfExists('rooms');
+
     }
 }
