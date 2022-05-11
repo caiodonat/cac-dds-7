@@ -6,11 +6,6 @@ use Illuminate\Support\Facades\Schema;
 
 class CreateAtendimentosTable extends Migration
 {
-    /**
-     * Run the migrations.
-     *
-     * @return void
-     */
     public function up()
     {
         Schema::create('tb_atendimentos', function (Blueprint $table) {

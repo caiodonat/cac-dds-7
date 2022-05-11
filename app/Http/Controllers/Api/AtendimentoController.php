@@ -40,31 +40,29 @@ class AtendimentoController extends Controller
      * Store a newly created resource in storage.
      */
     public function store(StoreAtendimentoRequest $request){
+        //
+        $cpf = $request->input("cpf");
+        $numero_atendimento = $request->input("numero_atendimento");
+        $sufixo_atendimento = $request->input("sufixo_atendimento");
         
-        try{
-            $cpf = $request->input("cpf");
-            $numero_atendimento = $request->input("numero_atendimento");
-            $sufixo_atendimento = $request->input("sufixo_atendimento");
-            $data_atendimento = $request->input("data_atendimento");
-            $emissao_atendimento = $request->input("emissao_atendimento");
+        $data_atendimento = $request->input("data_atendimento");
+        $emissao_atendimento = $request->input("emissao_atendimento");
 
-            
-            $atendimento = new Atendimento();
-            $atendimento->cpf = $cpf;
-            $atendimento->numero_atendimento = $numero_atendimento;
-            $atendimento->sufixo_atendimento = $sufixo_atendimento;
-            $atendimento->data_atendimento = $data_atendimento;
-            $atendimento->emissao_atendimento = Carbon::now();
 
-            if ($atendimento->save()){
-                return json_encode($atendimento);
-            }
-            return json_encode(["erro"=>true]);
-        }catch(\Exception $e){
 
-            return json_encode(["erro"=>true,"message"=>$e->getMessage()]);
+        //
+        
+        $atendimento = new Atendimento();
+        $atendimento->cpf = $cpf;
+        $atendimento->numero_atendimento = $numero_atendimento;
+        $atendimento->sufixo_atendimento = $sufixo_atendimento;
+        $atendimento->data_atendimento = $data_atendimento;
+        $atendimento->emissao_atendimento = $emissao_atendimento;
 
+        if ($atendimento->save()){
+            return json_encode($atendimento);
         }
+        return json_encode(["erro"=>true]);
     }
 
     public function atendimentoHoje(){
