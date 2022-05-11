@@ -14,11 +14,14 @@ class RoomSeeder extends Seeder
      */
     public function run()
     {
+        /*
         DB::table('rooms')->insert([
             'start_time' => Str::random(10),
             'end_time' => Str::random(10),
             'class_id' => Str::random(10),
             'instructor' => Str::random(10),
         ]);
+
+        */
     }
 }

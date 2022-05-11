@@ -531,6 +531,7 @@ class ComposerStaticInitdf35772d8f15af87b1e14ac302c5d7bb
         'App\\Http\\Middleware\\VerifyCsrfToken' => __DIR__ . '/../..' . '/app/Http/Middleware/VerifyCsrfToken.php',
         'App\\Http\\Requests\\StoreAtendimentoRequest' => __DIR__ . '/../..' . '/app/Http/Requests/StoreAtendimentoRequest.php',
         'App\\Http\\Requests\\UpdateAtendimentoRequest' => __DIR__ . '/../..' . '/app/Http/Requests/UpdateAtendimentoRequest.php',
+        'App\\Models\\Address' => __DIR__ . '/../..' . '/app/Models/Address.php',
         'App\\Models\\Atendimento' => __DIR__ . '/../..' . '/app/Models/Atendimento.php',
         'App\\Models\\User' => __DIR__ . '/../..' . '/app/Models/User.php',
         'App\\Policies\\AtendimentoPolicy' => __DIR__ . '/../..' . '/app/Policies/AtendimentoPolicy.php',
@@ -648,18 +649,10 @@ class ComposerStaticInitdf35772d8f15af87b1e14ac302c5d7bb
         'Cron\\MinutesField' => __DIR__ . '/..' . '/dragonmantank/cron-expression/src/Cron/MinutesField.php',
         'Cron\\MonthField' => __DIR__ . '/..' . '/dragonmantank/cron-expression/src/Cron/MonthField.php',
         'Database\\Factories\\AtendimentoFactory' => __DIR__ . '/../..' . '/database/factories/AtendimentoFactory.php',
-<<<<<<< HEAD
-=======
-        'Database\\Factories\\RoomFactory' => __DIR__ . '/../..' . '/database/factories/RoomFactory.php',
->>>>>>> 6f8f515be0c8c1a66109a8ff2ac4bf15736ae3eb
         'Database\\Factories\\UserFactory' => __DIR__ . '/../..' . '/database/factories/UserFactory.php',
         'Database\\Seeders\\AtendimentoSeeder' => __DIR__ . '/../..' . '/database/seeders/AtendimentoSeeder.php',
         'Database\\Seeders\\DatabaseSeeder' => __DIR__ . '/../..' . '/database/seeders/DatabaseSeeder.php',
         'Database\\Seeders\\RoomSeeder' => __DIR__ . '/../..' . '/database/seeders/RoomSeeder.php',
-<<<<<<< HEAD
-=======
-        'Database\\Seeders\\centralcliente' => __DIR__ . '/../..' . '/database/seeders/centralcliente.php',
->>>>>>> 6f8f515be0c8c1a66109a8ff2ac4bf15736ae3eb
         'DeepCopy\\DeepCopy' => __DIR__ . '/..' . '/myclabs/deep-copy/src/DeepCopy/DeepCopy.php',
         'DeepCopy\\Exception\\CloneException' => __DIR__ . '/..' . '/myclabs/deep-copy/src/DeepCopy/Exception/CloneException.php',
         'DeepCopy\\Exception\\PropertyException' => __DIR__ . '/..' . '/myclabs/deep-copy/src/DeepCopy/Exception/PropertyException.php',
