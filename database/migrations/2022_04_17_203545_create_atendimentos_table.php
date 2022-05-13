@@ -11,7 +11,7 @@ class CreateAtendimentosTable extends Migration
     public function up()
     {
         Schema::create('tb_atendentes', function (Blueprint $table) {
-            $table->increments('id_atendimentos');
+            $table->increments('id_atendimento');
             $table->int('cpf');
             $table->int('numero_atendimento');
             $table->enum('sufixo_atendimento', ['PDG', 'FCR', 'DRT', 'OTS'])->default('PDG');

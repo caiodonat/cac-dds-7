@@ -20,14 +20,14 @@ class DatabaseSeeder extends Seeder
 
         DB::table('tb_atendentes')->insert([
             'cpf' => '12345678',
-            'numero_atendimento' => '1',
-            'sufixo_atendimento' => 'PDG',
+            'numero_atendimento' => '55',
+            'sufixo_atendimento' => 'DRT',
             'observacoes' => Str::random(10),
-            'data_atendimento' => '2020-04-17',
-            //'emissao_atendimento' => '2020-04-17 20:35:45',
-            //'inicio_atendimento' => '2020-04-17 20:35:45',
-            //'fim_atendimento' => '2020-04-17 26:36:46',
-            'estado_atendimento' => 'nao_concluido',
+            'data_atendimento' => '2020-04-18',
+            'emissao_atendimento' => '2020-04-18 20:35:45',
+            'inicio_atendimento' => '2020-04-18 16:35:45',
+            'fim_atendimento' => '2020-04-18 16:50:46',
+            'estado_atendimento' => 'concluido',
         ]);
     }
 }
