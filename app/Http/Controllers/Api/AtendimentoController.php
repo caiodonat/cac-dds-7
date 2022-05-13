@@ -17,47 +17,32 @@ class AtendimentoController extends Controller
         $atendimentos = Atendimento::all();
         return json_encode($atendimentos, JSON_PRETTY_PRINT);
     }
-    
-    /*
-    public function __invoke(){ 
-        $atendimentos = Atendimento::all();
-        return json_encode($atendimentos, JSON_PRETTY_PRINT);}
-    */
-
     public function get($id_atendimento){
         $atendimento = Atendimento::findOrFail($id_atendimento);
         return json_encode($atendimento, JSON_PRETTY_PRINT);
     }
+    public function create(){}
 
     /**
-     * Show the form for creating a new resource.
-     */
-    public function create(){
-        //
-    }
-
-    /**
-     * Store a newly created resource in storage.
+     * utilizado para gerar um novo registro no banco
+     * 
+     * 
      */
     public function store(StoreAtendimentoRequest $request){
-        //
         $cpf = $request->input("cpf");
         $numero_atendimento = $request->input("numero_atendimento");
         $sufixo_atendimento = $request->input("sufixo_atendimento");
         
         $data_atendimento = $request->input("data_atendimento");
-        $emissao_atendimento = $request->input("emissao_atendimento");
-
-
-
-        //
         
+        $now_carbon = Carbon::now();
+
         $atendimento = new Atendimento();
         $atendimento->cpf = $cpf;
         $atendimento->numero_atendimento = $numero_atendimento;
         $atendimento->sufixo_atendimento = $sufixo_atendimento;
         $atendimento->data_atendimento = $data_atendimento;
-        $atendimento->emissao_atendimento = $emissao_atendimento;
+        $atendimento->emissao_atendimento = $now_carbon;
 
         if ($atendimento->save()){
             return json_encode($atendimento);
@@ -66,19 +51,20 @@ class AtendimentoController extends Controller
     }
 
     public function atendimentoHoje(){
-        //
+
+        $today = Carbon::today();
+        $date = "13:14:15";
+        return json_encode(Atendimento::where("data_atendimento", $today)->get(), JSON_PRETTY_PRINT);
     }
 
-    /**
-     * Display the specified resource.
-     */
+    public function atendimentoOntem(){
+        //Carbon::yesterday();
+    }
+
     public function show(Atendimento $atendimento){
         //
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
     public function edit(Atendimento $atendimento)
     {
         //

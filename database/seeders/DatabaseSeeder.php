@@ -3,16 +3,11 @@
 namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
-use Database\Seeders\DB;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
 
 class DatabaseSeeder extends Seeder
 {
-    /**
-     * Seed the application's database.
-     *
-     * @return void
-     */
     public function run()
     {/*
         DB::table('tb_atendimentos')->insert([
@@ -27,5 +22,12 @@ class DatabaseSeeder extends Seeder
             'estado_atendimento'=>Str::random(10),
         ]);
         */
+        DB::table('tb_atendimentos')->insert([
+            'cpf' => Str::random(10),
+            'numero_atendimento' => Str::random(10),
+            'sufixo_atendimento' => 'PDG',
+            'data_atendimento' => Str::random(10),
+            'inicio_atendimento' => Str::random(10),
+        ]);
     }
 }

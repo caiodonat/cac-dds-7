@@ -9,7 +9,7 @@ class Atendimento extends Model
 {
     use HasFactory;
     protected $table = 'tb_atendimentos';
-    protected $primaryKey = 'id_atendimento';
+    protected $primaryKey = 'id_atendimentos';
     public $timestamps = false;
     
 }

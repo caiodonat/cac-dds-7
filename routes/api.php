@@ -14,4 +14,4 @@ Route::get('/atendimento/{id_atendimento}', [AtendimentoController::class, 'get'
 
 Route::post('/atendimento/post', [AtendimentoController::class, 'store']);
 
-Route::get('/atendimento/hoje', [AtendimentoController::class, 'atendimentoHoje']);
+Route::get('/atendimentos/hoje', [AtendimentoController::class, 'atendimentoHoje']);
