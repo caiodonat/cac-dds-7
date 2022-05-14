@@ -13,83 +13,84 @@ use Carbon\Carbon;
 class AtendimentoController extends Controller
 {
     public function index(){
-        
         $atendimentos = Atendimento::all();
         return json_encode($atendimentos, JSON_PRETTY_PRINT);
     }
+
     public function get($id_atendimento){
         $atendimento = Atendimento::findOrFail($id_atendimento);
         return json_encode($atendimento, JSON_PRETTY_PRINT);
     }
-    public function create(){}
 
-    /**
-     * utilizado para gerar um novo registro no banco
-     * 
-     * 
-     */
     public function store(StoreAtendimentoRequest $request){
+        //
+        $current = Carbon::now();
+
         $cpf = $request->input("cpf");
         $numero_atendimento = $request->input("numero_atendimento");
         $sufixo_atendimento = $request->input("sufixo_atendimento");
-        
-        $data_atendimento = $request->input("data_atendimento");
-        
-        $now_carbon = Carbon::now();
+        $observacoes = $request->input("observacoes");
 
+        if($request->input("date_time_emissao_atendimento")!=null){
+            $date_time = Carbon::create($request->input("date_time_emissao_atendimento"));
+            $date_time_emissao_atendimento = $date_time->toDateTimeString();
+            $date_emissao_atendimento = $date_time->toDateString();
+        }else{
+            $date_time_emissao_atendimento = $current->toDateTimeString();
+            $date_emissao_atendimento = $current->toDateString();
+        }
+        
+
+        //Gerando um novo registro
         $atendimento = new Atendimento();
-        $atendimento->cpf = $cpf;
-        $atendimento->numero_atendimento = $numero_atendimento;
-        $atendimento->sufixo_atendimento = $sufixo_atendimento;
-        $atendimento->data_atendimento = $data_atendimento;
-        $atendimento->emissao_atendimento = $now_carbon;
 
+        $atendimento->cpf = $cpf;
+
+        //numero_atendimento
+        $atendimento->numero_atendimento = $numero_atendimento;
+
+        //sufixo_atendimento
+        if($sufixo_atendimento!=null){
+            $atendimento->sufixo_atendimento = $sufixo_atendimento;
+        }else{
+            $atendimento->sufixo_atendimento = "OTS";
+        }
+        
+        if ($observacoes!=null){
+            $atendimento->observacoes = $observacoes;
+        }else{
+            $atendimento->observacoes = "Sem Observações";
+        }
+
+        //date_emissao_atendimento
+        $atendimento->date_emissao_atendimento = $date_emissao_atendimento;
+
+        //date_time_emissao_atendimento
+        $atendimento->date_time_emissao_atendimento = $date_time_emissao_atendimento;
+
+        //verificando se foi possivel registrar
         if ($atendimento->save()){
             return json_encode($atendimento);
         }
         return json_encode(["erro"=>true]);
     }
-
-    public function atendimentoHoje(){
-
+    /*
+    public function atendimentoDia(){
+        
         $today = Carbon::today();
-        $date = "13:14:15";
-        return json_encode(Atendimento::where("data_atendimento", $today)->get(), JSON_PRETTY_PRINT);
+        $atendimento = Atendimento::whereDate("date_emissao_atendimento", $today->toDateString())->get();
+        return json_encode($atendimento, JSON_PRETTY_PRINT);
     }
-
-    public function atendimentoOntem(){
-        //Carbon::yesterday();
+    */
+    public function atendimentosDate($date){
+        $dateRequest = Carbon::create($date);
+        $atendimentos = Atendimento::whereDate("date_emissao_atendimento", $dateRequest->toDateString())->get();
+        return json_encode($atendimentos, JSON_PRETTY_PRINT);
     }
-
-    public function show(Atendimento $atendimento){
-        //
-    }
-
-    public function edit(Atendimento $atendimento)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \App\Http\Requests\UpdateAtendimentoRequest  $request
-     * @param  \App\Models\Atendimento  $atendimento
-     * @return \Illuminate\Http\Response
-     */
-    public function update(UpdateAtendimentoRequest $request, Atendimento $atendimento)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Models\Atendimento  $atendimento
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy(Atendimento $atendimento)
-    {
-        //
+    public function atendimentosFromTo($from, $to){
+        $fromR = Carbon::create($from);
+        $toR = Carbon::create($to);
+        $atendimentos = Atendimento::whereBetween("date_emissao_atendimento", [$fromR->toDateString(), $toR->toDateString()])->get();
+        return json_encode($atendimentos, JSON_PRETTY_PRINT);
     }
 }
