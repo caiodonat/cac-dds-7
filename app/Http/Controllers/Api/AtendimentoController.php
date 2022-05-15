@@ -24,17 +24,22 @@ class AtendimentoController extends Controller
 
     public function store(StoreAtendimentoRequest $request){
         //
-        $current = Carbon::now();
-
-        $cpf = $request->input("cpf");
+        $current = Carbon::now('-03:00');
+        try {
+            $cpf = $request->input("cpf");
+        } catch (Throwable $th) {
+            $cpf = null;
+        }
 
         $sufixo_atendimento = $request->input("sufixo_atendimento");
         $observacoes = $request->input("observacoes");
 
+        //inicio
         if($request->input("date_time_emissao_atendimento")!=null){
             $date_time = Carbon::create($request->input("date_time_emissao_atendimento"));
             $date_time_emissao_atendimento = $date_time->toDateTimeString();
             $date_emissao_atendimento = $date_time->toDateString();
+            //fim() |->reservado para teste
         }else{
             $date_time_emissao_atendimento = $current->toDateTimeString();
             $date_emissao_atendimento = $current->toDateString();
@@ -44,6 +49,7 @@ class AtendimentoController extends Controller
         //Gerando um novo registro
         $atendimento = new Atendimento();
 
+        //cpf
         $atendimento->cpf = $cpf;
 
         //numero_atendimento
@@ -82,19 +88,13 @@ class AtendimentoController extends Controller
         }
         return json_encode(["erro"=>true]);
     }
-    /*
-    public function atendimentoDia(){
-        
-        $today = Carbon::today();
-        $atendimento = Atendimento::whereDate("date_emissao_atendimento", $today->toDateString())->get();
-        return json_encode($atendimento, JSON_PRETTY_PRINT);
-    }
-    */
+
     public function atendimentosDate($date){
         $dateRequest = Carbon::create($date);
         $atendimentos = Atendimento::where("date_emissao_atendimento", $dateRequest->toDateString())->get();
         return json_encode($atendimentos, JSON_PRETTY_PRINT);
     }
+
     public function atendimentosFromTo($from, $to){
         $fromR = Carbon::create($from);
         $toR = Carbon::create($to);

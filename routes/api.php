@@ -14,7 +14,6 @@ Route::get('/atendimento/id/{id_atendimento}', [AtendimentoController::class, 'g
 
 Route::post('/atendimento/post', [AtendimentoController::class, 'store']);
 
-//Route::get('/atendimentos/hoje', [AtendimentoController::class, 'atendimentoDia']);
-
 Route::get('/atendimento/dia/{date}', [AtendimentoController::class, 'atendimentosDate']);
-Route::get('/atendimento/dias/from={from}&to={to}', [AtendimentoController::class, 'atendimentosFromTo']);
+
+Route::get('/atendimento/dias/{from}&{to}', [AtendimentoController::class, 'atendimentosFromTo']);
