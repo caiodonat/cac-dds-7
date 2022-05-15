@@ -27,7 +27,7 @@ class AtendimentoController extends Controller
         $current = Carbon::now();
 
         $cpf = $request->input("cpf");
-        $numero_atendimento = $request->input("numero_atendimento");
+
         $sufixo_atendimento = $request->input("sufixo_atendimento");
         $observacoes = $request->input("observacoes");
 
@@ -47,7 +47,15 @@ class AtendimentoController extends Controller
         $atendimento->cpf = $cpf;
 
         //numero_atendimento
-        $atendimento->numero_atendimento = $numero_atendimento;
+        $today = $current->toDateString();
+        $lastAtendimento = Atendimento::all()->where("date_emissao_atendimento", $today)->last();
+
+        if ($lastAtendimento!=null){
+            $atendimento->numero_atendimento = $lastAtendimento->numero_atendimento+1;
+        }else{
+            $atendimento->numero_atendimento = 1;
+        }
+        
 
         //sufixo_atendimento
         if($sufixo_atendimento!=null){
@@ -84,7 +92,7 @@ class AtendimentoController extends Controller
     */
     public function atendimentosDate($date){
         $dateRequest = Carbon::create($date);
-        $atendimentos = Atendimento::whereDate("date_emissao_atendimento", $dateRequest->toDateString())->get();
+        $atendimentos = Atendimento::where("date_emissao_atendimento", $dateRequest->toDateString())->get();
         return json_encode($atendimentos, JSON_PRETTY_PRINT);
     }
     public function atendimentosFromTo($from, $to){
