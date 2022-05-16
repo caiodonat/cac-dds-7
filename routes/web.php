@@ -16,5 +16,5 @@ use App\Http\Controllers\SenhaController;
 */
 
 Route::get('/', function () {
-    return view('totem.telaInicial');
+    return view('welcome');
 });

@@ -16,7 +16,7 @@ class AtendimentoSeeder extends Seeder
         DB::table('tb_atendimentos')->insert([
             'cpf' => Str::random(10),
             'numero_atendimento' => Str::random(10),
-            'sufixo_atendimento' => $this->randomElement( array('PDG','FCR','DRT','OTS')),
+            'sufixo_atendimento' => 'OTS',
             'data_atendimento' => Str::random(10),
             'inicio_atendimento' => Str::random(10),
         ]);

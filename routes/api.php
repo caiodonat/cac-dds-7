@@ -10,8 +10,10 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 
 Route::get('/atendimentos', [AtendimentoController::class, 'index']);
 
-Route::get('/atendimento/{id_atendimento}', [AtendimentoController::class, 'get']);
+Route::get('/atendimento/id/{id_atendimento}', [AtendimentoController::class, 'get']);
 
 Route::post('/atendimento/post', [AtendimentoController::class, 'store']);
 
-Route::get('/atendimento/hoje', [AtendimentoController::class, 'atendimentoHoje']);
+Route::get('/atendimento/dia/{date}', [AtendimentoController::class, 'atendimentosDate']);
+
+Route::get('/atendimento/dias/{from}&{to}', [AtendimentoController::class, 'atendimentosFromTo']);
