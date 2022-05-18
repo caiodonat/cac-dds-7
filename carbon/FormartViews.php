@@ -7,17 +7,17 @@ use Carbon\Carbon;
 
 $connect = Connect::connect();
 
-$viewcpf = $connect->query('SELECT date_emissao_atendimento FROM tb_atendimentos');
-$viewcpf = $viewcpf->fetchall($format);
+$viewData = $connect->query('SELECT date_emissao_atendimento FROM tb_atendimentos');
+$viewData = $viewData->fetchAll();
 /*
 $viewdt = $connect->query('SELECT data_atendimento FROM tb_atendimentos');
 $viewdt = $viewdt->fetch();
 */
-Carbon::setLocale('pt-BR');
 
-var_dump($viewcpf);
-//var_dump($viewdt);
+//dd($viewData . $formato);
 
-$format::createFromDate($day . "/" . $month . "/" . $year);
+//$today = Carbon::today('America/Sao_Paulo');
 
-$date = Carbon::createFromDate($viewcpf);
+$formato = Carbon::createFromDate($day, $month, $year );
+dd($formato -> format('d/m/Y'));
+//dd($viewData -> $formato);
