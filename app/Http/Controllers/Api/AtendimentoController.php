@@ -120,7 +120,7 @@ class AtendimentoController extends Controller
         return $atendimentos->toJson(JSON_PRETTY_PRINT);
     }
 
-    public function atendimentosRowToday(){
+    public function atendimentosQueueToday(){
         $carbonNow = Carbon::now('-03:00');
 
         $atendimentos = Atendimento::
@@ -131,7 +131,7 @@ class AtendimentoController extends Controller
         return $atendimentos->toJson(JSON_PRETTY_PRINT);
     }
 
-    public function atendimentosRowTodayNext(){
+    public function atendimentosQueueTodayNext(){
         $carbonNow = Carbon::now('-03:00');
         $atendimentos = Atendimento::
         where("date_emissao_atendimento", $carbonNow->toDateString())

@@ -18,9 +18,9 @@ Route::get('/atendimentos/dias/{from}&{to}', [AtendimentoController::class, 'ate
 
 Route::get('/atendimentos/month/{month}', [AtendimentoController::class, 'atendimentosMonth']);
 
-Route::get('/atendimentos/row/', [AtendimentoController::class, 'atendimentosRowToday']);
+Route::get('/atendimentos/queue/', [AtendimentoController::class, 'atendimentosQueueToday']);
 
-Route::get('/atendimentos/row/next', [AtendimentoController::class, 'atendimentosRowTodayNext']);
+Route::get('/atendimentos/queue/next', [AtendimentoController::class, 'atendimentosQueueTodayNext']);
 
 
 Route::post('/atendimento/post', [AtendimentoController::class, 'store']);

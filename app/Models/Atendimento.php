@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Carbon\Carbon;
 
 class Atendimento extends Model
 {
@@ -11,5 +12,7 @@ class Atendimento extends Model
     protected $table = 'tb_atendimentos';
     protected $primaryKey = 'id_atendimento';
     public $timestamps = false;
+    //protected $dates = 'd/m/Y';
+    //protected $dateFormat = 'd/m/Y';
     
 }
