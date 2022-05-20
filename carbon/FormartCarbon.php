@@ -11,12 +11,10 @@ use Carbon\Carbon;
 
 $connect = Connect::connect();
 
-/*Passando a seleção das tabela do banco, para ser mostrado no terminal por exemplo a tabela posts
-$posts = $connect->query('SELECT observacoes FROM tb_atendentes');
-$posts = $posts->fetch();
+$viewDate = $connect->query('SELECT   date_time_emissao_atendimento FROM tb_atendimentos');
+$viewDate = $viewDate->fetch();
 
-*/
-//Passando a linguagem para o terminal
 Carbon::setLocale('pt-BR');
 
-var_dump($viewcpf);
+$date = Carbon::createFromDate($viewDate->date_time_emissao_atendimento);
+dd($date->format('d/m/Y H:i:s'));

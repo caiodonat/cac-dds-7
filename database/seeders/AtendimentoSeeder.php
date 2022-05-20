@@ -14,10 +14,10 @@ class AtendimentoSeeder extends Seeder
     {
         //$sufixo_atendimentoe -> faker -> randomElement(['PDG', 'FCR', 'DRT', 'OTS']);
         DB::table('tb_atendimentos')->insert([
-            'cpf' => '01010101',
+            'cpf' => Str::random(11),
             'numero_atendimento' => '01',
             'sufixo_atendimento' => 'OTS',
-            'data_atendimento' =>  '2020-01-01',
+            'data_atendimento' =>  Str::random(10),
             'inicio_atendimento' => Str::random(10),
         ]);
     }
