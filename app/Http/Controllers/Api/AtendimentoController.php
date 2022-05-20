@@ -140,4 +140,11 @@ class AtendimentoController extends Controller
 
         return $atendimentos->toJson(JSON_PRETTY_PRINT);
     }
+
+    public function atendimentoBegin($id_atendimento){//, $guiche
+        $carbonNow = Carbon::now('-03:00');
+        Atendimento::where("id_atendimento", "=", $id_atendimento)->update(['inicio_atendimento' => $carbonNow->toDateTimeString()]);
+
+        return AtendimentoController::get($id_atendimento);
+    }
 }
