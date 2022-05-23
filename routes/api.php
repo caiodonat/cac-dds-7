@@ -30,3 +30,4 @@ Route::get('/atendimento/post', [AtendimentoController::class, 'store']);
 Route::put('/atendimento/begin/{id_atendimento}', [AtendimentoController::class, 'atendimentoBegin']);
 
 //update -> finalizar atendimento
+Route::put('/atendimento/finish/{id_atendimento}&{$estado_fim_atendimento}', [AtendimentoController::class, 'atendimentoFinish']);

@@ -134,7 +134,8 @@ class AtendimentoController extends Controller
     public function atendimentosQueueTodayNext(){
         $carbonNow = Carbon::now('-03:00');
         $atendimentos = Atendimento::
-        where("date_emissao_atendimento", $carbonNow->toDateString())
+        where("date_emissao_atendimento", $carbonNow
+        ->toDateString())
         ->where("inicio_atendimento", "=", null)
         ->get()->first();
 
@@ -143,7 +144,18 @@ class AtendimentoController extends Controller
 
     public function atendimentoBegin($id_atendimento){//, $guiche
         $carbonNow = Carbon::now('-03:00');
-        Atendimento::where("id_atendimento", "=", $id_atendimento)->update(['inicio_atendimento' => $carbonNow->toDateTimeString()]);
+        Atendimento::where("id_atendimento", "=", $id_atendimento)
+        ->update(['inicio_atendimento' => $carbonNow
+        ->toDateTimeString()]);
+
+        return AtendimentoController::get($id_atendimento);
+    }
+    public function atendimentoFinish($id_atendimento, $estado_fim_atendimento){//, $guiche
+        $carbonNow = Carbon::now('-03:00');
+        Atendimento::where("id_atendimento", "=", $id_atendimento)
+        ->update(['fim_atendimento' => $carbonNow
+        ->toDateTimeString()])
+        ->update(['estado_fim_atendimento' => $estado_fim_atendimento]);
 
         return AtendimentoController::get($id_atendimento);
     }
