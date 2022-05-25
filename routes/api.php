@@ -23,7 +23,7 @@ Route::get('/atendimentos/queue/', [AtendimentoController::class, 'atendimentosQ
 Route::get('/atendimentos/queue/next', [AtendimentoController::class, 'atendimentosQueueTodayNext']);
 
 
-Route::get('/atendimento/post', [AtendimentoController::class, 'store']);
+Route::post('/atendimento/post', [AtendimentoController::class, 'createAtendimento']);
 
 
 //update -> iniciar atendimento

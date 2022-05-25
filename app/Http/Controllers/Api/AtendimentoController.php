@@ -22,7 +22,7 @@ class AtendimentoController extends Controller
         return json_encode($atendimento, JSON_PRETTY_PRINT);
     }
 
-    public function store(StoreAtendimentoRequest $request){
+    public function createAtendimento(StoreAtendimentoRequest $request){
         //
         $current = Carbon::now('-03:00');
         try {
@@ -101,7 +101,9 @@ class AtendimentoController extends Controller
         $fromR = Carbon::create($from);
         $toR = Carbon::create($to);
         $atendimentos = Atendimento::
-        whereBetween("date_emissao_atendimento", [$fromR->toDateString(), $toR->toDateString()])
+        whereBetween("date_emissao_atendimento", [
+        $fromR->toDateString(), 
+        $toR->toDateString()])
         ->get();
         return $atendimentos;
     }
