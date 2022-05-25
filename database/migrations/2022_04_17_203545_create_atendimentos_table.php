@@ -12,7 +12,7 @@ class CreateAtendimentosTable extends Migration
     {
         Schema::create('tb_atendimentos', function (Blueprint $table) {
             $table->increments('id_atendimento')->unsigned();
-            $table->bigInteger('cpf')->unsigned()->nullable();//bigIncrements->(8-byte)
+            $table->bigInteger('cpf')->unsigned()->nullable(); //bigIncrements->(8-byte)
             $table->integer('numero_atendimento');
             $table->enum('sufixo_atendimento', ['PDG', 'FCR', 'DRT', 'OTS']);
             $table->string('observacoes')->nullable();
@@ -26,6 +26,6 @@ class CreateAtendimentosTable extends Migration
 
     public function down()
     {
-        Schema::dropIfExists('tb_atendimento');
+        Schema::dropIfExists('tb_atendimentos');
     }
 }
