@@ -10,22 +10,28 @@ class CreateGuicheTable extends Migration
 {
     public function up()
     {
+        /*
         Schema::create('tb_guiches', function (Blueprint $table) {
             $table->increments('id_guiche')->unsigned();
             $table->unsignedInteger('id_login_guiche');
             $table->string('nomes_funcionarios');
 
             $table->foreign('id_login_guiche')
-            ->references('id_login_guiche')
-            ->on('tb_login_guiches');
+                ->references('id_login_guiche')
+                ->on('tb_login_guiches');
             $table->foreign('id_guiche')
-            ->references('id_guiche')
-            ->on('tb_login_guiches');
+                ->references('id_guiche')
+                ->on('tb_login_guiches');
+
+            $table->index(['id_guiche', 'id_login_guiche', 'nomes_funcionarios']);
         });
+        */
     }
 
     public function down()
     {
-        Schema::dropIfExists('tb_login_guiches');
+        /*
+        Schema::dropIfExists('tb_guiches');
+        */
     }
 }
