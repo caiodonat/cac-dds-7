@@ -10,7 +10,7 @@ class CreateGuicheTable extends Migration
 {
     public function up()
     {
-        /*
+
         Schema::create('tb_guiches', function (Blueprint $table) {
             $table->increments('id_guiche')->unsigned();
             $table->unsignedInteger('id_login_guiche');
@@ -25,13 +25,11 @@ class CreateGuicheTable extends Migration
 
             $table->index(['id_guiche', 'id_login_guiche', 'nomes_funcionarios']);
         });
-        */
     }
 
     public function down()
     {
-        /*
+
         Schema::dropIfExists('tb_guiches');
-        */
     }
 }
