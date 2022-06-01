@@ -17,7 +17,7 @@ class CreateLoginGuicheTable extends Migration
             $table->string('nomes_funcionarios');
             $table->boolean('contrato_ativo');
 
-            protected $primaryKey =  'id_login_login', 'nomes_funcionarios';
+            //protected $primaryKey =  'id_login_login', 'nomes_funcionarios';
         });
     }
 
