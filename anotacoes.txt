@@ -1,0 +1,3 @@
+Adicionar uma nova coluna de Array, buscar se existe
+
+https://laracasts.com/discuss/channels/eloquent/insert-array-data-with-eloquent
