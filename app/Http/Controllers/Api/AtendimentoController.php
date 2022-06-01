@@ -153,11 +153,21 @@ class AtendimentoController extends Controller
         ->get();
 
         return $atendimentos->toJson(JSON_PRETTY_PRINT);
-
     }
 
     public function atendimentoCall($id_atendimento){
         //adiciona esse atendimento ($id_atendimento) a uma lista que sera chamada pelo telão, e o telao ficarar verificando (com frequencia) se possui atualizações nessa fila
+    }
+
+    public function atendimentoTodayNumber($numero_atendimento){
+        $carbonNow = Carbon::now('-03:00');
+
+        $atendimento = Atendimento::
+        where("date_emissao_atendimento", $carbonNow->toDateString())
+        ->where("numero_atendimento", "=", $numero_atendimento)
+        ->get();
+
+        return $atendimento->toJson(JSON_PRETTY_PRINT);
     }
 
     //post
