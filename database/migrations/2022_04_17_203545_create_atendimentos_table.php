@@ -15,7 +15,8 @@ class CreateAtendimentosTable extends Migration
             $table->increments('id_atendimento')->unsigned();
             $table->bigInteger('cpf')->unsigned()->nullable(); //bigIncrements->(8-byte)
             $table->integer('numero_atendimento');
-            $table->enum('sufixo_atendimento', ['PDG', 'FCR', 'SCT', 'OTS']);
+            $table->enum('sufixo_setor', ['PDG', 'FCR', 'SCT', 'OTS']);
+            //$table->string('servico')->nullable();//serviço 1,serviço 2,serviço 3,serviço 4,serviço 5
             $table->string('observacoes')->nullable();
             $table->date('date_emissao_atendimento');
             $table->dateTime('date_time_emissao_atendimento');

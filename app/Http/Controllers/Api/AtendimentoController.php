@@ -156,6 +156,16 @@ class AtendimentoController extends Controller
 
     }
 
+    public function atendimentoCall($id_atendimento){
+        //adiciona esse atendimento ($id_atendimento) a uma lista que sera chamada pelo telão, e o telao ficarar verificando (com frequencia) se possui atualizações nessa fila
+    }
+
+    //post
+
+
+
+    //update
+
     public function atendimentoBegin($id_atendimento){//, $guiche
         $carbonNow = Carbon::now('-03:00');
         Atendimento::where("id_atendimento", "=", $id_atendimento)

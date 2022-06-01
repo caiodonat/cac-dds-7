@@ -24,6 +24,10 @@ Route::get('/atendimentos/queue/next', [AtendimentoController::class, 'atendimen
 
 Route::get('/atendimentos/afterQueue/', [AtendimentoController::class, 'atendimentosAfterQueueToday']);
 
+Route::get('atendimento/call/', [AtendimentoController::class, 'atendimentoCall']);
+
+//get(atendimento/{numero_atendimento}{today})//retorna um atendimento especifico
+
 
 Route::post('/atendimento/post', [AtendimentoController::class, 'createAtendimento']);
 
