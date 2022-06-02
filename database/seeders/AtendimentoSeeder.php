@@ -12,6 +12,7 @@ class AtendimentoSeeder extends Seeder
 {
     public function run()
     {
+        /*
         //$sufixo_atendimentoe -> faker -> randomElement(['PDG', 'FCR', 'DRT', 'OTS']);
         DB::table('tb_atendimentos')->insert([
             'cpf' => Str::random(11),
@@ -20,5 +21,6 @@ class AtendimentoSeeder extends Seeder
             'data_atendimento' =>  Str::random(10),
             'inicio_atendimento' => Str::random(10),
         ]);
+        */
     }
 }

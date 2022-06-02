@@ -23,20 +23,8 @@ class CreateAtendimentosTable extends Migration
             $table->dateTime('fim_atendimento')->nullable();
             $table->enum('estado_fim_atendimento', ['nao_concluido', 'concluido'])->nullable();
 
-
-            //$SufixoAtendimento2 = Input::get('');
-            $SufixoAtendimento2 = [];
-            foreach ($SufixoAtendimento2 as $key) {
-                $SufixoAtendimento2[] = [
-                    'PDG' => 'sufixo_atendimento',
-                    'FCR' => 'sufixo_atendimento',
-                    'SCT' => 'SCT',
-                    'OTS' => 'OTS',
-
-                ];
-            }
-
-            DB::table('tb_atendimentos')->insert($SufixoAtendimento2);
+            //Em Teste para viabilidade da array
+            $collection = collect(['sufixoTotem' => 'pedagógico', 'finaceiro', 'secretaria', 'outros servicos'])->toArray();
         });
     }
 
