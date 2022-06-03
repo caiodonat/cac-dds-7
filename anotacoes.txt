@@ -1,3 +1,7 @@
 Adicionar uma nova coluna de Array, buscar se existe
 
 https://laracasts.com/discuss/channels/eloquent/insert-array-data-with-eloquent
+
+"Existe varias formas" para trabalhar com Array 
+
+https://laravel.com/docs/9.x/collections

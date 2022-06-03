@@ -17,7 +17,7 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-
+        /*
         DB::table('tb_atendentes')->insert([
             'cpf' => '12345678',
             'numero_atendimento' => '55',
@@ -29,5 +29,6 @@ class DatabaseSeeder extends Seeder
             'fim_atendimento' => '2020-04-18 16:50:46',
             'estado_atendimento' => 'concluido',
         ]);
+        */
     }
 }
