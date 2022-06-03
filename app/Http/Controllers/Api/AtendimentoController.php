@@ -12,15 +12,7 @@ use Carbon\Carbon;
 
 class AtendimentoController extends Controller
 {
-    public function index(){
-        $atendimentos = Atendimento::all();
-        return json_encode($atendimentos, JSON_PRETTY_PRINT);
-    }
-
-    public function get($id_atendimento){
-        $atendimento = Atendimento::findOrFail($id_atendimento);
-        return json_encode($atendimento, JSON_PRETTY_PRINT);
-    }
+    //POST
 
     public function createAtendimento(StoreAtendimentoRequest $request){
         //
@@ -89,6 +81,19 @@ class AtendimentoController extends Controller
             return $atendimento->toJson(JSON_PRETTY_PRINT);
         }
         return json_encode(["erro"=>true]);
+    }
+
+
+    //GET
+
+    public function index(){
+        $atendimentos = Atendimento::all();
+        return json_encode($atendimentos, JSON_PRETTY_PRINT);
+    }
+
+    public function get($id_atendimento){
+        $atendimento = Atendimento::findOrFail($id_atendimento);
+        return json_encode($atendimento, JSON_PRETTY_PRINT);
     }
 
     public function atendimentosDate($date){
@@ -170,11 +175,8 @@ class AtendimentoController extends Controller
         return $atendimento->toJson(JSON_PRETTY_PRINT);
     }
 
-    //post
 
-
-
-    //update
+    //UPDATE
 
     public function atendimentoBegin($id_atendimento){//, $guiche
         $carbonNow = Carbon::now('-03:00');

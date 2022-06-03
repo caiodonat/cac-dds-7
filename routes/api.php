@@ -8,8 +8,12 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
 
+//POST
 
-//get
+Route::post('/atendimento/post', [AtendimentoController::class, 'createAtendimento']);
+
+
+//GET
 
 Route::get('/atendimentos', [AtendimentoController::class, 'index']);
 
@@ -33,15 +37,10 @@ Route::get('atendimento/call/{id_atendimento}', [AtendimentoController::class, '
 Route::get('atendimento/numero_atendimento/{numero_atendimento}', [AtendimentoController::class, 'atendimentoTodayNumber']);
 
 
-//post
+//put/UPDATE
 
-Route::post('/atendimento/post', [AtendimentoController::class, 'createAtendimento']);
-
-
-//put
-
-//update -> iniciar atendimento
+//iniciar atendimento
 Route::put('/atendimento/begin/{id_atendimento}', [AtendimentoController::class, 'atendimentoBegin']);
 
-//update -> finalizar atendimento
+//finalizar atendimento
 Route::put('/atendimento/finish/{id_atendimento}&{$estado_fim_atendimento}', [AtendimentoController::class, 'atendimentoFinish']);
