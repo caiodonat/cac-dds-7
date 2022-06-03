@@ -3,7 +3,6 @@
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
-
 use Illuminate\Database\QueryException;
 
 class CreateAtendimentosTable extends Migration
@@ -18,7 +17,7 @@ class CreateAtendimentosTable extends Migration
 
             $table->bigInteger('cpf')->unsigned()->nullable(); //bigIncrements->(8-byte)
             $table->integer('numero_atendimento');
-            $table->enum('setor', ['PDG', 'FCR', 'SCT', 'OTS']);
+            $table->enum('sufixo_atendimento', ['PDG', 'FCR', 'SCT', 'OTS']);
             $table->string('servicos')->nullable();//serviço 1,serviço 2,serviço 3,serviço 4,serviço 5
             $table->string('observacoes')->nullable();
 

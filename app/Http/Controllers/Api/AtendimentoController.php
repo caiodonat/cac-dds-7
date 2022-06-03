@@ -134,7 +134,7 @@ class AtendimentoController extends Controller
         where("date_emissao_atendimento", $carbonNow->toDateString())
         ->where("inicio_atendimento", "=", null)
         ->get();
-
+        
         return $atendimentos->toJson(JSON_PRETTY_PRINT);
     }
 
