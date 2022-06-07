@@ -49,8 +49,12 @@ Route::get('atendimento/numero_atendimento/{numero_atendimento}', [AtendimentoCo
 
 //put/UPDATE
 
-//Esta rota vai ser respondavel pelo inicio do atendimento 
+//Esta rota vai ser respondavel pelo inicio do atendimento
 Route::put('/atendimento/begin/{id_atendimento}', [AtendimentoController::class, 'atendimentoBegin']);
 
 //Esta rota vai ser responsavel pelo encerramento do atendimento
 Route::put('/atendimento/finish/{id_atendimento}&{$estado_fim_atendimento}', [AtendimentoController::class, 'atendimentoFinish']);
+
+
+//API GUICHES TESTE
+Route::get('/guiches', [AtendimentoController::class, 'guiches']);

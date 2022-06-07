@@ -13,7 +13,7 @@ class CreateGuichesTable extends Migration
      */
     public function up()
     {
-        Schema::create('guiches', function (Blueprint $table) {
+        Schema::create('tb_guiches', function (Blueprint $table) {
             $table->increments('id_guiches')->unsigned();
             $table->integer('id_login_guiches')->unsigned();
             $table->string('nomes_funcionarios')->nullable();
@@ -28,6 +28,6 @@ class CreateGuichesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('guiches');
+        Schema::dropIfExists('tb_guiches');
     }
 }

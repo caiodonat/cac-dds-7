@@ -13,7 +13,7 @@ class CreateLoginGuichesTable extends Migration
      */
     public function up()
     {
-        Schema::create('login_guiches', function (Blueprint $table) {
+        Schema::create('tb_login_guiches', function (Blueprint $table) {
             $table->id('id_login_guiches')->unsigned();
             $table->string('login')->nullable();
             $table->string('senha')->nullable();
@@ -30,6 +30,6 @@ class CreateLoginGuichesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('login_guiches');
+        Schema::dropIfExists('tb_login_guiches');
     }
 }
