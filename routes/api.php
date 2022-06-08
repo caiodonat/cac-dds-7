@@ -40,9 +40,6 @@ Route::get('/atendimento/queue/next', [AtendimentoController::class, 'atendiment
 //Esta rota vai chamar a senha anterior caso a mesma nao tenha comparecido ao guiche
 Route::get('/atendimentos/afterQueue/', [AtendimentoController::class, 'atendimentosAfterQueueToday']);
 
-
-Route::get('atendimento/call/{id_atendimento}', [AtendimentoController::class, 'atendimentoCall']);
-
 //retorna um atendimento especifico (do dia atual) com base na variavel 'numero_atendimento'
 Route::get('atendimento/numero_atendimento/{numero_atendimento}', [AtendimentoController::class, 'atendimentoTodayNumber']);
 
@@ -54,3 +51,9 @@ Route::put('/atendimento/begin/{id_atendimento}', [AtendimentoController::class,
 
 //Esta rota vai ser responsavel pelo encerramento do atendimento
 Route::put('/atendimento/finish/{id_atendimento}&{$estado_fim_atendimento}', [AtendimentoController::class, 'atendimentoFinish']);
+
+//altera valor de status_atendimento
+Route::put('/atendimento/to_call/{id_atendimento}', [AtendimentoController::class, 'atendimentoToCall']);
+
+//chama a senha no telao e altera valor de status_atendimento
+Route::put('/atendimento/calling/{id_atendimento}', [AtendimentoController::class, 'atendimentoCalling']);
