@@ -120,9 +120,9 @@ class AtendimentoController extends Controller
     }
 
     public function atendimentosMonth($month){
-        $fistDayOfMonth = Carbon::create($month)->startOfMonth()->toDateString();
+        $firstDayOfMonth = Carbon::create($month)->startOfMonth()->toDateString();
         $lastDayOfMonth = Carbon::create($month)->endOfMonth()->toDateString();
-        $atendimentos = AtendimentoController::atendimentosFromToV($fistDayOfMonth, $lastDayOfMonth);
+        $atendimentos = AtendimentoController::atendimentosFromToV($firstDayOfMonth, $lastDayOfMonth);
 
         return $atendimentos->toJson(JSON_PRETTY_PRINT);
     }
@@ -160,10 +160,6 @@ class AtendimentoController extends Controller
         return $atendimentos->toJson(JSON_PRETTY_PRINT);
     }
 
-    public function atendimentoCall($id_atendimento){
-        //adiciona esse atendimento ($id_atendimento) a uma lista que sera chamada pelo telão, e o telao ficarar verificando (com frequencia) se possui atualizações nessa fila
-    }
-
     public function atendimentoTodayNumber($numero_atendimento){
         $carbonNow = Carbon::now('-03:00');
 
@@ -181,11 +177,14 @@ class AtendimentoController extends Controller
     public function atendimentoBegin($id_atendimento){//, $guiche
         $carbonNow = Carbon::now('-03:00');
         Atendimento::where("id_atendimento", "=", $id_atendimento)
-        ->update(['inicio_atendimento' => $carbonNow
-        ->toDateTimeString()]);
+        ->update(['inicio_atendimento' => $carbonNow->toDateTimeString()]);
 
-        return AtendimentoController::get($id_atendimento);
+        //$atendimento = Atendimento::where("id_atendimento", "=", $id_atendimento);//aparentemente não é a mesma coisa
+        $atendimento = Atendimento::findOrFail($id_atendimento);
+
+        return json_encode($atendimento, JSON_PRETTY_PRINT);
     }
+
     public function atendimentoFinish($id_atendimento, $estado_fim_atendimento){//, $guiche
         $carbonNow = Carbon::now('-03:00');
         Atendimento::where("id_atendimento", "=", $id_atendimento)
@@ -193,6 +192,37 @@ class AtendimentoController extends Controller
         ->toDateTimeString()])
         ->update(['estado_fim_atendimento' => $estado_fim_atendimento]);
 
+        $atendimento = AtendimentoController::get($id_atendimento);
+
+        return json_encode($atendimento, JSON_PRETTY_PRINT);
+    }
+
+    public function atendimentoToCall($id_atendimento){
+        //adiciona esse atendimento ($id_atendimento) a uma lista que sera chamada pelo telão, e o telao ficarar verificando (com frequencia) se possui atualizações nessa fila
+        
+        $carbonNow = Carbon::now('-03:00');
+        Atendimento::where("id_atendimento", "=", $id_atendimento)
+        ->update(['status_atendimento' => 'chamando']);
+
         return AtendimentoController::get($id_atendimento);
+    }
+
+    public function atendimentoCalling(){
+        //metodo utilizado pelo telao para verificar quem ele deve chamar        
+        $carbonNow = Carbon::now('-03:00');
+        $atendimento = Atendimento::
+          where('date_emissao_atendimento', $carbonNow->toDateString())
+        ->where('status_atendimento', "==", 'chamando')
+        ->get()->first();
+        if($atendimento != null){
+            Atendimento::where("id_atendimento", "=", $atendimento->id_atendimento)
+            ->update(['status_atendimento' => 'aguardando']);
+
+            //$atendimento = Atendimento::findOrFail($id_atendimento);
+
+            return json_encode($atendimento, JSON_PRETTY_PRINT);
+        }else{
+            return json_encode(["message"=>"atendimento == null"]);
+        }
     }
 }
