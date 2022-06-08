@@ -7,14 +7,18 @@ use App\Http\Requests\UpdateAtendimentoRequest;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Atendimento as Atendimento;
+use App\Models\tb_login_guiches as tb_login_guiches;
+use App\Models\guiches as guiches;
 use DB;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\Redis;
 
 class AtendimentoController extends Controller
 {
     //POST
 
-    public function createAtendimento(StoreAtendimentoRequest $request){
+    public function createAtendimento(StoreAtendimentoRequest $request)
+    {
         //
         $current = Carbon::now('-03:00');
         try {
@@ -27,16 +31,16 @@ class AtendimentoController extends Controller
         $observacoes = $request->input("observacoes");
 
         //inicio
-        if($request->input("date_time_emissao_atendimento")!=null){
+        if ($request->input("date_time_emissao_atendimento") != null) {
             $date_time = Carbon::create($request->input("date_time_emissao_atendimento"));
             $date_time_emissao_atendimento = $date_time->toDateTimeString();
             $date_emissao_atendimento = $date_time->toDateString();
             //fim() |->reservado para teste
-        }else{
+        } else {
             $date_time_emissao_atendimento = $current->toDateTimeString();
             $date_emissao_atendimento = $current->toDateString();
         }
-        
+
 
         //Gerando um novo registro
         $atendimento = new Atendimento();
@@ -47,26 +51,26 @@ class AtendimentoController extends Controller
         //numero_atendimento
         $today = $current->toDateString();
         $lastAtendimento = Atendimento::all()
-        ->where("date_emissao_atendimento", $today)
-        ->last();
+            ->where("date_emissao_atendimento", $today)
+            ->last();
 
-        if ($lastAtendimento!=null){
-            $atendimento->numero_atendimento = $lastAtendimento->numero_atendimento+1;
-        }else{
+        if ($lastAtendimento != null) {
+            $atendimento->numero_atendimento = $lastAtendimento->numero_atendimento + 1;
+        } else {
             $atendimento->numero_atendimento = 1;
         }
-        
+
 
         //sufixo_atendimento
-        if($sufixo_atendimento!=null){
+        if ($sufixo_atendimento != null) {
             $atendimento->sufixo_atendimento = $sufixo_atendimento;
-        }else{
+        } else {
             $atendimento->sufixo_atendimento = "OTS";
         }
-        
-        if ($observacoes!=null){
+
+        if ($observacoes != null) {
             $atendimento->observacoes = $observacoes;
-        }else{
+        } else {
             $atendimento->observacoes = "Sem Observações";
         }
 
@@ -77,43 +81,48 @@ class AtendimentoController extends Controller
         $atendimento->date_time_emissao_atendimento = $date_time_emissao_atendimento;
 
         //verificando se foi possivel registrar
-        if ($atendimento->save()){
+        if ($atendimento->save()) {
             return $atendimento->toJson(JSON_PRETTY_PRINT);
         }
-        return json_encode(["erro"=>true]);
+        return json_encode(["erro" => true]);
     }
 
 
     //GET
 
-    public function index(){
+    public function index()
+    {
         $atendimentos = Atendimento::all();
         return json_encode($atendimentos, JSON_PRETTY_PRINT);
     }
 
-    public function get($id_atendimento){
+    public function get($id_atendimento)
+    {
         $atendimento = Atendimento::findOrFail($id_atendimento);
         return json_encode($atendimento, JSON_PRETTY_PRINT);
     }
 
-    public function atendimentosDate($date){
+    public function atendimentosDate($date)
+    {
         $dateRequest = Carbon::create($date);
         $atendimentos = Atendimento::where("date_emissao_atendimento", $dateRequest->toDateString())->get();
         return $atendimentos->toJson(JSON_PRETTY_PRINT);
     }
 
-    public function atendimentosFromToV($from, $to){
+    public function atendimentosFromToV($from, $to)
+    {
         $fromR = Carbon::create($from);
         $toR = Carbon::create($to);
-        $atendimentos = Atendimento::
-        whereBetween("date_emissao_atendimento", [
-        $fromR->toDateString(), 
-        $toR->toDateString()])
-        ->get();
+        $atendimentos = Atendimento::whereBetween("date_emissao_atendimento", [
+            $fromR->toDateString(),
+            $toR->toDateString()
+        ])
+            ->get();
         return $atendimentos;
     }
 
-    public function atendimentosFromTo($from, $to){
+    public function atendimentosFromTo($from, $to)
+    {
         $atendimentos = AtendimentoController::atendimentosFromToV($from, $to);
 
         return $atendimentos->toJson(JSON_PRETTY_PRINT);
@@ -127,35 +136,35 @@ class AtendimentoController extends Controller
         return $atendimentos->toJson(JSON_PRETTY_PRINT);
     }
 
-    public function atendimentosQueueToday(){
+    public function atendimentosQueueToday()
+    {
         $carbonNow = Carbon::now('-03:00');
 
-        $atendimentos = Atendimento::
-        where("date_emissao_atendimento", $carbonNow->toDateString())
-        ->where("inicio_atendimento", "=", null)
-        ->get();
-        
-        return $atendimentos->toJson(JSON_PRETTY_PRINT);
-    }
-
-    public function atendimentosQueueTodayNext(){
-        $carbonNow = Carbon::now('-03:00');
-        $atendimentos = Atendimento::
-        where("date_emissao_atendimento", $carbonNow
-        ->toDateString())
-        ->where("inicio_atendimento", "=", null)
-        ->get()->first();
+        $atendimentos = Atendimento::where("date_emissao_atendimento", $carbonNow->toDateString())
+            ->where("inicio_atendimento", "=", null)
+            ->get();
 
         return $atendimentos->toJson(JSON_PRETTY_PRINT);
     }
 
-    public function atendimentosAfterQueueToday(){
+    public function atendimentosQueueTodayNext()
+    {
+        $carbonNow = Carbon::now('-03:00');
+        $atendimentos = Atendimento::where("date_emissao_atendimento", $carbonNow
+            ->toDateString())
+            ->where("inicio_atendimento", "=", null)
+            ->get()->first();
+
+        return $atendimentos->toJson(JSON_PRETTY_PRINT);
+    }
+
+    public function atendimentosAfterQueueToday()
+    {
         $carbonNow = Carbon::now('-03:00');
 
-        $atendimentos = Atendimento::
-        where("date_emissao_atendimento", $carbonNow->toDateString())
-        ->where("inicio_atendimento", "!=", null)
-        ->get();
+        $atendimentos = Atendimento::where("date_emissao_atendimento", $carbonNow->toDateString())
+            ->where("inicio_atendimento", "!=", null)
+            ->get();
 
         return $atendimentos->toJson(JSON_PRETTY_PRINT);
     }
@@ -163,10 +172,9 @@ class AtendimentoController extends Controller
     public function atendimentoTodayNumber($numero_atendimento){
         $carbonNow = Carbon::now('-03:00');
 
-        $atendimento = Atendimento::
-        where("date_emissao_atendimento", $carbonNow->toDateString())
-        ->where("numero_atendimento", "=", $numero_atendimento)
-        ->get();
+        $atendimento = Atendimento::where("date_emissao_atendimento", $carbonNow->toDateString())
+            ->where("numero_atendimento", "=", $numero_atendimento)
+            ->get();
 
         return $atendimento->toJson(JSON_PRETTY_PRINT);
     }
@@ -174,7 +182,8 @@ class AtendimentoController extends Controller
 
     //UPDATE
 
-    public function atendimentoBegin($id_atendimento){//, $guiche
+    public function atendimentoBegin($id_atendimento)
+    { //, $guiche
         $carbonNow = Carbon::now('-03:00');
         Atendimento::where("id_atendimento", "=", $id_atendimento)
         ->update(['inicio_atendimento' => $carbonNow->toDateTimeString()]);
@@ -188,9 +197,9 @@ class AtendimentoController extends Controller
     public function atendimentoFinish($id_atendimento, $estado_fim_atendimento){//, $guiche
         $carbonNow = Carbon::now('-03:00');
         Atendimento::where("id_atendimento", "=", $id_atendimento)
-        ->update(['fim_atendimento' => $carbonNow
-        ->toDateTimeString()])
-        ->update(['estado_fim_atendimento' => $estado_fim_atendimento]);
+            ->update(['fim_atendimento' => $carbonNow
+                ->toDateTimeString()])
+            ->update(['estado_fim_atendimento' => $estado_fim_atendimento]);
 
         $atendimento = AtendimentoController::get($id_atendimento);
 
@@ -223,6 +232,27 @@ class AtendimentoController extends Controller
             return json_encode($atendimento, JSON_PRETTY_PRINT);
         }else{
             return json_encode(["message"=>"atendimento == null"]);
+        }
+
+    }
+    //API Guiches;
+
+    public function guiches()
+    {
+        $guiches = guiches::all();
+        if (count($guiches) > 0) {
+            return response()->json($guiches, 200);
+        } else {
+            return response()->json(['message' => 'nada encontrado'], 404);
+        }
+    }
+
+    public function postGuiches(Request $request){
+        $guiches = guiches::create($request->all());
+        if ($guiches) {
+            return response()->json($guiches, 201);
+        } else {
+            return response()->json(['message' => 'erro ao criar'], 404);
         }
     }
 }

@@ -46,7 +46,7 @@ Route::get('atendimento/numero_atendimento/{numero_atendimento}', [AtendimentoCo
 
 //put/UPDATE
 
-//Esta rota vai ser respondavel pelo inicio do atendimento 
+//Esta rota vai ser respondavel pelo inicio do atendimento
 Route::put('/atendimento/begin/{id_atendimento}', [AtendimentoController::class, 'atendimentoBegin']);
 
 //Esta rota vai ser responsavel pelo encerramento do atendimento
@@ -57,3 +57,9 @@ Route::put('/atendimento/to_call/{id_atendimento}', [AtendimentoController::clas
 
 //chama a senha no telao e altera valor de status_atendimento
 Route::put('/atendimento/calling/{id_atendimento}', [AtendimentoController::class, 'atendimentoCalling']);
+
+
+
+//GUICHE
+
+Route::get('/guiches', [AtendimentoController::class, 'guiches']);
