@@ -17,7 +17,7 @@ Route::post('/atendimento/post', [AtendimentoController::class, 'createAtendimen
 //GET
 
 //Esta rota vai exibir todos os atendimentos realizados no dia
-Route::get('/atendimentos', [AtendimentoController::class, 'index']);
+//Route::get('/atendimentos', [AtendimentoController::class, 'index']);
 
 //Esta rota vai buscar um atendimento realizado pelo ID
 Route::get('/atendimento/id/{id_atendimento}', [AtendimentoController::class, 'get']);
