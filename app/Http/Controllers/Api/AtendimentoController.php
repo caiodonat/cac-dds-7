@@ -215,8 +215,6 @@ class AtendimentoController extends Controller
 
         return AtendimentoController::get($id_atendimento);
     }
-<<<<<<< HEAD
-=======
 
     public function atendimentoCalling(){
         //metodo utilizado pelo telao para verificar quem ele deve chamar        
@@ -257,5 +255,4 @@ class AtendimentoController extends Controller
             return response()->json(['message' => 'erro ao criar'], 404);
         }
     }
->>>>>>> 124860e131edc6b193a028f9beb4d4924149e7c6
 }

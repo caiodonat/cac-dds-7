@@ -63,13 +63,12 @@ Route::put('/atendimento/calling/{id_atendimento}', [AtendimentoController::clas
 
 //GUICHE
 
-<<<<<<< HEAD
+Route::get('/guiches', [AtendimentoController::class, 'guiches']);
+
 //API funcionarios;
+
 
 //Route::get('/funcionarios', [ApiGuiches::class, 'funcionariosAll']);
 
 Route::get('/funcionarios', [ApiGuiches::class, 'funcionariosAll']);
 Route::post('/funcionarios', [ApiGuiches::class, 'createFuncionario']);
-=======
-Route::get('/guiches', [AtendimentoController::class, 'guiches']);
->>>>>>> 124860e131edc6b193a028f9beb4d4924149e7c6
