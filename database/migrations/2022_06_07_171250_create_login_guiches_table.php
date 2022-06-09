@@ -17,7 +17,7 @@ class CreateLoginGuichesTable extends Migration
             $table->id('id_login_guiches')->unsigned();
             $table->string('login')->nullable();
             $table->string('senha')->nullable();
-            $table->string('nomes_funcionarios')->nullable();
+            $table->string('nome_funcionarios')->nullable();
             $table->enum('cadastros_ativos', ['ativo', 'inativo'])->nullable();
             //$table->timestamps();
         });

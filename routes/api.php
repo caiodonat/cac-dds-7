@@ -3,6 +3,7 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\AtendimentoController;
+use App\Http\Controllers\ApiGuiches;
 
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
@@ -62,4 +63,13 @@ Route::put('/atendimento/calling/{id_atendimento}', [AtendimentoController::clas
 
 //GUICHE
 
+<<<<<<< HEAD
+//API funcionarios;
+
+//Route::get('/funcionarios', [ApiGuiches::class, 'funcionariosAll']);
+
+Route::get('/funcionarios', [ApiGuiches::class, 'funcionariosAll']);
+Route::post('/funcionarios', [ApiGuiches::class, 'createFuncionario']);
+=======
 Route::get('/guiches', [AtendimentoController::class, 'guiches']);
+>>>>>>> 124860e131edc6b193a028f9beb4d4924149e7c6
