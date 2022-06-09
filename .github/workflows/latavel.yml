@@ -1,8 +1,8 @@
-name: Laravel
+name: Servidor
 
 on:
   push:
-    branches: [ "servidor" ]
+    branches: [ "servidor-main" ]
   pull_request:
     branches: [ "servidor" ]
 
