@@ -4915,6 +4915,7 @@ return array(
     'Symfony\\Polyfill\\Php80\\PhpToken' => $vendorDir . '/symfony/polyfill-php80/PhpToken.php',
     'Symfony\\Polyfill\\Php81\\Php81' => $vendorDir . '/symfony/polyfill-php81/Php81.php',
     'Tests\\CreatesApplication' => $baseDir . '/tests/CreatesApplication.php',
+    'Tests\\Feature\\ApiTest' => $baseDir . '/tests/Feature/ApiTest.php',
     'Tests\\Feature\\ExampleTest' => $baseDir . '/tests/Feature/ExampleTest.php',
     'Tests\\TestCase' => $baseDir . '/tests/TestCase.php',
     'Tests\\Unit\\ExampleTest' => $baseDir . '/tests/Unit/ExampleTest.php',
