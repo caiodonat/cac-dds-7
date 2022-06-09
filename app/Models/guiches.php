@@ -10,7 +10,7 @@ class guiches extends Model
     use HasFactory;
 
     protected $table = 'tb_guiches';
-    protected $fillable = ['id_login_guiches', 'nomes_funcionarios'];
-    protected $primaryKey = ['id_guiches', 'id_login_guiches', 'nomes_funcionarios'];
-    protected $foreignKey = ['id_login_guiches', 'nomes_funcionarios'];
+    protected $fillable = ['id_login_guiches', 'nome_funcionario'];
+    protected $primaryKey = ['id_guiches', 'id_login_guiches', 'nome_funcionario'];
+    protected $foreignKey = ['id_login_guiches', 'nome_funcionario'];
 }

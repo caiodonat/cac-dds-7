@@ -208,27 +208,4 @@ class AtendimentoController extends Controller
 
         return AtendimentoController::get($id_atendimento);
     }
-
-
-    //API Guiches;
-
-    public function guiches()
-    {
-        $guiches = guiches::all();
-        if (count($guiches) > 0) {
-            return response()->json($guiches, 200);
-        } else {
-            return response()->json(['message' => 'nada encontrado'], 404);
-        }
-    }
-
-    public function postGuiches(Request $request)
-    {
-        $guiches = guiches::create($request->all());
-        if ($guiches) {
-            return response()->json($guiches, 201);
-        } else {
-            return response()->json(['message' => 'erro ao criar'], 404);
-        }
-    }
 }

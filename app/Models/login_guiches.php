@@ -9,6 +9,6 @@ class login_guiches extends Model
 {
     use HasFactory;
     protected $table = 'tb_login_guiches';
-    protected $fillable = ['login', 'senha', 'nomes_funcionarios', 'cadastros_ativos'];
-    protected $primaryKey = ['login', 'senha', 'nomes_funcionarios', 'cadastros_ativos'];
+    protected $fillable = ['login', 'senha', 'nome_funcionario', 'cadastros_ativos'];
+    protected $primaryKey = ['login', 'senha', 'nome_funcionario', 'cadastros_ativos'];
 }
