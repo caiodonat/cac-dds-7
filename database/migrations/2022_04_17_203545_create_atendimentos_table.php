@@ -21,7 +21,6 @@ class CreateAtendimentosTable extends Migration
             $table->string('servicos')->nullable();//serviço 1,serviço 2,serviço 3,serviço 4,serviço 5
             $table->string('observacoes')->nullable();
 
-
             $table->dateTime('first_call')->nullable();
             $table->dateTime('inicio_atendimento')->nullable();
             $table->dateTime('fim_atendimento')->nullable();

@@ -5,13 +5,15 @@ namespace App\Http\Controllers\Api;
 use App\Http\Requests\StoreAtendimentoRequest;
 use App\Http\Requests\UpdateAtendimentoRequest;
 use App\Http\Controllers\Controller;
-use Illuminate\Http\Request;
+
 use App\Models\Atendimento as Atendimento;
 use App\Models\tb_login_guiches as tb_login_guiches;
 use App\Models\guiches as guiches;
-use DB;
-use Carbon\Carbon;
+
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Redis;
+use Carbon\Carbon;
+use DB;
 
 class AtendimentoController extends Controller
 {
@@ -33,6 +35,7 @@ class AtendimentoController extends Controller
         //inicio
         if ($request->input("date_time_emissao_atendimento") != null) {
             $date_time = Carbon::create($request->input("date_time_emissao_atendimento"));
+            
             $date_time_emissao_atendimento = $date_time->toDateTimeString();
             $date_emissao_atendimento = $date_time->toDateString();
             //fim() |->reservado para teste
@@ -249,7 +252,7 @@ class AtendimentoController extends Controller
         $carbonNow = Carbon::now('-03:00');
         $atendimento = Atendimento::
           where('date_emissao_atendimento', $carbonNow->toDateString())
-        ->where('status_atendimento', "=", 'chamando')
+        ->where('status_atendimento', "==", 'chamando')
         ->get()->first();
         if($atendimento != null){
             Atendimento::where("id_atendimento", "=", $atendimento->id_atendimento)
