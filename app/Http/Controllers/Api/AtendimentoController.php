@@ -108,7 +108,8 @@ class AtendimentoController extends Controller
     public function atendimentosDate($date)
     {
         $dateRequest = Carbon::create($date);
-        $atendimentos = Atendimento::where("date_emissao_atendimento", $dateRequest->toDateString())->get();
+        $atendimentos = Atendimento::where("date_emissao_atendimento", $dateRequest->toDateString())
+        ->get()->first();
         return $atendimentos->toJson(JSON_PRETTY_PRINT);
     }
 
