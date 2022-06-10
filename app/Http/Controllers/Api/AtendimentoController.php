@@ -216,6 +216,19 @@ class AtendimentoController extends Controller
         return AtendimentoController::get($id_atendimento);
     }
 
+    public function atendimentoToCallNext(){
+        //adiciona esse atendimento ($id_atendimento) a uma lista que sera chamada pelo telão, e o telao ficarar verificando (com frequencia) se possui atualizações nessa fila
+        
+        $carbonNow = Carbon::now('-03:00');
+        Atendimento::where("date_emissao_atendimento", $carbonNow
+        ->toDateString())
+        ->where("inicio_atendimento", "=", null)
+        ->get()->first()
+        ->update(['status_atendimento' => 'chamando']);
+
+        return AtendimentoController::get($id_atendimento);
+    }
+
     public function atendimentoCalling(){
         //metodo utilizado pelo telao para verificar quem ele deve chamar        
         $carbonNow = Carbon::now('-03:00');

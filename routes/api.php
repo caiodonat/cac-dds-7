@@ -18,7 +18,7 @@ Route::post('/atendimento/post', [AtendimentoController::class, 'createAtendimen
 //GET
 
 //Esta rota vai exibir todos os atendimentos realizados no dia
-//Route::get('/atendimentos', [AtendimentoController::class, 'index']);
+Route::get('/atendimentos', [AtendimentoController::class, 'index']);
 
 //Esta rota vai buscar um atendimento realizado pelo ID
 Route::get('/atendimento/id/{id_atendimento}', [AtendimentoController::class, 'get']);
@@ -33,13 +33,13 @@ Route::get('/atendimentos/dias/{from}&{to}', [AtendimentoController::class, 'ate
 Route::get('/atendimentos/month/{month}', [AtendimentoController::class, 'atendimentosMonth']);
 
 //Esta rota vai exibir os proximos atendimentos a serem realizados
-Route::get('/atendimentos/queue/', [AtendimentoController::class, 'atendimentosQueueToday']);
+Route::get('/atendimentos/queue', [AtendimentoController::class, 'atendimentosQueueToday']);
 
 //Esta rota vai chamar o proximo da fila que sera antendido
-Route::get('/atendimento/queue/next', [AtendimentoController::class, 'atendimentosQueueTodayNext']);
+Route::get('/atendimento/queue_next', [AtendimentoController::class, 'atendimentosQueueTodayNext']);
 
 //Esta rota vai chamar a senha anterior caso a mesma nao tenha comparecido ao guiche
-Route::get('/atendimentos/afterQueue/', [AtendimentoController::class, 'atendimentosAfterQueueToday']);
+Route::get('/atendimentos/afterQueue', [AtendimentoController::class, 'atendimentosAfterQueueToday']);
 
 //retorna um atendimento especifico (do dia atual) com base na variavel 'numero_atendimento'
 Route::get('atendimento/numero_atendimento/{numero_atendimento}', [AtendimentoController::class, 'atendimentoTodayNumber']);
@@ -47,14 +47,17 @@ Route::get('atendimento/numero_atendimento/{numero_atendimento}', [AtendimentoCo
 
 //put/UPDATE
 
-//Esta rota vai ser respondavel pelo inicio do atendimento
+//inicio do atendimento
 Route::put('/atendimento/begin/{id_atendimento}', [AtendimentoController::class, 'atendimentoBegin']);
 
-//Esta rota vai ser responsavel pelo encerramento do atendimento
+//encerramento do atendimento
 Route::put('/atendimento/finish/{id_atendimento}&{$estado_fim_atendimento}', [AtendimentoController::class, 'atendimentoFinish']);
 
-//altera valor de status_atendimento
+//chama o uma senha especifica da fila
 Route::put('/atendimento/to_call/{id_atendimento}', [AtendimentoController::class, 'atendimentoToCall']);
+
+//chama a proxima senha da fila
+Route::put('/atendimento/to_call_next', [AtendimentoController::class, 'atendimentoToCallNext']);
 
 //chama a senha no telao e altera valor de status_atendimento
 Route::put('/atendimento/calling/{id_atendimento}', [AtendimentoController::class, 'atendimentoCalling']);
