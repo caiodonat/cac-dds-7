@@ -47,6 +47,9 @@ Route::get('atendimento/numero_atendimento/{numero_atendimento}', [AtendimentoCo
 //senhas a serem atendidas
 Route::get('/atendimento/to_call', [AtendimentoController::class, 'ToCallNext']);
 
+//chama a senha no telao e altera valor de status_atendimento
+Route::get('/atendimento/to_call_next', [AtendimentoController::class, 'ToCallNext']);
+
 
 //put/UPDATE
 
@@ -61,9 +64,6 @@ Route::put('/atendimento/call/{id_atendimento}', [AtendimentoController::class, 
 
 //chama a fila de chamada a proxima senha da fila de espera
 Route::put('/atendimento/call_next', [AtendimentoController::class, 'CallNext']);
-
-//chama a senha no telao e altera valor de status_atendimento
-Route::put('/atendimento/to_call_next', [AtendimentoController::class, 'ToCallNext']);
 
 
 
