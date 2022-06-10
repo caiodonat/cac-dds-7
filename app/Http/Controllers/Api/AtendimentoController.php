@@ -179,6 +179,17 @@ class AtendimentoController extends Controller
         return $atendimento->toJson(JSON_PRETTY_PRINT);
     }
 
+    public function ToCall(){
+        //metodo utilizado pelo telao para verificar quem ele deve chamar        
+        $carbonNow = Carbon::now('-03:00');
+        $atendimentos = Atendimento::
+          where('date_emissao_atendimento', $carbonNow->toDateString())
+        ->where('status_atendimento', "==", 'chamando')
+        ->get();
+        
+        return json_encode($atendimento, JSON_PRETTY_PRINT);
+    }
+
 
     //UPDATE
 
@@ -206,7 +217,7 @@ class AtendimentoController extends Controller
         return json_encode($atendimento, JSON_PRETTY_PRINT);
     }
 
-    public function atendimentoToCall($id_atendimento){
+    public function Call($id_atendimento){
         //adiciona esse atendimento ($id_atendimento) a uma lista que sera chamada pelo telão, e o telao ficarar verificando (com frequencia) se possui atualizações nessa fila
         
         $carbonNow = Carbon::now('-03:00');
@@ -216,25 +227,29 @@ class AtendimentoController extends Controller
         return AtendimentoController::get($id_atendimento);
     }
 
-    public function atendimentoToCallNext(){
+    public function CallNext(){
         //adiciona esse atendimento ($id_atendimento) a uma lista que sera chamada pelo telão, e o telao ficarar verificando (com frequencia) se possui atualizações nessa fila
         
         $carbonNow = Carbon::now('-03:00');
-        Atendimento::where("date_emissao_atendimento", $carbonNow
+        //if()
+
+        $id_atendimento = Atendimento::where("date_emissao_atendimento", $carbonNow
         ->toDateString())
         ->where("inicio_atendimento", "=", null)
-        ->get()->first()
+        ->get()->first()->value('id_atendimento');
+
+        Atendimento::where('id_atendimento', '=', $id_atendimento)
         ->update(['status_atendimento' => 'chamando']);
 
         return AtendimentoController::get($id_atendimento);
     }
 
-    public function atendimentoCalling(){
+    public function ToCallNext(){
         //metodo utilizado pelo telao para verificar quem ele deve chamar        
         $carbonNow = Carbon::now('-03:00');
         $atendimento = Atendimento::
           where('date_emissao_atendimento', $carbonNow->toDateString())
-        ->where('status_atendimento', "==", 'chamando')
+        ->where('status_atendimento', "=", 'chamando')
         ->get()->first();
         if($atendimento != null){
             Atendimento::where("id_atendimento", "=", $atendimento->id_atendimento)
