@@ -3,7 +3,9 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\AtendimentoController;
-use App\Http\Controllers\ApiGuiches;
+use App\Http\Controllers\Api\ApiGuiches;
+//use App\Http\Controllers\ApiGuiches;
+
 
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
@@ -59,16 +61,5 @@ Route::put('/atendimento/to_call/{id_atendimento}', [AtendimentoController::clas
 //chama a senha no telao e altera valor de status_atendimento
 Route::put('/atendimento/calling/{id_atendimento}', [AtendimentoController::class, 'atendimentoCalling']);
 
-
-
-//GUICHE
-
-Route::get('/guiches', [AtendimentoController::class, 'guiches']);
-
-//API funcionarios;
-
-
-//Route::get('/funcionarios', [ApiGuiches::class, 'funcionariosAll']);
-
-Route::get('/funcionarios', [ApiGuiches::class, 'funcionariosAll']);
-Route::post('/funcionarios', [ApiGuiches::class, 'createFuncionario']);
+//Rotas Funcionarios
+Route::get('/funcionario', [ApiGuiches::class, 'getfuncionarios']);
