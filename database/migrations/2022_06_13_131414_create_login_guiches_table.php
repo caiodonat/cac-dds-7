@@ -3,13 +3,16 @@
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
-use Illuminate\Database\QueryException;
 
 class CreateLoginGuichesTable extends Migration
 {
+    /**
+     * Run the migrations.
+     *
+     * @return void
+     */
     public function up()
     {
-
         Schema::create('tb_login_guiches', function (Blueprint $table) {
             $table->increments('id_login_guiche')->unsigned();
             $table->string('login');
@@ -21,6 +24,11 @@ class CreateLoginGuichesTable extends Migration
         });
     }
 
+    /**
+     * Reverse the migrations.
+     *
+     * @return void
+     */
     public function down()
     {
         Schema::dropIfExists('tb_login_guiches');

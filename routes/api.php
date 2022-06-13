@@ -3,9 +3,7 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\AtendimentoController;
-use App\Http\Controllers\Api\ApiGuiches;
-//use App\Http\Controllers\ApiGuiches;
-
+use App\Http\Controllers\Api\ApiController;
 
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
@@ -67,5 +65,8 @@ Route::put('/atendimento/call/{id_atendimento}', [AtendimentoController::class, 
 //chama a fila de chamada a proxima senha da fila de espera
 Route::put('/atendimento/call_next', [AtendimentoController::class, 'CallNext']);
 
-//Rotas Funcionarios
-Route::get('/funcionario', [ApiGuiches::class, 'getfuncionarios']);
+//Rotas das api funcionarios .dev
+Route::get('/funcionarios', [ApiController::class, 'Allfuncionarios']);
+Route::post('/funcionarios', [ApiController::class, 'createfuncionarios']);
+Route::get('/funcionarios/{id}', [ApiController::class, 'buscarfuncionarios']);
+Route::delete('/funcionarios/{id}', [ApiController::class, 'deletfuncionarios']);
