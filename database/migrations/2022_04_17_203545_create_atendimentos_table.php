@@ -9,7 +9,7 @@ class CreateAtendimentosTable extends Migration
 {
     public function up()
     {
-
+        
         Schema::create('tb_atendimentos', function (Blueprint $table) {
             $table->increments('id_atendimento')->unsigned();
             $table->date('date_emissao_atendimento');

@@ -93,19 +93,19 @@ class AtendimentoController extends Controller
 
     //GET
 
-    public function index()
+    public function all()
     {
         $atendimentos = Atendimento::all();
         return json_encode($atendimentos, JSON_PRETTY_PRINT);
     }
 
-    public function get($id_atendimento)
+    public function id($id_atendimento)
     {
         $atendimento = Atendimento::findOrFail($id_atendimento);
         return json_encode($atendimento, JSON_PRETTY_PRINT);
     }
 
-    public function atendimentosDate($date)
+    public function date($date)
     {
         $dateRequest = Carbon::create($date);
         $atendimentos = Atendimento::where("date_emissao_atendimento", $dateRequest->toDateString())
@@ -113,22 +113,14 @@ class AtendimentoController extends Controller
         return $atendimentos->toJson(JSON_PRETTY_PRINT);
     }
 
-    public function atendimentosFromToV($from, $to)
+    public function diaFromTo($from, $to)
     {
         $fromR = Carbon::create($from);
         $toR = Carbon::create($to);
-        $atendimentos = Atendimento::whereBetween("date_emissao_atendimento", [
+        $atendimentos = Atendimento::whereBetween('date_emissao_atendimento', [
             $fromR->toDateString(),
             $toR->toDateString()
-        ])
-            ->get();
-        return $atendimentos;
-    }
-
-    public function atendimentosFromTo($from, $to)
-    {
-        $atendimentos = AtendimentoController::atendimentosFromToV($from, $to);
-
+        ])->get();
         return $atendimentos->toJson(JSON_PRETTY_PRINT);
     }
 
