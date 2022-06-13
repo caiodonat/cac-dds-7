@@ -2,9 +2,9 @@ name: Servidor
 
 on:
   push:
-    branches: [ "servidor-main" ]
-  pull_request:
     branches: [ "servidor" ]
+  pull_request:
+    branches: [ "servidor-main" ]
 
 jobs:
   laravel-tests:
