@@ -37,4 +37,6 @@ jobs:
       run: php artisan migrate --seed
 
     - name: Execute tests (Unit and Feature tests) via PHPUnit
-      run: php artisan test
+      run: 
+        php artisan serve
+        php artisan test
