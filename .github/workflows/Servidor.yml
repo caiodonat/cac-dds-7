@@ -30,20 +30,13 @@ jobs:
         mkdir -p database
         touch database/database.sqlite
 
-    - name: Connection SQLite
-      run:
-        env:
-          DB_CONNECTION: sqlite
-          DB_DATABASE: database/database.sqlite
+    - name: Connection Sqlite
+      env:
+        DB_CONNECTION: sqlite
+        DB_DATABASE: database/database.sqlite
 
     - name: Run Migrate & Seeders
       run: php artisan migrate --seed
 
     - name: Execute tests (Unit and Feature tests) via PHPUnit
-      env:
-        DB_CONNECTION: sqlite
-        DB_DATABASE: database/database.sqlite
-
-      run: 
-        php artisan serve
-        vendor/bin/phpunit
+      run: vendor/bin/phpunit
