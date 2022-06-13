@@ -31,7 +31,7 @@ jobs:
         touch database/database.sqlite
 
     - name: Run Migrate
-      run: php artisan migrate -v
+      run: php artisan migrate:fresh -v
     
     - name: Run Seeders
       run: php artisan db:seed --class=AtendimentoSeeder
