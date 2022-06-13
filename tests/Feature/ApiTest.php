@@ -17,35 +17,43 @@ class ApiTest extends TestCase
 
     public function test_api(){
         $response = $this->get('/api/atendimentos');
-        $response
-        ->assertStatus(200);
+        $response->assertStatus(200);
     }
 
-    public function test_resposta_banco(){
+    public function test_atendimentos(){
         $response = $this->getJson('/api/atendimentos');
  
-        $response
-            ->assertStatus(200)
-            ->assertJson([
-            ]);
+        $response->assertJson(fn (AssertableJson $json) =>
+        $json//->has(2)
+            ->first(fn ($json) =>
+                $json->where('id_atendimento', 1)
+                ->etc()
+            )
+        )
+    ;
     }
 
-    public function test_create_atendimento(){
+    public function test_id(){
         $response = $this->getJson('/api/atendimento/id/1');
      
-        $response
-            ->assertJson(fn (AssertableJson $json) =>
+        $response->assertJson(fn (AssertableJson $json) =>
                $json->where('id_atendimento', 1)
-                ->where('sufixo_atendimento', 'FCR')
+                ->etc()
+        );
+    }
+
+    public function test_date(){
+        $response = $this->getJson('/api/atendimentos/dia/2022-06-10');
+
+        $response->assertJson(fn (AssertableJson $json) =>
+               $json->where('date_emissao_atendimento', '2022-06-10')
                 ->etc()
             );
     }
-
-    public function test_exibir_todos_os_atendimentos_em_uma_data_especifica(){
+    public function test_date_from_to(){
         $response = $this->getJson('/api/atendimentos/dia/2022-06-10');
 
-        $response
-            ->assertJson(fn (AssertableJson $json) =>
+        $response->assertJson(fn (AssertableJson $json) =>
                $json->where('date_emissao_atendimento', '2022-06-10')
                 ->etc()
             );

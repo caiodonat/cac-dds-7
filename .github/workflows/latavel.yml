@@ -39,7 +39,7 @@ jobs:
       run: php artisan migrate
     
     - name: Run Seeders
-      run: php artisan db:seed
+      run: php artisan db:seed --class=AtendimentoSeeder
 
     - name: Execute tests (Unit and Feature tests) via PHPUnit
       env:
