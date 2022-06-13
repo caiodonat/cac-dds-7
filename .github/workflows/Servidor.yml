@@ -40,8 +40,5 @@ jobs:
         DB_DATABASE: database/database.sqlite
       run: php artisan migrate --seed
 
-    - name: Start Serve
-      run: php artisan serve
-
     - name: Execute tests (Unit and Feature tests) via PHPUnit
       run: php artisan test
