@@ -34,9 +34,6 @@ jobs:
       env:
         DB_CONNECTION: sqlite
         DB_DATABASE: database/database.sqlite
-      run:
-
-    - name: Run Migrate & Seeders
       run: php artisan migrate --seed
 
     - name: Execute tests (Unit and Feature tests) via PHPUnit
