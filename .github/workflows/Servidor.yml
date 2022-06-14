@@ -44,9 +44,10 @@ jobs:
       env:
         APP_URL: http://localhost:8000
         DB_CONNECTION: sqlite
+        DB_HOST: 127.0.0.1
         DB_DATABASE: database/database.sqlite
         DB_PORT: 8889
-      run: php artisan migrate -y --seed --env=production
+      run: php artisan migrate --env=production
 
     - name: Execute tests (Unit and Feature tests) via PHPUnit
       run: php artisan test
