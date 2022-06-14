@@ -46,7 +46,7 @@ jobs:
         DB_CONNECTION: sqlite
         DB_DATABASE: database/database.sqlite
         DB_PORT: 8889
-      run: php artisan migrate --seed
+      run: php artisan migrate --env=production --seed
 
     - name: Execute tests (Unit and Feature tests) via PHPUnit
       run: php artisan test
