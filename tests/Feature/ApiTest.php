@@ -16,7 +16,8 @@ class ApiTest extends TestCase
      */
 
     public function test_api(){
-        $response = $this->get('/atendimentos');
+        $response = $this->getJson('/api/atendimentos');
+
         $response->assertStatus(200);
     }
 
@@ -29,32 +30,32 @@ class ApiTest extends TestCase
                 $json->where('id_atendimento', 1)
                 ->etc()
             )
-        )
-    ;
+        );
     }
 
     public function test_id(){
         $response = $this->getJson('/api/atendimento/id/1');
      
         $response->assertJson(fn (AssertableJson $json) =>
-               $json->where('id_atendimento', 1)
-                ->etc()
+            $json->where('id_atendimento', 1)
+            ->etc()
         );
     }
 
     public function test_date(){
-        $response = $this->getJson('/api/atendimentos/dia/2022-06-10');
+        $response = $this->getJson('/api/atendimentos/dia/2022-06-13');
 
         $response->assertJson(fn (AssertableJson $json) =>
-               $json->where('date_emissao_atendimento', '2022-06-10')
+               $json->where('date_emissao_atendimento', '2022-06-13')
                 ->etc()
             );
     }
+
     public function test_date_from_to(){
-        $response = $this->getJson('/api/atendimentos/dia/2022-06-10');
+        $response = $this->getJson('/api/atendimentos/dia/2022-06-13');
 
         $response->assertJson(fn (AssertableJson $json) =>
-               $json->where('date_emissao_atendimento', '2022-06-10')
+               $json->where('date_emissao_atendimento', '2022-06-13')
                 ->etc()
             );
     }
