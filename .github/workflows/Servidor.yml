@@ -9,6 +9,7 @@ jobs:
 
     runs-on: ubuntu-latest
 
+
     steps:
     - uses: shivammathur/setup-php@15c43e89cdef867065b0213be354c2841860869e
       with:
@@ -23,23 +24,16 @@ jobs:
       run: 
         composer install -q --no-ansi --no-interaction --no-scripts --no-progress --prefer-dist
 
-    - name: Autoload
-      run: composer dumpautoload
-    
+    before_script:
+      - cp .env.travis .env
+      - mysql -e 'CREATE DATABASE homestead_test;'
+      - composer self-update
+      - composer install --no-interaction
+      - php artisan key:generate
+      - php artisan migrate --seed
+
     - name: Directory Permissions
       run: chmod -R 777 storage bootstrap/cache
-    
-    - name: Create Database
-      run: |
-        mkdir -p database
-        touch database/database.sqlite
-
-    - name: Connection Sqlite
-      env:
-        DB_CONNECTION: sqlite
-        DB_DATABASE: database/database.sqlite
-        DB_PORT: 8889
-      run: php artisan migrate --seed
 
     - name: Execute tests (Unit and Feature tests) via PHPUnit
-      run: php artisan test
+      run: vendor/bin/phpunit
