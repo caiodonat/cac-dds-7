@@ -15,19 +15,6 @@ class ApiTest extends TestCase
      * @return void
      */
 
-    public function testGetBlogPosts()
-    {
-        $response = $this->getJson('/api/atendimentos');
-
-        $array = json_decode($response);
-        $result = false;
-        if($array[0]->id_atendimento == 1)
-        {
-            $result = true;
-        }
-        $this->assertEquals(true, $result);
-    }
-
     public function test_api(){
         $response = $this->getJson('/api/atendimentos');
 
