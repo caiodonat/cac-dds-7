@@ -16,47 +16,166 @@ class ApiTest extends TestCase
      */
 
     public function test_api(){
-        $response = $this->getJson('/api/atendimentos');
-
-        $response->assertStatus(200);
+        $response = $this->get('/api/atendimentos');
+        $response
+        ->assertStatus(200);
     }
 
-    public function test_atendimentos(){
+    public function test_resposta_banco(){
         $response = $this->getJson('/api/atendimentos');
  
-        $response->assertJson(fn (AssertableJson $json) =>
-        $json//->has(2)
-            ->first(fn ($json) =>
-                $json->where('id_atendimento', 1)
+        $response
+            ->assertStatus(200)
+            ->assertJson([
+            ]);
+    }
+
+    public function test_create_atendimento(){
+        $response = $this->getJson('/api/atendimento/id/1');
+     
+        $response
+            ->assertJson(fn (AssertableJson $json) =>
+            $json->first(fn ($json) =>
+               $json->where('id_atendimento', 1)
+                ->where('sufixo_atendimento', 'FCR')
                 ->etc()
             )
         );
     }
 
-    public function test_id(){
-        $response = $this->getJson('/api/atendimento/id/1');
-     
-        $response->assertJson(fn (AssertableJson $json) =>
-            $json->where('id_atendimento', 1)
-            ->etc()
+    public function test_exibir_todos_os_atendimentos_em_uma_data_especifica(){
+        $response = $this->getJson('/api/atendimentos/dia/2022-06-10');
+
+        $response
+            ->assertJson(fn (AssertableJson $json) =>
+            $json->first(fn ($json) =>
+               $json->where('date_emissao_atendimento', '2022-06-10')
+                ->etc()
+            )
         );
     }
 
-    public function test_date(){
-        $response = $this->getJson('/api/atendimentos/dia/2022-06-13');
+    public function test_exibir_todos_os_atendimentos_dentro_de_um_periodo_de_tempo(){
+        $response = $this->getJson('/api/atendimentos/dias/2022-06-08&2022-06-10');
 
-        $response->assertJson(fn (AssertableJson $json) =>
-               $json->where('date_emissao_atendimento', '2022-06-13')
+        $response
+            ->assertJson(fn (AssertableJson $json) =>
+            $json->first(fn ($json) =>
+               $json->where('date_emissao_atendimento')
                 ->etc()
+                )
             );
     }
 
-    public function test_date_from_to(){
-        $response = $this->getJson('/api/atendimentos/dia/2022-06-13');
+    public function test_exibir_todos_os_atendimentos_dentro_de_um_mes_especifico(){
+        $response = $this->getJson('api/atendimentos/month/6');
 
-        $response->assertJson(fn (AssertableJson $json) =>
-               $json->where('date_emissao_atendimento', '2022-06-13')
+        $response
+            ->assertJson(fn (AssertableJson $json) =>
+            $json->first(fn ($json) =>
+                $json->where('date_emissao_atendimento' , 6)
                 ->etc()
+                )
             );
+    }
+
+    public function test_exibir_proximos_atendimentos(){
+        $response = $this->getJson('api/atendimentos/');
+
+        $response
+            ->assertJson(fn (AssertableJson $json) =>
+            $json->first(fn ($json) =>
+               $json->where('atendimentosQueueToday')
+                ->etc()
+                )
+            );
+    }
+
+    public function test_chamar_proximo_da_fila(){
+        $response = $this->getJson('api//atendimento/');
+
+        $response
+            ->assertJson(fn (AssertableJson $json) =>
+            $json->first(fn ($json) =>
+               $json->where('atendimentosQueueTodayNext')
+                ->etc()
+                )
+            );
+    }
+
+    public function test_chamar_novamente_senha_que_nao_compareceu(){
+        $response = $this->getJson('api/atendimentos/');
+
+        $response
+            ->assertJson(fn (AssertableJson $json) =>
+            $json->first(fn ($json) =>
+               $json->where('atendimentosAfterQueueToday')
+                ->etc()
+                )
+            );
+    }
+
+    public function test_exibir_um_atendimento_especifico_do_dia_pelo_numero_atendimento(){
+        $response = $this->getJson('api/atendimento/numero_atendimento/');
+
+        $response
+            ->assertJson(fn (AssertableJson $json) =>
+            $json->first(fn ($json) =>
+               $json->where('atendimentoTodayNumber')
+                ->etc()
+                )
+            );
+    }
+
+    public function test_senhas_a_serem_atendidas(){
+        $response = $this->getJson('api/atendimento/to_call');
+
+        $response
+            ->assertJson(fn (AssertableJson $json) =>
+            $json->first(fn ($json) =>
+               $json->where('ToCallNext')
+                ->etc()
+                )
+            );
+    }
+
+    public function test_chamar_senha_no_telao_e_alterar_o_valor_do_staus_do_atendimetno(){
+        $response = $this->getJson('api/atendimento/to_call_next');
+
+        $response
+            ->assertJson(fn (AssertableJson $json) =>
+            $json->first(fn ($json) =>
+               $json->where('ToCallNext')
+                ->etc()
+                )
+            );
+    }
+
+    public function test_iniciar_atendimento(){
+        $response = $this->putJson('api/atendimento/begin/{id_atendimento}');
+
+        $response
+            ->assertJson(fn (AssertableJson $json) =>
+            $json->first(fn ($json) =>
+                $json->where('atendimentoBegin')
+                ->etc()
+                )
+            );
+    }
+
+    public function test_encerrar_atendimento(){
+        $response = $this->putJson('api/atendimento/finish/{id_atendimento}&{$estado_fim_atendimento}');
+
+        $response
+            ->assertJson(fn (AssertableJson $json) =>
+            $json->first(fn ($json) =>
+                $json->where('atendimentoFinish')
+                ->etc()
+                )
+            );
+    }
+
+    public function test_chamar_senha_especifica_que_esta_na_fila(){
+
     }
 }
