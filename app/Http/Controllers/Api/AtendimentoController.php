@@ -255,7 +255,7 @@ class AtendimentoController extends Controller
 
             return json_encode($atendimento, JSON_PRETTY_PRINT);
         }else{
-            return json_encode(["message"=>"atendimento == null"]);
+            return null;
         }
 
     }
