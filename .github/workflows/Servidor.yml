@@ -28,9 +28,6 @@ jobs:
     - name: Install Dependencies
       run: 
         composer install -q --no-ansi --no-interaction --no-scripts --no-progress --prefer-dist
-
-    - name: Autoload
-      run: composer dumpautoload
     
     - name: Directory Permissions
       run: chmod -R 777 storage bootstrap/cache
@@ -45,9 +42,6 @@ jobs:
         APP_URL: http://127.0.0.1:8000
         DB_CONNECTION: sqlite
         DB_HOST: 127.0.0.1
-        DB_DATABASE: database/database.sqlite
         DB_PORT: 8889
+        DB_DATABASE: database/database.sqlite
       run: php artisan migrate --env=production --force
-
-    - name: Execute tests (Unit and Feature tests) via PHPUnit
-      run: php artisan test
