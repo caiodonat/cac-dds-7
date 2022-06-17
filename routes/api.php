@@ -1,5 +1,7 @@
 <?php
 
+namespace App\Http\Controllers\Api;
+
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\AtendimentoController;
@@ -66,7 +68,9 @@ Route::put('/atendimento/call/{id_atendimento}', [AtendimentoController::class, 
 Route::put('/atendimento/call_next', [AtendimentoController::class, 'CallNext']);
 
 //Rotas das api funcionarios .dev
-Route::get('/funcionarios', [ApiController::class, 'Allfuncionarios']);
-Route::post('/funcionarios', [ApiController::class, 'createfuncionarios']);
-Route::get('/funcionarios/{id}', [ApiController::class, 'buscarfuncionarios']);
-Route::delete('/funcionarios/{id}', [ApiController::class, 'deletfuncionarios']);
+Route::get('saida', [ApiController::class, 'getFuncionarios']);
+
+//teste de api
+Route::get('guiche', [AtendimentoController::class, 'getFull']);
+Route::get('post', [AtendimentoController::class, 'getLogin']);
+Route::post('post', [AtendimentoController::class, 'CreateLogin']);

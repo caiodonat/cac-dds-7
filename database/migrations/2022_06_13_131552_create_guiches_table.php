@@ -15,8 +15,9 @@ class CreateGuichesTable extends Migration
     {
         Schema::create('tb_guiches', function (Blueprint $table) {
             $table->increments('id_guiche')->unsigned();
-            $table->unsignedInteger('id_login_guiche');
-            $table->string('nomes_funcionario');
+            $table->string('login');
+            $table->string('senha');
+            $table->timestamp('data_hora_abertura')->nullable();
         });
     }
 
