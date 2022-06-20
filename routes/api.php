@@ -1,8 +1,11 @@
 <?php
 
+namespace App\Http\Controllers\Api;
+
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\AtendimentoController;
+use App\Http\Controllers\Api\ServicosController;
 use App\Http\Controllers\Api\ApiController;
 
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
@@ -18,16 +21,16 @@ Route::post('/atendimento/post', [AtendimentoController::class, 'createAtendimen
 //GET
 
 //Esta rota vai exibir todos os atendimentos realizados no dia
-Route::get('/atendimentos', [AtendimentoController::class, 'index']);
+Route::get('/atendimentos', [AtendimentoController::class, 'all']);
 
 //Esta rota vai buscar um atendimento realizado pelo ID
-Route::get('/atendimento/id/{id_atendimento}', [AtendimentoController::class, 'get']);
+Route::get('/atendimento/id/{id_atendimento}', [AtendimentoController::class, 'id']);
 
 //Esta rota vai exibir os atendimentos em uma data especifica
-Route::get('/atendimentos/dia/{date}', [AtendimentoController::class, 'atendimentosDate']);
+Route::get('/atendimentos/dia/{date}', [AtendimentoController::class, 'date']);
 
 //Esta rota vai exibir os atendimentos realizados dentro de um periodo de tempo
-Route::get('/atendimentos/dias/{from}&{to}', [AtendimentoController::class, 'atendimentosFromTo']);
+Route::get('/atendimentos/dias/{from}&{to}', [AtendimentoController::class, 'diaFromTo']);
 
 //Esta rota vai exibir os atendimentos realizados em um mes especifico
 Route::get('/atendimentos/month/{month}', [AtendimentoController::class, 'atendimentosMonth']);
@@ -44,14 +47,10 @@ Route::get('/atendimentos/afterQueue', [AtendimentoController::class, 'atendimen
 //retorna um atendimento especifico (do dia atual) com base na variavel 'numero_atendimento'
 Route::get('atendimento/numero_atendimento/{numero_atendimento}', [AtendimentoController::class, 'atendimentoTodayNumber']);
 
-//senhas a serem atendidas
-Route::get('/atendimento/to_call', [AtendimentoController::class, 'ToCallNext']);
+//chama a proxima senha no telao e altera valor de status_atendimento
+Route::get('/atendimento/to_call_next', [AtendimentoController::class, 'toCallNext']);
 
-//chama a senha no telao e altera valor de status_atendimento
-Route::get('/atendimento/to_call_next', [AtendimentoController::class, 'ToCallNext']);
-
-
-//put/UPDATE
+//PUT
 
 //inicio do atendimento
 Route::put('/atendimento/begin/{id_atendimento}', [AtendimentoController::class, 'atendimentoBegin']);
@@ -60,13 +59,29 @@ Route::put('/atendimento/begin/{id_atendimento}', [AtendimentoController::class,
 Route::put('/atendimento/finish/{id_atendimento}&{$estado_fim_atendimento}', [AtendimentoController::class, 'atendimentoFinish']);
 
 //chama o uma senha especifica da fila
-Route::put('/atendimento/call/{id_atendimento}', [AtendimentoController::class, 'Call']);
+Route::put('/atendimento/call/{id_atendimento}', [AtendimentoController::class, 'call']);
 
 //chama a fila de chamada a proxima senha da fila de espera
-Route::put('/atendimento/call_next', [AtendimentoController::class, 'CallNext']);
+Route::put('/atendimento/call_next', [AtendimentoController::class, 'callNext']);
+
+
+//SERVICOS
+
+Route::get('/servicos/pdg', [ServicosController::class, 'getPDG']);
+Route::get('/servicos/fcr', [ServicosController::class, 'getFCR']);
+Route::get('/servicos/sct', [ServicosController::class, 'getSCT']);
+Route::get('/servicos/ots', [ServicosController::class, 'getOTS']);
+
+
+//FUNCIONARIOS
 
 //Rotas das api funcionarios .dev
-Route::get('/funcionarios', [ApiController::class, 'Allfuncionarios']);
-Route::post('/funcionarios', [ApiController::class, 'createfuncionarios']);
-Route::get('/funcionarios/{id}', [ApiController::class, 'buscarfuncionarios']);
-Route::delete('/funcionarios/{id}', [ApiController::class, 'deletfuncionarios']);
+Route::get('saida', [ApiController::class, 'getFuncionarios']);
+
+
+//GUICHE
+
+//teste de api
+Route::get('guiche', [AtendimentoController::class, 'getFull']);
+Route::get('post', [AtendimentoController::class, 'getLogin']);
+Route::post('post', [AtendimentoController::class, 'CreateLogin']);

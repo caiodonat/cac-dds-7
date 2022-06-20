@@ -17,12 +17,16 @@ class GuichesSeeds extends Seeder
     public function run()
     {
 
-        DB::tbale('tb_login_guiches')->insert([
-            'id_login_guiches' => Str::random(10),
+        DB::table('tb_login_guiches')->insert([
             'login' => Str::random(10),
             'senha' => Hash::make('123456'),
-            'nomes_funcionarios' => Str::random(10),
-            'cadastro_ativo' => 'ativo'
+            'nome_funcionario' => Str::random(10),
+            'contrato_ativo' => 'ativo'
+        ]);
+
+        DB::table('tb_guiches')->insert([
+            'login' => Str::random(10),
+            'senha' => Hash::make('123456'),
         ]);
     }
 }

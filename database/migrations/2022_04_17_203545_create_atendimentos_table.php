@@ -9,7 +9,7 @@ class CreateAtendimentosTable extends Migration
 {
     public function up()
     {
-
+        
         Schema::create('tb_atendimentos', function (Blueprint $table) {
             $table->increments('id_atendimento')->unsigned();
             $table->date('date_emissao_atendimento');
@@ -20,7 +20,6 @@ class CreateAtendimentosTable extends Migration
             $table->enum('sufixo_atendimento', ['PDG', 'FCR', 'SCT', 'OTS']);
             $table->string('servicos')->nullable();//serviço 1,serviço 2,serviço 3,serviço 4,serviço 5
             $table->string('observacoes')->nullable();
-
 
             $table->dateTime('first_call')->nullable();
             $table->dateTime('inicio_atendimento')->nullable();

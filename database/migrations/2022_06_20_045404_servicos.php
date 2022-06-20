@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateGuichesTable extends Migration
+class Servicos extends Migration
 {
     /**
      * Run the migrations.
@@ -13,11 +13,10 @@ class CreateGuichesTable extends Migration
      */
     public function up()
     {
-        Schema::create('tb_guiches', function (Blueprint $table) {
-            $table->increments('id_guiche')->unsigned();
-            $table->string('login');
-            $table->string('senha');
-            $table->timestamp('data_hora_abertura')->nullable();
+        Schema::create('tb_servicos', function (Blueprint $table) {
+            $table->increments('id_servicos')->unsigned();
+            $table->enum('setor', ['PDG', 'FCR', 'SCT', 'OTS']);
+            $table->string('servico');
         });
     }
 
@@ -28,6 +27,6 @@ class CreateGuichesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('tb_guiches');
+        //
     }
 }

@@ -4,12 +4,11 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Carbon\Carbon;
 
-class Atendimento extends Model
+class Servicos extends Model
 {
     use HasFactory;
-    protected $table = 'tb_atendimentos';
-    protected $primaryKey = 'id_atendimento';
+    protected $table = 'tb_servicos';
+    protected $primaryKey = 'id_servicos';
     public $timestamps = false;
 }

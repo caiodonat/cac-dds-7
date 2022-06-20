@@ -5,13 +5,15 @@ namespace App\Http\Controllers\Api;
 use App\Http\Requests\StoreAtendimentoRequest;
 use App\Http\Requests\UpdateAtendimentoRequest;
 use App\Http\Controllers\Controller;
-use Illuminate\Http\Request;
+
 use App\Models\Atendimento as Atendimento;
-use App\Models\tb_login_guiches as tb_login_guiches;
-use App\Models\guiches as guiches;
-use DB;
-use Carbon\Carbon;
+use App\Models\LoginGuiche;
+use App\Models\Guiche;
+
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Redis;
+use Carbon\Carbon;
+use DB;
 
 class AtendimentoController extends Controller
 {
@@ -33,6 +35,7 @@ class AtendimentoController extends Controller
         //inicio
         if ($request->input("date_time_emissao_atendimento") != null) {
             $date_time = Carbon::create($request->input("date_time_emissao_atendimento"));
+
             $date_time_emissao_atendimento = $date_time->toDateTimeString();
             $date_emissao_atendimento = $date_time->toDateString();
             //fim() |->reservado para teste
@@ -90,46 +93,40 @@ class AtendimentoController extends Controller
 
     //GET
 
-    public function index()
+    public function all()
     {
         $atendimentos = Atendimento::all();
         return json_encode($atendimentos, JSON_PRETTY_PRINT);
     }
 
-    public function get($id_atendimento)
+    public function id($id_atendimento)
     {
         $atendimento = Atendimento::findOrFail($id_atendimento);
         return json_encode($atendimento, JSON_PRETTY_PRINT);
     }
 
-    public function atendimentosDate($date)
+    public function date($date)
     {
         $dateRequest = Carbon::create($date);
-        $atendimentos = Atendimento::where("date_emissao_atendimento", $dateRequest->toDateString())
-        ->get()->first();
-        return $atendimentos->toJson(JSON_PRETTY_PRINT);
+        $atendimento = Atendimento::where("date_emissao_atendimento", $dateRequest->toDateString())
+        ->get();
+        
+        return json_encode($atendimento, JSON_PRETTY_PRINT);
     }
 
-    public function atendimentosFromToV($from, $to)
+    public function diaFromTo($from, $to)
     {
         $fromR = Carbon::create($from);
         $toR = Carbon::create($to);
-        $atendimentos = Atendimento::whereBetween("date_emissao_atendimento", [
+        $atendimentos = Atendimento::whereBetween('date_emissao_atendimento', [
             $fromR->toDateString(),
             $toR->toDateString()
-        ])
-            ->get();
-        return $atendimentos;
-    }
-
-    public function atendimentosFromTo($from, $to)
-    {
-        $atendimentos = AtendimentoController::atendimentosFromToV($from, $to);
-
+        ])->get();
         return $atendimentos->toJson(JSON_PRETTY_PRINT);
     }
 
-    public function atendimentosMonth($month){
+    public function atendimentosMonth($month)
+    {
         $firstDayOfMonth = Carbon::create($month)->startOfMonth()->toDateString();
         $lastDayOfMonth = Carbon::create($month)->endOfMonth()->toDateString();
         $atendimentos = AtendimentoController::atendimentosFromToV($firstDayOfMonth, $lastDayOfMonth);
@@ -170,7 +167,8 @@ class AtendimentoController extends Controller
         return $atendimentos->toJson(JSON_PRETTY_PRINT);
     }
 
-    public function atendimentoTodayNumber($numero_atendimento){
+    public function atendimentoTodayNumber($numero_atendimento)
+    {
         $carbonNow = Carbon::now('-03:00');
 
         $atendimento = Atendimento::where("date_emissao_atendimento", $carbonNow->toDateString())
@@ -180,14 +178,14 @@ class AtendimentoController extends Controller
         return $atendimento->toJson(JSON_PRETTY_PRINT);
     }
 
-    public function ToCall(){
-        //metodo utilizado pelo telao para verificar quem ele deve chamar        
+    public function ToCall()
+    {
+        //metodo utilizado pelo telao para verificar quem ele deve chamar
         $carbonNow = Carbon::now('-03:00');
-        $atendimentos = Atendimento::
-          where('date_emissao_atendimento', $carbonNow->toDateString())
-        ->where('status_atendimento', "==", 'chamando')
-        ->get();
-        
+        $atendimentos = Atendimento::where('date_emissao_atendimento', $carbonNow->toDateString())
+            ->where('status_atendimento', "==", 'chamando')
+            ->get();
+
         return json_encode($atendimento, JSON_PRETTY_PRINT);
     }
 
@@ -198,7 +196,7 @@ class AtendimentoController extends Controller
     { //, $guiche
         $carbonNow = Carbon::now('-03:00');
         Atendimento::where("id_atendimento", "=", $id_atendimento)
-        ->update(['inicio_atendimento' => $carbonNow->toDateTimeString()]);
+            ->update(['inicio_atendimento' => $carbonNow->toDateTimeString()]);
 
         //$atendimento = Atendimento::where("id_atendimento", "=", $id_atendimento);//aparentemente não é a mesma coisa
         $atendimento = Atendimento::findOrFail($id_atendimento);
@@ -206,82 +204,114 @@ class AtendimentoController extends Controller
         return json_encode($atendimento, JSON_PRETTY_PRINT);
     }
 
-    public function atendimentoFinish($id_atendimento, $estado_fim_atendimento){//, $guiche
+    public function atendimentoFinish($id_atendimento, $estado_fim_atendimento)
+    { //, $guiche
         $carbonNow = Carbon::now('-03:00');
         Atendimento::where("id_atendimento", "=", $id_atendimento)
             ->update(['fim_atendimento' => $carbonNow
                 ->toDateTimeString()])
             ->update(['estado_fim_atendimento' => $estado_fim_atendimento]);
 
-        $atendimento = AtendimentoController::get($id_atendimento);
+        $atendimento = Atendimento::findOrFail($id_atendimento);
 
         return json_encode($atendimento, JSON_PRETTY_PRINT);
     }
 
-    public function Call($id_atendimento){
-        //adiciona esse atendimento ($id_atendimento) a uma lista que sera chamada pelo telão, e o telao ficarar verificando (com frequencia) se possui atualizações nessa fila
-        
-        $carbonNow = Carbon::now('-03:00');
-        Atendimento::where("id_atendimento", "=", $id_atendimento)
-        ->update(['status_atendimento' => 'chamando']);
-
-        return AtendimentoController::get($id_atendimento);
-    }
-
-    public function CallNext(){
-        //adiciona esse atendimento ($id_atendimento) a uma lista que sera chamada pelo telão, e o telao ficarar verificando (com frequencia) se possui atualizações nessa fila
-        
-        $carbonNow = Carbon::now('-03:00');
-        //if()
-
-        $id_atendimento = Atendimento::where("date_emissao_atendimento", $carbonNow
-        ->toDateString())
-        ->where("inicio_atendimento", "=", null)
-        ->get()->first()->value('id_atendimento');
-
-        Atendimento::where('id_atendimento', '=', $id_atendimento)
-        ->update(['status_atendimento' => 'chamando']);
-
-        return AtendimentoController::get($id_atendimento);
-    }
-
-    public function ToCallNext(){
-        //metodo utilizado pelo telao para verificar quem ele deve chamar        
-        $carbonNow = Carbon::now('-03:00');
-        $atendimento = Atendimento::
-          where('date_emissao_atendimento', $carbonNow->toDateString())
-        ->where('status_atendimento', "=", 'chamando')
-        ->get()->first();
-        if($atendimento != null){
-            Atendimento::where("id_atendimento", "=", $atendimento->id_atendimento)
-            ->update(['status_atendimento' => 'aguardando']);
-
-            //$atendimento = Atendimento::findOrFail($id_atendimento);
-
-            return json_encode($atendimento, JSON_PRETTY_PRINT);
-        }else{
-            return json_encode(["message"=>"atendimento == null"]);
-        }
-
-    }
-    //API Guiches;
-
-    public function guiches()
+    public function call($id_atendimento)
     {
-        $guiches = guiches::all();
-        if (count($guiches) > 0) {
-            return response()->json($guiches, 200);
-        } else {
-            return response()->json(['message' => 'nada encontrado'], 404);
+        //adiciona esse atendimento ($id_atendimento) a uma lista que sera chamada pelo telão, e o telao ficarar verificando (com frequencia) se possui atualizações nessa fila
+
+        $carbonNow = Carbon::now('-03:00');
+        DB::table('tb_atendimentos')
+        ->where('id_atendimento', '=', $id_atendimento)
+        ->update(['status_atendimento' => 'chamando',
+         'first_call' => $carbonNow->toDateTimeString()]);
+
+        $atendimento = Atendimento::findOrFail($id_atendimento);
+
+        return json_encode($atendimento, JSON_PRETTY_PRINT);
+    }
+
+    public function callNext()
+    {
+        //guiche nao pode utilizar essa rota se ele estiver em atendimento
+        //adiciona esse atendimento ($id_atendimento) a uma lista que sera chamada pelo telão, e o telao ficarar verificando (com frequencia) se possui atualizações nessa fila
+        //2 guiches nao podem chamar a mesma senha
+        
+        $carbonNow = Carbon::now('-03:00');
+
+        try {
+        $atendimento = DB::table('tb_atendimentos')
+        ->where('date_emissao_atendimento', '=', $carbonNow->toDateString())
+        ->first();
+        
+        $id_atendimento = $atendimento->id_atendimento;//*RTA*
+        
+        DB::table('tb_atendimentos')
+        ->where('id_atendimento', '=', $atendimento->id_atendimento)
+        ->update(['status_atendimento' => 'chamando',
+        'first_call' => $carbonNow->toDateTimeString()]);
+        
+        $atendimento = Atendimento::findOrFail($id_atendimento);
+
+        return json_encode($atendimento, JSON_PRETTY_PRINT);
+
+        } catch (\Exception $th) {
+            return json_encode(["fila_vazia"=>true]);
         }
     }
 
-    public function postGuiches(Request $request){
-        $guiches = guiches::create($request->all());
-        if ($guiches) {
-            return response()->json($guiches, 201);
-        } else {
-            return response()->json(['message' => 'erro ao criar'], 404);
+    public function toCallNext()
+    {   /*
+        *   metodo utilizado pelo telao para verificar qual senha deve ser chamada
+        */
+
+        $carbonNow = Carbon::now('-03:00');
+
+        try{
+        $atendimentoDB = DB::table('tb_atendimentos')
+        ->where('date_emissao_atendimento', $carbonNow->toDateString())
+        ->where('status_atendimento', 'chamando')
+        ->get()->first();
+
+        $atendimento = Atendimento::findOrFail($atendimentoDB->id_atendimento);
+
+        $atendimento->status_atendimento = "aguardando";
+
+        if($atendimento->save()){
+            return json_encode($atendimento, JSON_PRETTY_PRINT);
         }
+        }catch(\Exception $e){
+            return json_encode(["fila_vazia"=>true]);
+        }
+    }
+
+    //CLASE ERRADA! @enderson
+
+    public function getFull()
+    {
+        $Full = Guiche::All();
+        if (count($Full) > 0) {
+            return response()->json($Full, 200);
+        } else {
+            return response()->json(['message' => 'Nenhum guichê encontrado'], 404);
+        }
+    }
+
+    //Criar api de authenticação, como nao sei
+
+    public function getLogin()
+    {
+        $Full = LoginGuiche::All();
+        if (count($Full) > 0) {
+            return response()->json($Full, 200);
+        } else {
+            return response()->json(['message' => 'Dados não encontrado'], 404);
+        }
+    }
+
+    public function CreateLogin(Request $request)
+    {
+
     }
 }
