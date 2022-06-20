@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\AtendimentoController;
+use App\Http\Controllers\Api\ServicosController;
 use App\Http\Controllers\Api\ApiController;
 
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
@@ -63,8 +64,22 @@ Route::put('/atendimento/call/{id_atendimento}', [AtendimentoController::class, 
 //chama a fila de chamada a proxima senha da fila de espera
 Route::put('/atendimento/call_next', [AtendimentoController::class, 'callNext']);
 
+
+//SERVICOS
+
+Route::get('/servicos/pdg', [ServicosController::class, 'getPDG']);
+Route::get('/servicos/fcr', [ServicosController::class, 'getFCR']);
+Route::get('/servicos/sct', [ServicosController::class, 'getSCT']);
+Route::get('/servicos/ots', [ServicosController::class, 'getOTS']);
+
+
+//FUNCIONARIOS
+
 //Rotas das api funcionarios .dev
 Route::get('saida', [ApiController::class, 'getFuncionarios']);
+
+
+//GUICHE
 
 //teste de api
 Route::get('guiche', [AtendimentoController::class, 'getFull']);

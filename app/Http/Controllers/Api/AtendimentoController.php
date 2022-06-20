@@ -5,10 +5,10 @@ namespace App\Http\Controllers\Api;
 use App\Http\Requests\StoreAtendimentoRequest;
 use App\Http\Requests\UpdateAtendimentoRequest;
 use App\Http\Controllers\Controller;
-use App\Models\LoginGuiche;
-use App\Models\Guiche;
 
 use App\Models\Atendimento as Atendimento;
+use App\Models\LoginGuiche;
+use App\Models\Guiche;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Redis;
