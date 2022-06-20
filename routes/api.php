@@ -46,14 +46,10 @@ Route::get('/atendimentos/afterQueue', [AtendimentoController::class, 'atendimen
 //retorna um atendimento especifico (do dia atual) com base na variavel 'numero_atendimento'
 Route::get('atendimento/numero_atendimento/{numero_atendimento}', [AtendimentoController::class, 'atendimentoTodayNumber']);
 
-//senhas a serem atendidas
-Route::get('/atendimento/to_call', [AtendimentoController::class, 'ToCallNext']);
+//chama a proxima senha no telao e altera valor de status_atendimento
+Route::get('/atendimento/to_call_next', [AtendimentoController::class, 'toCallNext']);
 
-//chama a senha no telao e altera valor de status_atendimento
-Route::get('/atendimento/to_call_next', [AtendimentoController::class, 'ToCallNext']);
-
-
-//put/UPDATE
+//PUT
 
 //inicio do atendimento
 Route::put('/atendimento/begin/{id_atendimento}', [AtendimentoController::class, 'atendimentoBegin']);

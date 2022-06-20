@@ -247,7 +247,7 @@ class AtendimentoController extends Controller
         $id_atendimento = $atendimento->id_atendimento;//*RTA*
         
         DB::table('tb_atendimentos')
-        ->where('id_atendimento', '=', $id_atendimento)
+        ->where('id_atendimento', '=', $atendimento->id_atendimento)
         ->update(['status_atendimento' => 'chamando',
         'first_call' => $carbonNow->toDateTimeString()]);
         
@@ -256,24 +256,36 @@ class AtendimentoController extends Controller
         return json_encode($atendimento, JSON_PRETTY_PRINT);
     }
 
-    public function ToCallNext()
-    {
-        //metodo utilizado pelo telao para verificar quem ele deve chamar
+    public function toCallNext()
+    {   /*
+        *   metodo utilizado pelo telao para verificar qual senha deve ser chamada
+        */
+
         $carbonNow = Carbon::now('-03:00');
-        $atendimento = Atendimento::where('date_emissao_atendimento', $carbonNow->toDateString())
-            ->where('status_atendimento', "==", 'chamando')
-            ->get()->first();
-        if ($atendimento != null) {
-            Atendimento::where("id_atendimento", "=", $atendimento->id_atendimento)
-                ->update(['status_atendimento' => 'aguardando']);
 
-            //$atendimento = Atendimento::findOrFail($id_atendimento);
+        $atendimentoDB = DB::table('tb_atendimentos')
+        ->where('date_emissao_atendimento', $carbonNow->toDateString())
+        ->where('status_atendimento', 'chamando')
+        ->get()->first();
 
+        $atendimento = Atendimento::findOrFail($atendimentoDB->id_atendimento);
+
+        if ($atendimento == null) {
+            return json_encode(["fila_vazia"=>true]);
+        }
+
+        try{
+        $atendimento->status_atendimento = "aguardando";
+
+        if($atendimento->save()){
             return json_encode($atendimento, JSON_PRETTY_PRINT);
-        } else {
+        }
+        }catch(\Exception $e){
             return null;
         }
     }
+
+    //CLASE ERRADA! @enderson
 
     public function getFull()
     {
