@@ -240,6 +240,7 @@ class AtendimentoController extends Controller
         
         $carbonNow = Carbon::now('-03:00');
 
+        try {
         $atendimento = DB::table('tb_atendimentos')
         ->where('date_emissao_atendimento', '=', $carbonNow->toDateString())
         ->first();
@@ -254,6 +255,10 @@ class AtendimentoController extends Controller
         $atendimento = Atendimento::findOrFail($id_atendimento);
 
         return json_encode($atendimento, JSON_PRETTY_PRINT);
+
+        } catch (\Exception $th) {
+            return json_encode(["fila_vazia"=>true]);
+        }
     }
 
     public function toCallNext()
@@ -263,6 +268,7 @@ class AtendimentoController extends Controller
 
         $carbonNow = Carbon::now('-03:00');
 
+        try{
         $atendimentoDB = DB::table('tb_atendimentos')
         ->where('date_emissao_atendimento', $carbonNow->toDateString())
         ->where('status_atendimento', 'chamando')
@@ -270,18 +276,13 @@ class AtendimentoController extends Controller
 
         $atendimento = Atendimento::findOrFail($atendimentoDB->id_atendimento);
 
-        if ($atendimento == null) {
-            return json_encode(["fila_vazia"=>true]);
-        }
-
-        try{
         $atendimento->status_atendimento = "aguardando";
 
         if($atendimento->save()){
             return json_encode($atendimento, JSON_PRETTY_PRINT);
         }
         }catch(\Exception $e){
-            return null;
+            return json_encode(["fila_vazia"=>true]);
         }
     }
 
