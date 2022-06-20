@@ -12,13 +12,4 @@ class Atendimento extends Model
     protected $table = 'tb_atendimentos';
     protected $primaryKey = 'id_atendimento';
     public $timestamps = false;
-
-/*
-    function usuario(){
-        $this -> belongsTo()
-    }
-*/
-    //protected $dates = 'd/m/Y';
-    //protected $dateFormat = 'd/m/Y';
-
 }

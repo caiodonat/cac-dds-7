@@ -208,36 +208,46 @@ class AtendimentoController extends Controller
                 ->toDateTimeString()])
             ->update(['estado_fim_atendimento' => $estado_fim_atendimento]);
 
-        $atendimento = AtendimentoController::get($id_atendimento);
+        $atendimento = Atendimento::findOrFail($id_atendimento);
 
         return json_encode($atendimento, JSON_PRETTY_PRINT);
     }
 
-    public function Call($id_atendimento){
+    public function call($id_atendimento){
         //adiciona esse atendimento ($id_atendimento) a uma lista que sera chamada pelo telão, e o telao ficarar verificando (com frequencia) se possui atualizações nessa fila
         
         $carbonNow = Carbon::now('-03:00');
-        Atendimento::where("id_atendimento", "=", $id_atendimento)
-        ->update(['status_atendimento' => 'chamando']);
+        DB::table('tb_atendimentos')
+        ->where('id_atendimento', '=', $id_atendimento)
+        ->update(['status_atendimento' => 'chamando',
+         'first_call' => $carbonNow->toDateTimeString()]);
 
-        return AtendimentoController::get($id_atendimento);
+        $atendimento = Atendimento::findOrFail($id_atendimento);
+
+        return json_encode($atendimento, JSON_PRETTY_PRINT);
     }
 
-    public function CallNext(){
+    public function callNext(){
+        //guiche nao pode utilizar essa rota se ele estiver em atendimento
         //adiciona esse atendimento ($id_atendimento) a uma lista que sera chamada pelo telão, e o telao ficarar verificando (com frequencia) se possui atualizações nessa fila
+        //2 guiches nao podem chamar a mesma senha
         
         $carbonNow = Carbon::now('-03:00');
-        //if()
 
-        $id_atendimento = Atendimento::where("date_emissao_atendimento", $carbonNow
-        ->toDateString())
-        ->where("inicio_atendimento", "=", null)
-        ->get()->first()->value('id_atendimento');
+        $atendimento = DB::table('tb_atendimentos')
+        ->where('date_emissao_atendimento', '=', $carbonNow->toDateString())
+        ->first();
+        
+        $id_atendimento = $atendimento->id_atendimento;//*RTA*
+        
+        DB::table('tb_atendimentos')
+        ->where('id_atendimento', '=', $id_atendimento)
+        ->update(['status_atendimento' => 'chamando',
+        'first_call' => $carbonNow->toDateTimeString()]);
+        
+        $atendimento = Atendimento::findOrFail($id_atendimento);
 
-        Atendimento::where('id_atendimento', '=', $id_atendimento)
-        ->update(['status_atendimento' => 'chamando']);
-
-        return AtendimentoController::get($id_atendimento);
+        return json_encode($atendimento, JSON_PRETTY_PRINT);
     }
 
     public function ToCallNext(){

@@ -60,10 +60,10 @@ Route::put('/atendimento/begin/{id_atendimento}', [AtendimentoController::class,
 Route::put('/atendimento/finish/{id_atendimento}&{$estado_fim_atendimento}', [AtendimentoController::class, 'atendimentoFinish']);
 
 //chama o uma senha especifica da fila
-Route::put('/atendimento/call/{id_atendimento}', [AtendimentoController::class, 'Call']);
+Route::put('/atendimento/call/{id_atendimento}', [AtendimentoController::class, 'call']);
 
 //chama a fila de chamada a proxima senha da fila de espera
-Route::put('/atendimento/call_next', [AtendimentoController::class, 'CallNext']);
+Route::put('/atendimento/call_next', [AtendimentoController::class, 'callNext']);
 
 //Rotas das api funcionarios .dev
 Route::get('/funcionarios', [ApiController::class, 'Allfuncionarios']);
