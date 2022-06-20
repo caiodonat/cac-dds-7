@@ -109,7 +109,7 @@ class AtendimentoController extends Controller
     {
         $dateRequest = Carbon::create($date);
         $atendimento = Atendimento::where("date_emissao_atendimento", $dateRequest->toDateString())
-        ->get()->first();
+        ->get();
         
         return json_encode($atendimento, JSON_PRETTY_PRINT);
     }

@@ -4,7 +4,7 @@ namespace Tests\Feature;
 
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
-use Illuminate\Testing\Fluent\AssertableJson;
+use Illuminate\Testing\Fluent\AssertableJson ;
 use Tests\TestCase;
 
 class ApiTest extends TestCase
@@ -35,33 +35,28 @@ class ApiTest extends TestCase
      
         $response
             ->assertJson(fn (AssertableJson $json) =>
-            $json->first(fn ($json) =>
                $json->where('id_atendimento', 1)
-                ->where('sufixo_atendimento', 'FCR')
                 ->etc()
-            )
-        );
+            );
     }
 
     public function test_exibir_todos_os_atendimentos_em_uma_data_especifica(){
-        $response = $this->getJson('/api/atendimentos/dia/2022-06-10');
+        $response = $this->getJson('/api/atendimentos/dia/2022-06-20');
 
         $response
             ->assertJson(fn (AssertableJson $json) =>
-            $json->first(fn ($json) =>
-               $json->where('date_emissao_atendimento', '2022-06-10')
+               $json->where('date_emissao_atendimento', '2022-06-20')//tem que add forEach
                 ->etc()
-            )
         );
     }
 
     public function test_exibir_todos_os_atendimentos_dentro_de_um_periodo_de_tempo(){
-        $response = $this->getJson('/api/atendimentos/dias/2022-06-08&2022-06-10');
+        $response = $this->getJson('/api/atendimentos/dias/2022-06-15&2022-06-20');
 
         $response
             ->assertJson(fn (AssertableJson $json) =>
             $json->first(fn ($json) =>
-               $json->where('date_emissao_atendimento')
+               $json->where("date_emissao_atendimento")
                 ->etc()
                 )
             );
@@ -73,10 +68,10 @@ class ApiTest extends TestCase
         $response
             ->assertJson(fn (AssertableJson $json) =>
             $json->first(fn ($json) =>
-                $json->where('date_emissao_atendimento' , 6)
+                $json->where("date_emissao_atendimento", '2022-06-01 , 2022-06-30')
                 ->etc()
-                )
-            );
+            )
+        );
     }
 
     public function test_exibir_proximos_atendimentos(){
@@ -85,10 +80,10 @@ class ApiTest extends TestCase
         $response
             ->assertJson(fn (AssertableJson $json) =>
             $json->first(fn ($json) =>
-               $json->where('atendimentosQueueToday')
+               $json->where("atendimentosQueueToday")
                 ->etc()
-                )
-            );
+            )
+        );
     }
 
     public function test_chamar_proximo_da_fila(){
@@ -173,9 +168,5 @@ class ApiTest extends TestCase
                 ->etc()
                 )
             );
-    }
-
-    public function test_chamar_senha_especifica_que_esta_na_fila(){
-
     }
 }
