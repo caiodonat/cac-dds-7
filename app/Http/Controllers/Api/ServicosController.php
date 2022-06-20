@@ -13,30 +13,47 @@ class ServicosController extends Controller
 {
     public function getPDG()
     {
-        $servicos = Servicos::where("setor", "PDG")
-        ->get();
+        $servicos = DB::table('tb_servicos')
+        ->where("setor", "PDG")
+        ->pluck('servico');
 
         return json_encode($servicos, JSON_PRETTY_PRINT);
     }
     public function getFCR()
     {
-        $servicos = Servicos::where("setor", "FCR")
-        ->get();
+        $servicos = DB::table('tb_servicos')
+        ->where("setor", "FCR")
+        ->pluck('servico');
 
         return json_encode($servicos, JSON_PRETTY_PRINT);
     }
     public function getSCT()
     {
-        $servicos = Servicos::where("setor", "SCT")
-        ->get();
+        $servicos = DB::table('tb_servicos')
+        ->where("setor", "SCT")
+        ->pluck('servico');
 
         return json_encode($servicos, JSON_PRETTY_PRINT);
     }
     public function getOTS()
     {
-        $servicos = Servicos::where("setor", "OTS")
-        ->get();
+        $servicos = DB::table('tb_servicos')
+        ->where("setor", "OTS")
+        ->pluck('servico');
 
         return json_encode($servicos, JSON_PRETTY_PRINT);
+    }
+    public function postServico($setor, $servico)
+    {
+            $newServico = new Servicos();
+        try {
+            $newServico->setor = $setor;
+            $newServico->servico = $servico;
+            if($newServico->save()){
+                return json_encode(["save_with_success" => true]);    
+            }
+        } catch (\Throwable $th) {
+            return json_encode(["save_with_success" => false]);
+        }
     }
 }

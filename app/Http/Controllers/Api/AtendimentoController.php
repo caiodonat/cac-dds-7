@@ -241,14 +241,12 @@ class AtendimentoController extends Controller
         $carbonNow = Carbon::now('-03:00');
 
         try {
-        $atendimento = DB::table('tb_atendimentos')
+        $id_atendimento = DB::table('tb_atendimentos')
         ->where('date_emissao_atendimento', '=', $carbonNow->toDateString())
-        ->first();
-        
-        $id_atendimento = $atendimento->id_atendimento;//*RTA*
+        ->value('id_atendimento');
         
         DB::table('tb_atendimentos')
-        ->where('id_atendimento', '=', $atendimento->id_atendimento)
+        ->where('id_atendimento', $id_atendimento)
         ->update(['status_atendimento' => 'chamando',
         'first_call' => $carbonNow->toDateTimeString()]);
         
@@ -269,12 +267,12 @@ class AtendimentoController extends Controller
         $carbonNow = Carbon::now('-03:00');
 
         try{
-        $atendimentoDB = DB::table('tb_atendimentos')
+        $id_atendimento_next = DB::table('tb_atendimentos')
         ->where('date_emissao_atendimento', $carbonNow->toDateString())
         ->where('status_atendimento', 'chamando')
-        ->get()->first();
+        ->value('id_atendimento');
 
-        $atendimento = Atendimento::findOrFail($atendimentoDB->id_atendimento);
+        $atendimento = Atendimento::findOrFail($id_atendimento_next);
 
         $atendimento->status_atendimento = "aguardando";
 
