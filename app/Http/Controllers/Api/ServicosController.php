@@ -14,28 +14,32 @@ class ServicosController extends Controller
     public function getPDG()
     {
         $servicos = DB::table('tb_servicos')
-        ->where("setor", "PDG");
+        ->where("setor", "PDG")
+        ->get();
 
         return json_encode($servicos, JSON_PRETTY_PRINT);
     }
     public function getFCR()
     {
         $servicos = DB::table('tb_servicos')
-        ->where("setor", "FCR");
+        ->where("setor", "FCR")
+        ->get();
 
         return json_encode($servicos, JSON_PRETTY_PRINT);
     }
     public function getSCT()
     {
         $servicos = DB::table('tb_servicos')
-        ->where("setor", "SCT");
+        ->where("setor", "SCT")
+        ->get();
 
         return json_encode($servicos, JSON_PRETTY_PRINT);
     }
     public function getOTS()
     {
         $servicos = DB::table('tb_servicos')
-        ->where("setor", "OTS");
+        ->where("setor", "OTS")
+        ->get();
 
         return json_encode($servicos, JSON_PRETTY_PRINT);
     }
