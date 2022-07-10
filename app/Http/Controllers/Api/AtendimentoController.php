@@ -25,7 +25,7 @@ class AtendimentoController extends Controller
         $current = Carbon::now('-03:00');
         try {
             $cpf = $request->input("cpf");
-        } catch (Throwable $th) {
+        } catch (\Throwable $th) {
             $cpf = null;
         }
 
@@ -222,6 +222,7 @@ class AtendimentoController extends Controller
         //adiciona esse atendimento ($id_atendimento) a uma lista que sera chamada pelo telão, e o telao ficarar verificando (com frequencia) se possui atualizações nessa fila
 
         $carbonNow = Carbon::now('-03:00');
+
         DB::table('tb_atendimentos')
         ->where('id_atendimento', '=', $id_atendimento)
         ->update(['status_atendimento' => 'chamando',
@@ -282,34 +283,5 @@ class AtendimentoController extends Controller
         }catch(\Exception $e){
             return json_encode(["fila_vazia"=>true]);
         }
-    }
-
-    //CLASE ERRADA! @enderson
-
-    public function getFull()
-    {
-        $Full = Guiche::All();
-        if (count($Full) > 0) {
-            return response()->json($Full, 200);
-        } else {
-            return response()->json(['message' => 'Nenhum guichê encontrado'], 404);
-        }
-    }
-
-    //Criar api de authenticação, como nao sei
-
-    public function getLogin()
-    {
-        $Full = LoginGuiche::All();
-        if (count($Full) > 0) {
-            return response()->json($Full, 200);
-        } else {
-            return response()->json(['message' => 'Dados não encontrado'], 404);
-        }
-    }
-
-    public function CreateLogin(Request $request)
-    {
-
     }
 }
