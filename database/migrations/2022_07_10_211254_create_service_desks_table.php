@@ -6,24 +6,21 @@ use Illuminate\Support\Facades\Schema;
 
 class CreateServiceDesksTable extends Migration
 {
-    /**
-     * Run the migrations.
-     *
-     * @return void
-     */
     public function up()
     {
         Schema::create('service_desks', function (Blueprint $table) {
-            $table->id();
-            $table->timestamps();
+            $table->increments('id_service_desk');
+            $table->enum('number_desk', [1, 2, 3, 4]);
+            $table->unsignedInteger('id_employee');//FK
+            $table->dateTime('opening');
+            $table->dateTime('closing')->nullable();
+        });
+        
+        Schema::table('service_desks', function (Blueprint $table) {
+            $table->foreign('id_employee')->references('id_employee')->on('employees');
         });
     }
 
-    /**
-     * Reverse the migrations.
-     *
-     * @return void
-     */
     public function down()
     {
         Schema::dropIfExists('service_desks');
