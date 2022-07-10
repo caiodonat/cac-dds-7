@@ -4,13 +4,8 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class Servicos extends Migration
+class CreateServicosTable extends Migration
 {
-    /**
-     * Run the migrations.
-     *
-     * @return void
-     */
     public function up()
     {
         Schema::create('tb_servicos', function (Blueprint $table) {
@@ -19,14 +14,9 @@ class Servicos extends Migration
             $table->string('servico');
         });
     }
-
-    /**
-     * Reverse the migrations.
-     *
-     * @return void
-     */
+    
     public function down()
     {
-        //
+        Schema::dropIfExists('tb_servicoes');
     }
 }
