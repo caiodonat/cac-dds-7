@@ -7,14 +7,8 @@ use DB;
 
 class ServicosSeeder extends Seeder
 {
-    /**
-     * Run the database seeds.
-     *
-     * @return void
-     */
     public function run()
     {
-        
         DB::table('tb_servicos')->insert([
             [   //PDG
                 'setor' => 'PDG',
