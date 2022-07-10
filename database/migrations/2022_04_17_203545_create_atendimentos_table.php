@@ -24,11 +24,7 @@ class CreateAtendimentosTable extends Migration
             $table->dateTime('first_call')->nullable();
             $table->dateTime('inicio_atendimento')->nullable();
             $table->dateTime('fim_atendimento')->nullable();
-            //$table->enum('estado_fim_atendimento', ['nao_concluido', 'concluido'])->nullable();
             $table->enum('status_atendimento', ['chamando', 'aguardando', 'em_atendimento', 'nao_compareceu', 'nao_concluido', 'concluido'])->nullable();
-
-            //Em Teste para viabilidade da array
-            $collection = collect(['sufixoTotem' => 'pedagógico', 'finaceiro', 'secretaria', 'outros servicos'])->toArray();
         });
     }
 
