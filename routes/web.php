@@ -1,8 +1,6 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\Consulta;
-use App\Http\Controllers\SenhaController;
 
 /*
 |--------------------------------------------------------------------------
@@ -26,5 +24,3 @@ Route::get('/carbon', function () {
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
 Auth::routes();
-
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');

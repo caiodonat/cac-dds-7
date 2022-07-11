@@ -18,9 +18,6 @@ jobs:
       with:
         path: ~/.composer/cache/files
         key: dependencies-composer-${{ hashFiles('composer.json') }}
-    
-    - name: Clean configs
-      run: php artisan config:clear 
 
     - name: Copy .env
       run: php -r "file_exists('.env') || copy('.env.example', '.env');"

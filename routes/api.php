@@ -73,17 +73,3 @@ Route::get('/servicos/pdg', [ServicosController::class, 'getPDG']);
 Route::get('/servicos/fcr', [ServicosController::class, 'getFCR']);
 Route::get('/servicos/sct', [ServicosController::class, 'getSCT']);
 Route::get('/servicos/ots', [ServicosController::class, 'getOTS']);
-
-
-//FUNCIONARIOS
-
-//Rotas das api funcionarios .dev
-Route::get('saida', [ApiController::class, 'getFuncionarios']);
-
-
-//GUICHE
-
-//teste de api
-Route::get('guiche', [AtendimentoController::class, 'getFull']);
-Route::get('post', [AtendimentoController::class, 'getLogin']);
-Route::post('post', [AtendimentoController::class, 'CreateLogin']);
