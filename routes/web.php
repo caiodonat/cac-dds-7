@@ -21,3 +21,7 @@ Route::get('/', function () {
 Route::get('/carbon', function () {
     return view('carbon');
 });
+
+Auth::routes();
+
+Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
