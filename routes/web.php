@@ -23,7 +23,7 @@ Route::get('/carbon', function () {
 
 Route::get('telao/telao', function () {
     return view('telao');
-});
+})
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
