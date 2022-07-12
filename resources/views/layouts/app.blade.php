@@ -10,14 +10,24 @@
     <title>{{ config('app.name', 'Laravel') }}</title>
 
     <!-- Scripts -->
+<<<<<<< HEAD
     <script src="{{ asset('js/script.js') }}" defer></script>
+=======
+    <script src="{{ asset('js/app.js') }}" defer></script>
+    <script src="{{ asset('js/mesa.js') }}" defer></script>
+>>>>>>> 4472719e09f8da5b00df8a34074b3534bc9fc5c5
 
     <!-- Fonts -->
     <link rel="dns-prefetch" href="//fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet">
 
     <!-- Styles -->
+<<<<<<< HEAD
     <link href="{{ asset('css/telao.css') }}" rel="stylesheet">
+=======
+    <link href="{{ asset('css/app.css') }}" rel="stylesheet">
+    <link href="{{ asset('css/mesa.css') }}" rel="stylesheet">
+>>>>>>> 4472719e09f8da5b00df8a34074b3534bc9fc5c5
 </head>
 <body>
     <div id="app">
@@ -74,7 +84,6 @@
                 </div>
             </div>
         </nav>
-
         <main class="py-4">
             @yield('content')
         </main>
