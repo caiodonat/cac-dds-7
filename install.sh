@@ -14,7 +14,7 @@ echo "download vsocde e chrome";
 
 
 echo "clonado projeto tcc";
-cd Documents/teste &&
+cd Documents/ &&
 git clone https://github.com/CaioDonat/CentralAtendimentoCliente2/tree/servidor &&
 cd CentralAtendimentoCliente2 &&
 git checkout servidor &&
