@@ -21,9 +21,13 @@ Route::get('/carbon', function () {
     return view('carbon');
 });
 
-Route::get('telao/telao', function () {
-    return view('telao');
-})
+Route::get('testando', function () {
+    return view('apenas um teste');
+}) ->name('testando.aplicativo');
+
+Route::get('telao', function () {
+    return view('telao.telao');
+}) ->name('telao');
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 

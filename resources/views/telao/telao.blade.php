@@ -1,3 +1,7 @@
+@extends("layouts.app")
+
+@section('content')
+
 <!DOCTYPE html>
 <html lang="pt-br">
     <head>
@@ -15,7 +19,7 @@
 
         <div>
             <header class="cabecalho">    
-            <img class="cabecalho-img" src="/resources/img/logo_senai_branco.png" alt="logo_senai">
+            <img class="cabecalho-img" src="/img/logo_senai_branco.png" alt="logo_senai">
             </header>
         <main>
             <section class="senha-guiche">
