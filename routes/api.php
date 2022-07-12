@@ -33,7 +33,7 @@ Route::get('/atendimentos/dia/{date}', [AtendimentoController::class, 'date']);
 Route::get('/atendimentos/dias/{from}&{to}', [AtendimentoController::class, 'diaFromTo']);
 
 //Esta rota vai exibir os atendimentos realizados em um mes especifico
-Route::get('/atendimentos/month/{month}', [AtendimentoController::class, 'atendimentosMonth']);
+Route::get('/atendimentos/month/{month}', [AtendimentoController::class, 'atendimentosMonth'])->name("atendimento.do.mes");
 
 //Esta rota vai exibir os proximos atendimentos a serem realizados
 Route::get('/atendimentos/queue', [AtendimentoController::class, 'atendimentosQueueToday']);
