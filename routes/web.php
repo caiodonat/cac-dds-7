@@ -24,7 +24,7 @@ Route::get('testando', function () {
     return view('apenas um teste');
 }) ->name('testando.aplicativo');
 
-Route::get('telao', function () {
+Route::get('telao/telao', function () {
     return view('telao.telao');
 }) ->name('telao');
 
