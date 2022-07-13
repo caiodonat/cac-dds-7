@@ -90,13 +90,18 @@ class AtendimentoController extends Controller
         return json_encode(["erro" => true]);
     }
 
-
     //GET
 
     public function all()
     {
-        $atendimentos = Atendimento::all();
-        return json_encode($atendimentos, JSON_PRETTY_PRINT);
+        try {
+            $r = DB::table('tb_atendimentos')
+            ->get();
+
+            return json_encode(['success'=>true,'r'=>$r], JSON_PRETTY_PRINT);
+        } catch (\Throwable $th) {
+            return json_encode(['success'=>false,'r'=>$th], JSON_PRETTY_PRINT);
+        }
     }
 
     public function id($id_atendimento)
@@ -242,18 +247,18 @@ class AtendimentoController extends Controller
         $carbonNow = Carbon::now('-03:00');
 
         try {
-        $id_atendimento = DB::table('tb_atendimentos')
-        ->where('date_emissao_atendimento', '=', $carbonNow->toDateString())
-        ->value('id_atendimento');
-        
-        DB::table('tb_atendimentos')
-        ->where('id_atendimento', $id_atendimento)
-        ->update(['status_atendimento' => 'chamando',
-        'first_call' => $carbonNow->toDateTimeString()]);
-        
-        $atendimento = Atendimento::findOrFail($id_atendimento);
+            $id_atendimento = DB::table('tb_atendimentos')
+            ->where('date_emissao_atendimento', '=', $carbonNow->toDateString())
+            ->value('id_atendimento');
+            
+            DB::table('tb_atendimentos')
+            ->where('id_atendimento', $id_atendimento)
+            ->update(['status_atendimento' => 'chamando',
+            'first_call' => $carbonNow->toDateTimeString()]);
+            
+            $atendimento = Atendimento::findOrFail($id_atendimento);
 
-        return json_encode($atendimento, JSON_PRETTY_PRINT);
+            return json_encode($atendimento, JSON_PRETTY_PRINT);
 
         } catch (\Exception $th) {
             return json_encode(["fila_vazia"=>true]);

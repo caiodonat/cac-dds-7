@@ -20,11 +20,11 @@ Route::post('/atendimento/post', [AtendimentoController::class, 'createAtendimen
 
 //GET
 
-//Esta rota vai exibir todos os atendimentos realizados no dia
-Route::get('/atendimentos', [AtendimentoController::class, 'all']);
+//retorna todos os atendimentos no DB
+Route::get('/atendimentos/all', [AtendimentoController::class, 'all']);
 
-//Esta rota vai buscar um atendimento realizado pelo ID
-Route::get('/atendimento/id/{id_atendimento}', [AtendimentoController::class, 'id']);
+//retorna um atendimento expecificado por ID
+Route::get('/atendimentos/id/{id_atendimento}', [AtendimentoController::class, 'id']);
 
 //Esta rota vai exibir os atendimentos em uma data especifica
 Route::get('/atendimentos/dia/{date}', [AtendimentoController::class, 'date']);

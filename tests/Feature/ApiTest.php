@@ -4,31 +4,32 @@ namespace Tests\Feature;
 
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
-use Illuminate\Testing\Fluent\AssertableJson ;
+use Illuminate\Testing\Fluent\AssertableJson;
 use Tests\TestCase;
 
 class ApiTest extends TestCase
 {
-    /**
-     * A basic feature test example.
-     *
-     * @return void
-     */
-
-    public function test_api(){
-        $response = $this->get('/api/atendimentos');
+    //retorna todos os atendimentos no DB
+    public function test_all(){
+        $response = $this->getJson('/api/atendimentos/all');
         $response
-        ->assertStatus(200);
+        ->assertJson(fn (AssertableJson $json) =>
+            $json->where('success', true)
+            ->has('r')
+     );
     }
 
-    public function test_resposta_banco(){
+    //retorna um atendimento expecificado por ID
+    public function test_id(){
         $response = $this->getJson('/api/atendimentos');
  
         $response
-            ->assertStatus(200)
-            ->assertJson([
-            ]);
+        ->assertJson(fn (AssertableJson $json) =>
+            $json->where('success', true)
+            ->has('r')
+        );
     }
+/*
 
     public function test_create_atendimento(){
         $response = $this->getJson('/api/atendimento/id/1');
@@ -169,4 +170,5 @@ class ApiTest extends TestCase
                 )
             );
     }
+    */
 }
