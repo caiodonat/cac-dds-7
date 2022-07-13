@@ -41,6 +41,10 @@ Route::get('/mesa_atendimento/principal', function(){
     return view('mesa_atendimento.inicioatendimento');
  })->name('inicioatendimento');
 
+ Route::get('/mesa_atendimento/monitor', function(){
+    return view('mesa_atendimento.monitor');
+ })->name('monitor');
+
 Auth::routes();
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');

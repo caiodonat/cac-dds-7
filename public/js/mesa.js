@@ -49,7 +49,7 @@ function chamarTela(){
 }
 
 function encerrarAtendimento(){
-    location.href = "atendimento.html"
+    location.href = "atendimento"
 }
 
 function buscarSenha(){

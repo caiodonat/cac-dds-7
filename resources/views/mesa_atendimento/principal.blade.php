@@ -19,6 +19,7 @@
   </div> -->
   <div>
   <a href="{{ url('/mesa_atendimento/atendimento') }}">Atendimento</a>
+  <a href="{{ url('/mesa_atendimento/monitor') }}">Monitor</a>
   </div>
   <div>
     <p class="atendimento">Atendimento</p>
