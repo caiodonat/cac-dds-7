@@ -1,25 +1,11 @@
-@extends("layouts.app")
+@extends("layouts.telao")
 
 @section('content')
-
-<!DOCTYPE html>
-<html lang="pt-br">
-    <head>
-        <meta charset="UTF-8">
-        <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Telao</title>
-        <link href="{{ asset('css/telao.css') }}" rel="stylesheet">
-        
-    </head>
-
-    <script src="js/script.js"></script>
-
-    <div onload="teste(); time(); data()">
+    <div>
 
         <div>
             <header class="cabecalho">    
-            <img class="cabecalho-img" src="/img/logo_senai_branco.png" alt="logo_senai">
+           <a href="{{ url('/home') }}"> <img class="cabecalho-img" src="/img/logo_senai_branco.png" alt="logo_senai"></a>
             </header>
         <main>
             <section class="senha-guiche">
