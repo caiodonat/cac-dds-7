@@ -17,13 +17,16 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('/testando', function(){
-   return "Apenas um teste";
-})->name('testando.aplicativo');
-
 Route::get('/carbon', function () {
     return view('carbon');
 });
+Route::get('testando', function () {
+    return view('apenas um teste');
+}) ->name('testando.aplicativo');
+
+Route::get('telao', function () {
+    return view('telao.telao');
+}) ->name('telao');
 
 Route::get('/mesa_atendimento/principal', function(){
     return view('mesa_atendimento.principal');
@@ -48,3 +51,5 @@ Route::get('/mesa_atendimento/principal', function(){
 Auth::routes();
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+
+Auth::routes();

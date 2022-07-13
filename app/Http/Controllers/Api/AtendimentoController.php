@@ -150,7 +150,7 @@ class AtendimentoController extends Controller
         $carbonNow = Carbon::now('-03:00');
         $atendimentos = Atendimento::where("date_emissao_atendimento", $carbonNow
             ->toDateString())
-            ->where("inicio_atendimento", "=", null)
+            ->where("started", "=", null)
             ->get()->first();
 
         return $atendimentos->toJson(JSON_PRETTY_PRINT);
