@@ -138,11 +138,12 @@ class AtendimentoController extends Controller
     {
         $carbonNow = Carbon::now('-03:00');
 
-        $atendimentos = Atendimento::where("date_emissao_atendimento", $carbonNow->toDateString())
-            ->where("inicio_atendimento", "=", null)
-            ->get();
+        $atendimentos = DB::table('tb_atendimentos')
+        ->where("date_emissao_atendimento", $carbonNow->toDateString())
+        ->where("inicio_atendimento", "=", null)
+        ->get();
 
-        return $atendimentos->toJson(JSON_PRETTY_PRINT);
+        return json_encode($atendimentos, JSON_PRETTY_PRINT);
     }
 
     public function atendimentosQueueTodayNext()
@@ -266,6 +267,19 @@ class AtendimentoController extends Controller
         */
 
         $carbonNow = Carbon::now('-03:00');
+
+        $id_atendimento = Atendimento::where("date_emissao_atendimento", $carbonNow
+        ->toDateString())
+        ->where("inicio_atendimento", "=", null)
+        ->get()->first()->value('id_atendimento');
+        
+        $atendimento = Atendimento::
+          where('date_emissao_atendimento', $carbonNow->toDateString())
+        ->where('status_atendimento', "=", 'chamando')
+        ->get()->first();
+        if($atendimento != null){
+            Atendimento::where("id_atendimento", "=", $atendimento->id_atendimento)
+            ->update(['status_atendimento' => 'aguardando']);
 
         try{
         $id_atendimento_next = DB::table('tb_atendimentos')
