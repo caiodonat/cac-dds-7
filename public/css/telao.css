@@ -30,7 +30,7 @@ body{
     color: dimgrey;
     gap: 50%;
 }
-.numero-tabela{
+.tabela-azul{
     font-size: 250px;
     padding-top: 60px;
     padding-bottom: 40px;
@@ -40,12 +40,18 @@ body{
     justify-content: space-around;
     text-shadow: white 1px 6px 2px;
 }
+
 .img{
     padding-left: 75%;
     padding-bottom: 20px;
 }
 .senhaTelao{
     padding-right: 29%;
+    font-size: 80%;
+}
+
+.guicheTelao{
+    font-size: 80%;
 }
 
 .senhas-anteriores{
@@ -58,8 +64,8 @@ body{
 .tabela-1{
     padding-right: 27%;
     justify-content: center;
-    
 }
+
 .linha-vertical{
     border-left: 6px solid #d6d3d3c2;
     height: 29%;
@@ -128,7 +134,7 @@ body{
 
 /* Piscar tabela  */
 
-.numero-tabela{
+.tabela-azul{
     background-color: 15px solid rgb(255, 217, 0);
     animation: piscarTela .3s    30;
  }

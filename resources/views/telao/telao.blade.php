@@ -15,7 +15,7 @@
 
     <script src="js/script.js"></script>
 
-    <body onload="teste(); time(); data()">
+    <div onload="teste(); time(); data()">
 
         <div>
             <header class="cabecalho">    
@@ -23,14 +23,14 @@
             </header>
         <main>
             <section class="senha-guiche">
-                <a class="senha"><strong>SENHA</strong>
-                <a class="guiche"><strong>GUICHÊ</strong>
+                <h1 class="senha"><strong>SENHA</strong>
+                <h1 class="guiche"><strong>GUICHÊ</strong>
             </section>
-            <section class="numero-tabela">
+            <div class="tabela-azul">
                 <header class="vertical-line-2"></header>
-                <a id="senhaAtual" class="senhaTelao">M-08</a>
-                <a class="guicheTelao" id="nmrGuiche">02</a>
-            </section>
+                <h1 id="senhaAtual" class="senhaTelao">M-08</a>
+                <h1 class="guicheTelao" id="nmrGuiche">02</a>
+            </div>
             <div>
                 <h1 class="hora" id="hora"></h1>
                 <h1 class="data" id="data"></h1>
@@ -45,5 +45,6 @@
             </div>
             </main>
         </div>
-    </body>
+    </div>
 </html> 
+@endsection
