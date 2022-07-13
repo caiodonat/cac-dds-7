@@ -20,6 +20,8 @@
   <div>
   <a href="{{ url('/mesa_atendimento/atendimento') }}">Atendimento</a>
   <a href="{{ url('/mesa_atendimento/monitor') }}">Monitor</a>
+  <a href="{{ url('/mesa_atendimento/triagem') }}">Triagem</a>
+  <a href="{{ url('/mesa_atendimento/configuracoes') }}">Configuracoes</a>
   </div>
   <div>
     <p class="atendimento">Atendimento</p>
