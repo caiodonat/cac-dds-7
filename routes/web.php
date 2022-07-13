@@ -20,8 +20,6 @@ Route::get('/', function () {
 Route::get('/carbon', function () {
     return view('carbon');
 });
-
-<<<<<<< HEAD
 Route::get('testando', function () {
     return view('apenas um teste');
 }) ->name('testando.aplicativo');
@@ -29,7 +27,7 @@ Route::get('testando', function () {
 Route::get('telao', function () {
     return view('telao.telao');
 }) ->name('telao');
-=======
+
 Route::get('/mesa_atendimento/principal', function(){
     return view('mesa_atendimento.principal');
  })->name('principal');
@@ -47,7 +45,6 @@ Route::get('/mesa_atendimento/principal', function(){
  })->name('inicioatendimento');
 
 Auth::routes();
->>>>>>> 4472719e09f8da5b00df8a34074b3534bc9fc5c5
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
