@@ -143,6 +143,8 @@ class AtendimentoController extends Controller
         ->where("inicio_atendimento", "=", null)
         ->get();
 
+        //teste
+
         return json_encode($atendimentos, JSON_PRETTY_PRINT);
     }
 
