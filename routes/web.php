@@ -28,6 +28,10 @@ Route::get('telao/telao', function () {
     return view('telao.telao');
 }) ->name('telao');
 
+Route::get('totem/totem', function () {
+    return view('totem.totem');
+}) ->name('totem');
+
 Route::get('/mesa_atendimento/principal', function(){
     return view('mesa_atendimento.principal');
  })->name('principal');

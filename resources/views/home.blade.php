@@ -11,6 +11,7 @@
                     <ul class="list-group">
                         <li class="list-group-item"><a href="{{ url('/mesa_atendimento/principal') }}">Mesa de Atendimento</a></li>
                         <li class="list-group-item"><a href="{{ url('/telao/telao') }}">Telao</a></li>
+                        <li class="list-group-item"><a href="{{ url('/totem/totem') }}">Totem</a></li>
 
                     </ul>
                     <!-- @if (session('status'))
