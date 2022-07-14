@@ -104,10 +104,18 @@ class AtendimentoController extends Controller
         }
     }
 
+    //retorna um atendimento expecificado por ID
     public function id($id_atendimento)
     {
-        $atendimento = Atendimento::findOrFail($id_atendimento);
-        return json_encode($atendimento, JSON_PRETTY_PRINT);
+        try {
+            $r = DB::table('tb_atendimentos')
+            ->where('id_atendimento', $id_atendimento)
+            ->get();
+
+            return json_encode(['success'=>true,'r'=>$r], JSON_PRETTY_PRINT);
+        } catch (\Throwable $th) {
+            return json_encode(['success'=>false,'r'=>$th], JSON_PRETTY_PRINT);
+        }
     }
 
     public function date($date)

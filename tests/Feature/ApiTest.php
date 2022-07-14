@@ -21,12 +21,16 @@ class ApiTest extends TestCase
 
     //retorna um atendimento expecificado por ID
     public function test_id(){
-        $response = $this->getJson('/api/atendimentos');
+        $response = $this->getJson('/api/atendimentos/id/1');
  
         $response
         ->assertJson(fn (AssertableJson $json) =>
             $json->where('success', true)
-            ->has('r')
+            ->has('r', 1)//verify if exist only 1 item in collection
+            ->has('r.0', fn ($json1) =>
+            $json1->where('id_atendimento', 1)
+            ->etc()
+            )
         );
     }
 /*
