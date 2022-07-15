@@ -27,7 +27,7 @@ Route::get('/atendimentos/all', [AtendimentoController::class, 'all']);
 Route::get('/atendimentos/id/{id_atendimento}', [AtendimentoController::class, 'id']);
 
 //retorna todos atendimentos com DATA especifica
-Route::get('/atendimentos/day/{date}', [AtendimentoController::class, 'day']);
+Route::get('/atendimentos/day/{day}', [AtendimentoController::class, 'day']);
 
 //Esta rota vai exibir os atendimentos realizados dentro de um periodo de tempo
 Route::get('/atendimentos/dias/{from}&{to}', [AtendimentoController::class, 'diaFromTo']);

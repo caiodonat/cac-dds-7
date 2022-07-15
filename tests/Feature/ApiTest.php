@@ -5,11 +5,28 @@ namespace Tests\Feature;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Testing\Fluent\AssertableJson;
+use Illuminate\Support\Facades\DB;
 use Tests\TestCase;
 use Carbon\Carbon;
 
 class ApiTest extends TestCase
 {
+    private function firstDayDB(){
+        $carbonNow = Carbon::now('-03:00');
+
+        try {
+
+            $r = DB::table('tb_atendimentos')
+            ->where('id_atendimento', 1)
+            ->value('date_emissao_atendimento');
+
+            return $r;
+        } catch (\Throwable $th) {
+            return $r;
+        }
+    }
+
+
     //retorna todos os atendimentos no DB
     public function test_all(){
         $response = $this->getJson('/api/atendimentos/all');
@@ -36,21 +53,29 @@ class ApiTest extends TestCase
     }
 
     public function test_day(){
-        $yesterday = Carbon::yesterday()->toDateString();
-        echo $yesterday;
+        $day = $this->firstDayDB();
+        $day = Carbon::create('2022-07-13')->toDateString();
+        //echo $day;
 
-        $response = $this->getJson("/api/atendimentos/dia/{$yesterday}");
+        $response = $this->getJson("/api/atendimentos/day/{$day}");
      
         $response
         ->assertJson(fn (AssertableJson $json) =>
             $json->where('success', true)
             ->has('r')
-            ->has('r.0', fn ($json1) =>
-                $json1->has('id_atendimento')
-                    ->where('date_emissao_atendimento', $yesterday)
+            ->has('r', 6, fn ($json1) =>
+                $json1->where('id_atendimento', 9)
+                    ->where('date_emissao_atendimento', $day)
                     ->etc()
                     
                 
+            )
+            ->first(fn ($json2) =>
+                $json2->each(fn ($json3) =>
+                    $json3->has('id_atendimento')
+                    ->where('date_emissao_atendimento', $day)
+                    ->etc()
+                )
             )
         );
     }

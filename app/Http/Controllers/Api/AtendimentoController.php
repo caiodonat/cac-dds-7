@@ -128,9 +128,9 @@ class AtendimentoController extends Controller
             ->where("date_emissao_atendimento", $dateRequest)
             ->get();
 
-            return json_encode(['success'=>true,'r'=>$r], JSON_PRETTY_PRINT);
+            return json_encode(['r'=>$r, 'success'=>true], JSON_PRETTY_PRINT);
         } catch (\Throwable $th) {
-            return json_encode(['success'=>false,'r'=>$th], JSON_PRETTY_PRINT);
+            return json_encode(['r'=>$th, 'success'=>false], JSON_PRETTY_PRINT);
         }
     }
 
@@ -304,20 +304,21 @@ class AtendimentoController extends Controller
             ->update(['status_atendimento' => 'aguardando']);
 
         try{
-        $id_atendimento_next = DB::table('tb_atendimentos')
-        ->where('date_emissao_atendimento', $carbonNow->toDateString())
-        ->where('status_atendimento', 'chamando')
-        ->value('id_atendimento');
+            $id_atendimento_next = DB::table('tb_atendimentos')
+            ->where('date_emissao_atendimento', $carbonNow->toDateString())
+            ->where('status_atendimento', 'chamando')
+            ->value('id_atendimento');
 
-        $atendimento = Atendimento::findOrFail($id_atendimento_next);
+            $atendimento = Atendimento::findOrFail($id_atendimento_next);
 
-        $atendimento->status_atendimento = "aguardando";
+            $atendimento->status_atendimento = "aguardando";
 
-        if($atendimento->save()){
-            return json_encode($atendimento, JSON_PRETTY_PRINT);
-        }
+            if($atendimento->save()){
+                return json_encode($atendimento, JSON_PRETTY_PRINT);
+            }
         }catch(\Exception $e){
             return json_encode(["fila_vazia"=>true]);
+        }
         }
     }
 }
