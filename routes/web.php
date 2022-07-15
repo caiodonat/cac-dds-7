@@ -17,14 +17,51 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('/testando', function(){
-   return "Apenas um teste";
-})->name('testando.aplicativo');
-
 Route::get('/carbon', function () {
     return view('carbon');
 });
+Route::get('testando', function () {
+    return view('apenas um teste');
+}) ->name('testando.aplicativo');
+
+Route::get('telao/telao', function () {
+    return view('telao.telao');
+}) ->name('telao');
+
+Route::get('totem/totem', function () {
+    return view('totem.totem');
+}) ->name('totem');
+
+Route::get('/mesa_atendimento/principal', function(){
+    return view('mesa_atendimento.principal');
+ })->name('principal');
+
+ Route::get('/mesa_atendimento/atendimento', function(){
+    return view('mesa_atendimento.atendimento');
+ })->name('atendimento');
+
+ Route::get('/mesa_atendimento/chamadoatendimento', function(){
+    return view('mesa_atendimento.chamadoatendimento');
+ })->name('chamadoatendimento');
+
+ Route::get('/mesa_atendimento/inicioatendimento', function(){
+    return view('mesa_atendimento.inicioatendimento');
+ })->name('inicioatendimento');
+
+ Route::get('/mesa_atendimento/monitor', function(){
+    return view('mesa_atendimento.monitor');
+ })->name('monitor');
+
+ Route::get('/mesa_atendimento/triagem', function(){
+    return view('mesa_atendimento.triagem');
+ })->name('triagem');
+
+ Route::get('/mesa_atendimento/configuracoes', function(){
+    return view('mesa_atendimento.configuracoes');
+ })->name('configuracoes');
 
 Auth::routes();
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+
+Auth::routes();
