@@ -12,8 +12,9 @@ use App\Models\Guiche;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Redis;
+use Illuminate\Support\Facades\DB;
 use Carbon\Carbon;
-use DB;
+
 
 class AtendimentoController extends Controller
 {
@@ -118,13 +119,19 @@ class AtendimentoController extends Controller
         }
     }
 
-    public function date($date)
+    public function day($date)
     {
-        $dateRequest = Carbon::create($date);
-        $atendimento = Atendimento::where("date_emissao_atendimento", $dateRequest->toDateString())
-        ->get();
-        
-        return json_encode($atendimento, JSON_PRETTY_PRINT);
+        try {
+            $dateRequest = Carbon::create($date)->toDateString();
+
+            $r = DB::table('tb_atendimentos')
+            ->where("date_emissao_atendimento", $dateRequest)
+            ->get();
+
+            return json_encode(['success'=>true,'r'=>$r], JSON_PRETTY_PRINT);
+        } catch (\Throwable $th) {
+            return json_encode(['success'=>false,'r'=>$th], JSON_PRETTY_PRINT);
+        }
     }
 
     public function diaFromTo($from, $to)

@@ -23,11 +23,11 @@ Route::post('/atendimento/post', [AtendimentoController::class, 'createAtendimen
 //retorna todos os atendimentos no DB
 Route::get('/atendimentos/all', [AtendimentoController::class, 'all']);
 
-//retorna um atendimento expecificado por ID
+//retorna um atendimento com ID expecifico 
 Route::get('/atendimentos/id/{id_atendimento}', [AtendimentoController::class, 'id']);
 
-//Esta rota vai exibir os atendimentos em uma data especifica
-Route::get('/atendimentos/dia/{date}', [AtendimentoController::class, 'date']);
+//retorna todos atendimentos com DATA especifica
+Route::get('/atendimentos/day/{date}', [AtendimentoController::class, 'day']);
 
 //Esta rota vai exibir os atendimentos realizados dentro de um periodo de tempo
 Route::get('/atendimentos/dias/{from}&{to}', [AtendimentoController::class, 'diaFromTo']);

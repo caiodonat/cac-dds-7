@@ -6,6 +6,7 @@ use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Testing\Fluent\AssertableJson;
 use Tests\TestCase;
+use Carbon\Carbon;
 
 class ApiTest extends TestCase
 {
@@ -28,22 +29,32 @@ class ApiTest extends TestCase
             $json->where('success', true)
             ->has('r', 1)//verify if exist only 1 item in collection
             ->has('r.0', fn ($json1) =>
-            $json1->where('id_atendimento', 1)
-            ->etc()
+                $json1->where('id_atendimento', 1)
+                ->etc()
             )
         );
     }
-/*
 
-    public function test_create_atendimento(){
-        $response = $this->getJson('/api/atendimento/id/1');
+    public function test_day(){
+        $yesterday = Carbon::yesterday()->toDateString();
+        echo $yesterday;
+
+        $response = $this->getJson("/api/atendimentos/dia/{$yesterday}");
      
         $response
-            ->assertJson(fn (AssertableJson $json) =>
-               $json->where('id_atendimento', 1)
-                ->etc()
-            );
+        ->assertJson(fn (AssertableJson $json) =>
+            $json->where('success', true)
+            ->has('r')
+            ->has('r.0', fn ($json1) =>
+                $json1->has('id_atendimento')
+                    ->where('date_emissao_atendimento', $yesterday)
+                    ->etc()
+                    
+                
+            )
+        );
     }
+    /*
 
     public function test_exibir_todos_os_atendimentos_em_uma_data_especifica(){
         $response = $this->getJson('/api/atendimentos/dia/2022-06-20');
