@@ -10,6 +10,7 @@
 
     <i>{{$post->name}}</i>
     <strong>em {{$post->post_date->format('d/m/Y')}}</strong>
+    <div>div</div>
 
 </body>
 </html>

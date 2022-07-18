@@ -2,5 +2,8 @@
 
 @section('content')
 
- <img src="Banner-Site2.jpg" alt="">
+<div>
+    <img class="displayed" src="img/BannerCac.png" alt="">
+</div>
+
 @endsection
