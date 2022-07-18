@@ -99,9 +99,9 @@ class AtendimentoController extends Controller
             $r = DB::table('tb_atendimentos')
             ->get();
 
-            return json_encode(['success'=>true,'r'=>$r], JSON_PRETTY_PRINT);
+            return json_encode(['r'=>$r, 'success'=>true], JSON_PRETTY_PRINT);
         } catch (\Throwable $th) {
-            return json_encode(['success'=>false,'r'=>$th], JSON_PRETTY_PRINT);
+            return json_encode(['r'=>$th, 'success'=>false], JSON_PRETTY_PRINT);
         }
     }
 
@@ -113,9 +113,9 @@ class AtendimentoController extends Controller
             ->where('id_atendimento', $id_atendimento)
             ->get();
 
-            return json_encode(['success'=>true,'r'=>$r], JSON_PRETTY_PRINT);
+            return json_encode(['r'=>$r, 'success'=>true], JSON_PRETTY_PRINT);
         } catch (\Throwable $th) {
-            return json_encode(['success'=>false,'r'=>$th], JSON_PRETTY_PRINT);
+            return json_encode(['r'=>$th, 'success'=>false], JSON_PRETTY_PRINT);
         }
     }
 
@@ -134,24 +134,37 @@ class AtendimentoController extends Controller
         }
     }
 
-    public function diaFromTo($from, $to)
+    public function daysFirstLast($first, $last)
     {
-        $fromR = Carbon::create($from);
-        $toR = Carbon::create($to);
-        $atendimentos = Atendimento::whereBetween('date_emissao_atendimento', [
-            $fromR->toDateString(),
-            $toR->toDateString()
-        ])->get();
-        return $atendimentos->toJson(JSON_PRETTY_PRINT);
+        try {
+        $f = Carbon::create($first)->toDateString();
+        $l = Carbon::create($last)->toDateString();
+
+        $r = DB::table('tb_atendimentos')
+        ->whereBetween('date_emissao_atendimento', [$f, $l])
+        ->get();
+
+
+            return json_encode(['r'=>$r, 'success'=>true], JSON_PRETTY_PRINT);
+        } catch (\Throwable $th) {
+            return json_encode(['r'=>$th, 'success'=>false], JSON_PRETTY_PRINT);
+        }
     }
 
-    public function atendimentosMonth($month)
+    public function month($month)
     {
-        $firstDayOfMonth = Carbon::create($month)->startOfMonth()->toDateString();
-        $lastDayOfMonth = Carbon::create($month)->endOfMonth()->toDateString();
-        $atendimentos = AtendimentoController::atendimentosFromToV($firstDayOfMonth, $lastDayOfMonth);
+        try {
+            $f = Carbon::create($month)->startOfMonth()->toDateString();
+            $l = Carbon::create($month)->endOfMonth()->toDateString();
+            
+            $r = DB::table('tb_atendimentos')
+            ->whereBetween('date_emissao_atendimento', [$f, $l])
+            ->get();
 
-        return $atendimentos->toJson(JSON_PRETTY_PRINT);
+            return json_encode(['r'=>$r, 'success'=>true], JSON_PRETTY_PRINT);
+        } catch (\Throwable $th) {
+            return json_encode(['r'=>$th, 'success'=>false], JSON_PRETTY_PRINT);
+        }
     }
 
     public function atendimentosQueueToday()

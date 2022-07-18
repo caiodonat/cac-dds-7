@@ -16,13 +16,15 @@ class ApiTest extends TestCase
 
         try {
 
-            $r = DB::table('tb_atendimentos')
+            $fDay = DB::table('tb_atendimentos')
             ->where('id_atendimento', 1)
             ->value('date_emissao_atendimento');
 
-            return $r;
+            $fDayCrbon = Carbon::create($fDay);
+
+            return $fDayCrbon;
         } catch (\Throwable $th) {
-            return $r;
+            return $th;
         }
     }
 
@@ -53,9 +55,7 @@ class ApiTest extends TestCase
     }
 
     public function test_day(){
-        $day = $this->firstDayDB();
-        $day = Carbon::create('2022-07-13')->toDateString();
-        //echo $day;
+        $day = $this->firstDayDB()->toDateString();
 
         $response = $this->getJson("/api/atendimentos/day/{$day}");
      
@@ -63,32 +63,46 @@ class ApiTest extends TestCase
         ->assertJson(fn (AssertableJson $json) =>
             $json->where('success', true)
             ->has('r')
-            ->has('r', 6, fn ($json1) =>
-                $json1->where('id_atendimento', 9)
-                    ->where('date_emissao_atendimento', $day)
-                    ->etc()
-                    
-                
-            )
-            ->first(fn ($json2) =>
-                $json2->each(fn ($json3) =>
-                    $json3->has('id_atendimento')
+            ->first(fn ($json1) =>
+                $json1->each(fn ($json2) =>
+                    $json2->has('id_atendimento')
                     ->where('date_emissao_atendimento', $day)
                     ->etc()
                 )
             )
         );
     }
-    /*
 
-    public function test_exibir_todos_os_atendimentos_em_uma_data_especifica(){
-        $response = $this->getJson('/api/atendimentos/dia/2022-06-20');
+    public function test_daysFirstLast(){//incomplete
+        $fDay = $this->firstDayDB();
+        $fDay7 = Carbon::create($fDay);
+        $fDay7->addDays(7);
+
+        //echo $fDay->toDateString(), $fDay7->toDateString();
+
+        $response = $this->getJson("/api/atendimentos/days/{$fDay->toDateString()}&{$fDay7->toDateString()}");
 
         $response
-            ->assertJson(fn (AssertableJson $json) =>
-               $json->where('date_emissao_atendimento', '2022-06-20')//tem que add forEach
-                ->etc()
+        ->assertJson(fn (AssertableJson $json) =>
+            $json->where('success', true)
+            ->has('r')
+            ->first(fn ($json1) =>
+                $json1->each(fn ($json2) =>
+                    $json2->has('id_atendimento')
+                    ->has('date_emissao_atendimento')
+                    ->etc()
+                )
+            )
         );
+        /*
+        foreach ($json2 as $j2 ) {
+            if($j2 >= $fDay || $j2 <= $fDay7){
+                return true;
+            }else{
+                return false;
+            }
+        }
+        */
     }
 
     public function test_exibir_todos_os_atendimentos_dentro_de_um_periodo_de_tempo(){
@@ -210,5 +224,4 @@ class ApiTest extends TestCase
                 )
             );
     }
-    */
 }
