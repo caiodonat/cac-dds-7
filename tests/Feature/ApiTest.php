@@ -28,7 +28,6 @@ class ApiTest extends TestCase
         }
     }
 
-
     //retorna todos os atendimentos no DB
     public function test_all(){
         $response = $this->getJson('/api/atendimentos/all');
@@ -94,29 +93,33 @@ class ApiTest extends TestCase
                 )
             )
         );
-        /*
-        foreach ($json2 as $j2 ) {
-            if($j2 >= $fDay || $j2 <= $fDay7){
-                return true;
-            }else{
-                return false;
-            }
-        }
-        */
     }
+    
+    public function test_monthMonth(){
+        $fDayDB = $this->firstDayDB()->toDateString();
+        
+        $r = $this->getJson("/api/atendimentos/month/{$fDayDB}");
 
-    public function test_exibir_todos_os_atendimentos_dentro_de_um_periodo_de_tempo(){
-        $response = $this->getJson('/api/atendimentos/dias/2022-06-15&2022-06-20');
-
-        $response
-            ->assertJson(fn (AssertableJson $json) =>
-            $json->first(fn ($json) =>
-               $json->where("date_emissao_atendimento")
-                ->etc()
+        $r->assertJson(fn (AssertableJson $json) =>
+        $json->where('success', true)
+        ->has('r')
+        //->count('r',$g)
+        ->first(fn ($json1) =>
+            $json1->each(fn ($json2) =>
+                $json2->has('id_atendimento')
+                    ->where('date_emissao_atendimento', (function (string $dt){
+                        $fDayDB = $this->firstDayDB();
+                        $fDM = Carbon::create($fDayDB)->startOfMonth()->toDateString();
+                        $lDM = Carbon::create($fDayDB)->endOfMonth()->toDateString();
+                        return $dt >= $fDM && 
+                        $dt <= $lDM;
+                    }))
+                    ->etc()
                 )
-            );
+            )
+        );
     }
-
+    
     public function test_exibir_todos_os_atendimentos_dentro_de_um_mes_especifico(){
         $response = $this->getJson('api/atendimentos/month/6');
 

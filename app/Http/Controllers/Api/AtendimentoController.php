@@ -151,19 +151,17 @@ class AtendimentoController extends Controller
         }
     }
 
-    public function month($month)
+    public function monthMonth($month)
     {
         try {
             $f = Carbon::create($month)->startOfMonth()->toDateString();
             $l = Carbon::create($month)->endOfMonth()->toDateString();
             
-            $r = DB::table('tb_atendimentos')
-            ->whereBetween('date_emissao_atendimento', [$f, $l])
-            ->get();
+            $r = $this->daysFirstLast($f, $l);
 
-            return json_encode(['r'=>$r, 'success'=>true], JSON_PRETTY_PRINT);
+            return $r;
         } catch (\Throwable $th) {
-            return json_encode(['r'=>$th, 'success'=>false], JSON_PRETTY_PRINT);
+            return $r;
         }
     }
 
