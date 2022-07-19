@@ -1,4 +1,4 @@
-@extends("layouts.app")
+@extends("layouts.mesa")
 
 @section('content')
 <div class="container2">
@@ -11,7 +11,7 @@
    Módulo para modificar os serviços dos determinados setores.
   </div>
 <div>
-  <select class="form-select" id="select-setor" aria-label="Default select example">
+  <select class="form-select w-75" id="select-setor" aria-label="Default select example">
     <option selected>Selecione o Setor</option>
     <option value="fcr">Financeiro</option>
     <option value="pdg">Pedagógico</option>
@@ -22,7 +22,7 @@
 </div>
 <br>
  <div>
-  <ul class="list-group-item" id="servicos-setores"></ul>
+  <ul class="list-group-item w-75" id="servicos-setores"></ul>
  </div>
  <div id="post-triagem">
  </div>

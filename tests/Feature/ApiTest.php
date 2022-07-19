@@ -53,6 +53,7 @@ class ApiTest extends TestCase
         );
     }
 
+    //retorna os atendimentos do dia atual
     public function test_day(){
         $day = $this->firstDayDB()->toDateString();
 
@@ -72,6 +73,7 @@ class ApiTest extends TestCase
         );
     }
 
+    //retorna os atendimentos realizados dentro de um espaço de tempo
     public function test_daysFirstLast(){
         $fDayDB = $this->firstDayDB();
         $fDay7 = Carbon::create($fDayDB)->addDays(7);
@@ -99,6 +101,7 @@ class ApiTest extends TestCase
         );
     }
     
+    //retorna os atendimentos realizados no mês
     public function test_monthMonth(){
         $fDayDB = $this->firstDayDB()->toDateString();
         
@@ -141,7 +144,7 @@ class ApiTest extends TestCase
                     }))
                     ->etc()
                 )
-            )
+        )
         );
     }
 
@@ -210,7 +213,7 @@ class ApiTest extends TestCase
                 )
             );
     }
-
+    
     public function test_iniciar_atendimento(){
         $response = $this->putJson('api/atendimento/begin/{id_atendimento}');
 
@@ -234,5 +237,9 @@ class ApiTest extends TestCase
                 )
             );
     }
+<<<<<<< HEAD
 
+=======
+    /*/
+>>>>>>> ca29cab9a88d236207c4a93b822e1d3cb2082121
 }

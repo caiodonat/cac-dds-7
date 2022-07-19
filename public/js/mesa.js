@@ -3,23 +3,23 @@ function navbar(){
     nav.innerHTML = " "
 
     nav.innerHTML += `<li class="nav-item">
-    <a class="nav-link active" id="home-tab" data-toggle="tab" href="../index.html" role="tab" aria-controls="home" aria-selected="true">
+    <a class="nav-link active" id="home-tab" data-toggle="tab" href="/mesa_atendimento/principal" role="tab" aria-controls="home" aria-selected="true">
       <img src="https://senaies.com.br/wp-content/uploads/2019/11/logo_senai_novo.svg" alt="Senai - ES" class="logo-img" style="height: 32px"></a>
   </li>
   <li class="nav-item">
-    <a class="nav-link" id="profile-tab" data-toggle="tab" href="atendimento.html" role="tab" aria-controls="profile"
+    <a class="nav-link" id="profile-tab" data-toggle="tab" href="/mesa_atendimento/atendimento" role="tab" aria-controls="profile"
       aria-selected="false">Atendimento</a>
   </li>
   <li class="nav-item">
-    <a class="nav-link" id="contact-tab" data-toggle="tab" href="monitor.html" role="tab" aria-controls="contact"
+    <a class="nav-link" id="contact-tab" data-toggle="tab" href="/mesa_atendimento/monitor" role="tab" aria-controls="contact"
       aria-selected="false">Monitor</a>
   </li>
   <li class="nav-item">
-    <a class="nav-link" id="contact-tab" data-toggle="tab" href="triagem.html" role="tab" aria-controls="contact"
+    <a class="nav-link" id="contact-tab" data-toggle="tab" href="/mesa_atendimento/triagem" role="tab" aria-controls="contact"
       aria-selected="false">Triagem</a>
   </li>
   <li class="nav-item">
-    <a class="nav-link" id="contact-tab" data-toggle="tab" href="configuracao.html" role="tab" aria-controls="contact"
+    <a class="nav-link" id="contact-tab" data-toggle="tab" href="/mesa_atendimento/configuracoes" role="tab" aria-controls="contact"
       aria-selected="false">Configuracao</a>
   </li>`
   }
