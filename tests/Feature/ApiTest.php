@@ -123,27 +123,24 @@ class ApiTest extends TestCase
             )
         );
     }
-    
-    public function test_exibir_todos_os_atendimentos_dentro_de_um_mes_especifico(){
-        $response = $this->getJson('api/atendimentos/month/6');
 
-        $response
-            ->assertJson(fn (AssertableJson $json) =>
-            $json->first(fn ($json) =>
-                $json->where("date_emissao_atendimento", '2022-06-01 , 2022-06-30')
-                ->etc()
-            )
-        );
-    }
+    public function test_queueToday(){
+        $r = $this->getJson('api/atendimentos/queue/today');
 
-    public function test_exibir_proximos_atendimentos(){
-        $response = $this->getJson('api/atendimentos/');
+        $r->assertJson(fn (AssertableJson $json) =>
+        $json->has('r')
+        ->where('success', true)
+        ->first(fn ($json1) =>
+            $json1->each(fn ($json2) =>
+                $json2->has('id_atendimento')
 
-        $response
-            ->assertJson(fn (AssertableJson $json) =>
-            $json->first(fn ($json) =>
-               $json->where("atendimentosQueueToday")
-                ->etc()
+                    ->where('date_emissao_atendimento', (function (string $dea){
+                        $cNow = Carbon::now('-03:00')->toDateString();
+                        return $dea == $cNow;
+
+                    }))
+                    ->etc()
+                )
             )
         );
     }
@@ -231,4 +228,5 @@ class ApiTest extends TestCase
                 )
             );
     }
+
 }
