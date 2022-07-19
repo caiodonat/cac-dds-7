@@ -39,7 +39,7 @@ Route::get('/atendimentos/month/{month}', [AtendimentoController::class, 'monthM
 Route::get('/atendimentos/queue/today', [AtendimentoController::class, 'queueToday']);
 
 //Esta rota vai chamar o proximo da fila que sera antendido
-Route::get('/atendimento/queue_next', [AtendimentoController::class, 'atendimentosQueueTodayNext']);
+Route::get('/atendimentos/queue/today/next', [AtendimentoController::class, 'queueTodayNext']);
 
 //Esta rota vai chamar a senha anterior caso a mesma nao tenha comparecido ao guiche
 Route::get('/atendimentos/afterQueue', [AtendimentoController::class, 'atendimentosAfterQueueToday']);

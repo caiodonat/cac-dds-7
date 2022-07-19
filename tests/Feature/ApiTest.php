@@ -145,16 +145,22 @@ class ApiTest extends TestCase
         );
     }
 
-    public function test_chamar_proximo_da_fila(){
-        $response = $this->getJson('api//atendimento/');
+    public function test_queueTodayNext(){
+        $r = $this->getJson('api/atendimentos/queue/today/next');
 
-        $response
-            ->assertJson(fn (AssertableJson $json) =>
-            $json->first(fn ($json) =>
-               $json->where('atendimentosQueueTodayNext')
-                ->etc()
+        $cNow = Carbon::now('-03:00')->toDateString();
+
+        $r->assertJson(fn (AssertableJson $json) =>
+            $json->has('r', 1)
+            ->where('success', true)
+            ->first(fn ($json1) =>
+                $json1->first(fn ($json2) =>
+                    $json2->has('id_atendimento')
+                    ->where('date_emissao_atendimento', $cNow)
+                    ->etc()
                 )
-            );
+            )
+        );
     }
 
     public function test_chamar_novamente_senha_que_nao_compareceu(){
