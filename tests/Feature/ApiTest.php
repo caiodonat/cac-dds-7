@@ -126,30 +126,44 @@ class ApiTest extends TestCase
             )
         );
     }
-    
-    //retorna os próximos atendimentos a serem realizados
-    public function test_next_appointments(){
-        $carbonNow = Carbon::now('-03:00');
 
-        $atendimentos = DB::table('tb_atendimentos')
-        ->where("date_emissao_atendimento", $carbonNow->toDateString())
-        ->where("inicio_atendimento", "=", null)
-        ->get();
+    public function test_queueToday(){
+        $r = $this->getJson('api/atendimentos/queue/today');
 
-        return $atendimentos;
+        $r->assertJson(fn (AssertableJson $json) =>
+        $json->has('r')
+        ->where('success', true)
+        ->first(fn ($json1) =>
+            $json1->each(fn ($json2) =>
+                $json2->has('id_atendimento')
+
+                    ->where('date_emissao_atendimento', (function (string $dea){
+                        $cNow = Carbon::now('-03:00')->toDateString();
+                        return $dea == $cNow;
+
+                    }))
+                    ->etc()
+                )
+        )
+        );
     }
 
-    /*
-    public function test_chamar_proximo_da_fila(){
-        $response = $this->getJson('api//atendimento/');
+    public function test_queueTodayNext(){
+        $r = $this->getJson('api/atendimentos/queue/today/next');
 
-        $response
-            ->assertJson(fn (AssertableJson $json) =>
-            $json->first(fn ($json) =>
-               $json->where('atendimentosQueueTodayNext')
-                ->etc()
+        $cNow = Carbon::now('-03:00')->toDateString();
+
+        $r->assertJson(fn (AssertableJson $json) =>
+            $json->has('r', 1)
+            ->where('success', true)
+            ->first(fn ($json1) =>
+                $json1->first(fn ($json2) =>
+                    $json2->has('id_atendimento')
+                    ->where('date_emissao_atendimento', $cNow)
+                    ->etc()
                 )
-            );
+            )
+        );
     }
 
     public function test_chamar_novamente_senha_que_nao_compareceu(){
@@ -223,5 +237,9 @@ class ApiTest extends TestCase
                 )
             );
     }
+<<<<<<< HEAD
+
+=======
     /*/
+>>>>>>> ca29cab9a88d236207c4a93b822e1d3cb2082121
 }
