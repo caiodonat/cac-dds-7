@@ -72,14 +72,11 @@ class ApiTest extends TestCase
         );
     }
 
-    public function test_daysFirstLast(){//incomplete
-        $fDay = $this->firstDayDB();
-        $fDay7 = Carbon::create($fDay);
-        $fDay7->addDays(7);
-
-        //echo $fDay->toDateString(), $fDay7->toDateString();
-
-        $response = $this->getJson("/api/atendimentos/days/{$fDay->toDateString()}&{$fDay7->toDateString()}");
+    public function test_daysFirstLast(){
+        $fDayDB = $this->firstDayDB();
+        $fDay7 = Carbon::create($fDayDB)->addDays(7);
+        
+        $response = $this->getJson("/api/atendimentos/days/{$fDayDB->toDateString()}&{$fDay7->toDateString()}");
 
         $response
         ->assertJson(fn (AssertableJson $json) =>
@@ -88,7 +85,14 @@ class ApiTest extends TestCase
             ->first(fn ($json1) =>
                 $json1->each(fn ($json2) =>
                     $json2->has('id_atendimento')
-                    ->has('date_emissao_atendimento')
+
+                    ->where('date_emissao_atendimento', (function (string $dt){
+                        $fDayDB = $this->firstDayDB();
+                        $fDay7 = Carbon::create($fDayDB)->addDays(7);
+
+                        return $dt >= $fDayDB->toDateString() && 
+                        $dt <= $fDay7->toDateString();
+                    }))
                     ->etc()
                 )
             )
@@ -103,10 +107,10 @@ class ApiTest extends TestCase
         $r->assertJson(fn (AssertableJson $json) =>
         $json->where('success', true)
         ->has('r')
-        //->count('r',$g)
         ->first(fn ($json1) =>
             $json1->each(fn ($json2) =>
                 $json2->has('id_atendimento')
+
                     ->where('date_emissao_atendimento', (function (string $dt){
                         $fDayDB = $this->firstDayDB();
                         $fDM = Carbon::create($fDayDB)->startOfMonth()->toDateString();
