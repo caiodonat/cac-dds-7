@@ -161,7 +161,7 @@ class AtendimentoController extends Controller
 
             return $r;
         } catch (\Throwable $th) {
-            return $r;
+            return $th;
         }
     }
 

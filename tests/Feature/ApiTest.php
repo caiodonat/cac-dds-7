@@ -53,6 +53,7 @@ class ApiTest extends TestCase
         );
     }
 
+    //retorna os atendimentos do dia atual
     public function test_day(){
         $day = $this->firstDayDB()->toDateString();
 
@@ -72,6 +73,7 @@ class ApiTest extends TestCase
         );
     }
 
+    //retorna os atendimentos realizados dentro de um espaço de tempo
     public function test_daysFirstLast(){
         $fDayDB = $this->firstDayDB();
         $fDay7 = Carbon::create($fDayDB)->addDays(7);
@@ -99,6 +101,7 @@ class ApiTest extends TestCase
         );
     }
     
+    //retorna os atendimentos realizados no mês
     public function test_monthMonth(){
         $fDayDB = $this->firstDayDB()->toDateString();
         
@@ -124,30 +127,19 @@ class ApiTest extends TestCase
         );
     }
     
-    public function test_exibir_todos_os_atendimentos_dentro_de_um_mes_especifico(){
-        $response = $this->getJson('api/atendimentos/month/6');
+    //retorna os próximos atendimentos a serem realizados
+    public function test_next_appointments(){
+        $carbonNow = Carbon::now('-03:00');
 
-        $response
-            ->assertJson(fn (AssertableJson $json) =>
-            $json->first(fn ($json) =>
-                $json->where("date_emissao_atendimento", '2022-06-01 , 2022-06-30')
-                ->etc()
-            )
-        );
+        $atendimentos = DB::table('tb_atendimentos')
+        ->where("date_emissao_atendimento", $carbonNow->toDateString())
+        ->where("inicio_atendimento", "=", null)
+        ->get();
+
+        return $atendimentos;
     }
 
-    public function test_exibir_proximos_atendimentos(){
-        $response = $this->getJson('api/atendimentos/');
-
-        $response
-            ->assertJson(fn (AssertableJson $json) =>
-            $json->first(fn ($json) =>
-               $json->where("atendimentosQueueToday")
-                ->etc()
-            )
-        );
-    }
-
+    /*
     public function test_chamar_proximo_da_fila(){
         $response = $this->getJson('api//atendimento/');
 
@@ -207,7 +199,7 @@ class ApiTest extends TestCase
                 )
             );
     }
-
+    
     public function test_iniciar_atendimento(){
         $response = $this->putJson('api/atendimento/begin/{id_atendimento}');
 
@@ -231,4 +223,5 @@ class ApiTest extends TestCase
                 )
             );
     }
+    /*/
 }
