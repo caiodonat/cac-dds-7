@@ -35,14 +35,14 @@ Route::get('/atendimentos/days/{first}&{last}', [AtendimentoController::class, '
 //retorna todos atendimentos de um Mes expecifico
 Route::get('/atendimentos/month/{month}', [AtendimentoController::class, 'monthMonth'])->name("atendimentos.month");
 
-//Esta rota vai exibir os proximos atendimentos a serem realizados
-Route::get('/atendimentos/queue/today', [AtendimentoController::class, 'queueToday']);
+//retorna todos os atendimento do dia atual
+Route::get('/atendimentos/queue', [AtendimentoController::class, 'queue']);
 
-//Esta rota vai chamar o proximo da fila que sera antendido
-Route::get('/atendimentos/queue/today/next', [AtendimentoController::class, 'queueTodayNext']);
+//retorna o proximo atendimento na fila do dia atual
+Route::get('/atendimentos/queue/next', [AtendimentoController::class, 'queueNext']);
 
 //Esta rota vai chamar a senha anterior caso a mesma nao tenha comparecido ao guiche
-Route::get('/atendimentos/afterQueue', [AtendimentoController::class, 'atendimentosAfterQueueToday']);
+Route::get('/atendimentos/queue/already_called', [AtendimentoController::class, 'queueAlreadyCalled']);
 
 //retorna um atendimento especifico (do dia atual) com base na variavel 'numero_atendimento'
 Route::get('atendimento/numero_atendimento/{numero_atendimento}', [AtendimentoController::class, 'atendimentoTodayNumber']);
