@@ -1,4 +1,4 @@
-@extends("layouts.totem")
+@extends("layouts.totemfinanceiro")
 @section('content')
 
 <div class="container">
@@ -30,7 +30,7 @@
         </div>
     </div>
     <br>
-    <input type="text" id="campo-texto" class="field_cpf" placeholder="CPF (Opcional)" aria-label="Search"
+    <input type="numeric" id="campo-texto" class="field_cpf" placeholder="CPF (Opcional)" aria-label="Search"
         aria-describedby="search-addon" />
     <button id='getData' class="btn-emitirsenha" onclick="EmitirSenha('FCR'); callAlert(); optionsChecked();">Emitir
         Senha</button>

@@ -1,4 +1,4 @@
-@extends("layouts.totem")
+@extends("layouts.totempedagogico")
 @section('content')
 
 <div class="logo_senai">
@@ -37,7 +37,7 @@
     </div>
     <br>
 
-    <input type="text" id="campo-texto" class="field_cpf" placeholder="CPF (Opcional)" aria-label="Search"
+    <input type="numeric" id="campo-texto" class="field_cpf" placeholder="CPF (Opcional)" aria-label="Search"
         aria-describedby="search-addon" />
     <button id='getData' class="btn-emitirsenha" onclick="EmitirSenha('PDG'); callAlert(); optionsChecked();">Emitir Senha</button>
 

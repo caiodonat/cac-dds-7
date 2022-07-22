@@ -23,7 +23,7 @@
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
     <link href="{{ asset('css/totem.css') }}" rel="stylesheet">
 </head>
-<body class="container1"> 
+<body class="container1" onload="servicoPedagogico();"> 
     <div id="app">
         <nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm">
             <div class="container">
