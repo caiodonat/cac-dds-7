@@ -60,6 +60,33 @@ Route::get('/mesa_atendimento/principal', function(){
     return view('mesa_atendimento.configuracoes');
  })->name('configuracoes');
 
+ Route::get('/totem/financeiro', function(){
+   return view('totem.financeiro');
+})->name('financeiro');
+
+Route::get('/totem/totem', function(){
+   return view('totem.totem');
+})->name('inicio');
+
+Route::get('/totem/outros', function(){
+   return view('totem.outros');
+})->name('outros');
+
+Route::get('/totem/secretaria', function(){
+   return view('totem.secretaria');
+})->name('secretaria');
+
+Route::get('/totem/pedagogico', function(){
+   return view('totem.pedagogico');
+})->name('pedagogico');
+
+Route::get('/totem/painel', function(){
+   return view('totem.painel');
+})->name('painel');
+
+Route::get('/totem/alert', function(){
+   return view('totem.alert');
+})->name('alert');
 Auth::routes();
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
