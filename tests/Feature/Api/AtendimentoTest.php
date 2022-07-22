@@ -210,16 +210,23 @@ class AtendimentoTest extends TestCase
         );
     }
 
-    public function test_senhas_a_serem_atendidas(){
-        $response = $this->getJson('api/atendimento/to_call');
+    public function test_queueNextTo_call(){
+        $r = $this->getJson('api/atendimentos/queue/next/to_call');
 
-        $response
-            ->assertJson(fn (AssertableJson $json) =>
-            $json->first(fn ($json) =>
-               $json->where('ToCallNext')
-                ->etc()
+        $cNow = Carbon::now('-03:00')->toDateString();
+
+        $r->assertJson(fn (AssertableJson $json) =>
+        $json->has('r')
+        ->where('success', true)
+        ->first(fn ($json1) =>
+            $json1->first(fn ($json2) =>
+                $json2->has('id_atendimento')
+                    ->where('date_emissao_atendimento', $cNow)
+                    ->where('status_atendimento', 'chamando')
+                    ->etc()
                 )
-            );
+            )
+        );
     }
 
     public function test_chamar_senha_no_telao_e_alterar_o_valor_do_staus_do_atendimetno(){
