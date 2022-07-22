@@ -7,41 +7,57 @@ use Illuminate\Support\Facades\Redis;
 
 use App\Http\Controllers\Controller;
 use App\Models\Servicos as Servicos;
-use DB;
+use Illuminate\Support\Facades\DB;
 
 class ServicosController extends Controller
 {
     public function getPDG()
     {
-        $servicos = DB::table('tb_servicos')
-        ->where("setor", "PDG")
-        ->get();
+        try {
+            $r = DB::table('tb_servicos')
+            ->where('setor', 'PDG')
+            ->get();
 
-        return json_encode($servicos, JSON_PRETTY_PRINT);
+            return json_encode(['r'=>$r, 'success'=>true], JSON_PRETTY_PRINT);
+        } catch (\Throwable $th) {
+            return json_encode(['r'=>$th, 'success'=>false], JSON_PRETTY_PRINT);
+        }
     }
     public function getFCR()
     {
-        $servicos = DB::table('tb_servicos')
-        ->where("setor", "FCR")
-        ->get();
+        try{
+            $r = DB::table('tb_servicos')
+            ->where('setor', 'FCR')
+            ->get();
 
-        return json_encode($servicos, JSON_PRETTY_PRINT);
+            return json_encode(['r'=>$r, 'success'=>true], JSON_PRETTY_PRINT);
+        } catch (\Throwable $th) {
+            return json_encode(['r'=>$th, 'success'=>false], JSON_PRETTY_PRINT);
+        }
     }
     public function getSCT()
     {
-        $servicos = DB::table('tb_servicos')
-        ->where("setor", "SCT")
-        ->get();
+        try{
+            $r = DB::table('tb_servicos')
+            ->where('setor', 'SCT')
+            ->get();
 
-        return json_encode($servicos, JSON_PRETTY_PRINT);
+            return json_encode(['r'=>$r, 'success'=>true], JSON_PRETTY_PRINT);
+        } catch (\Throwable $th) {
+            return json_encode(['r'=>$th, 'success'=>false], JSON_PRETTY_PRINT);
+        }
     }
     public function getOTS()
     {
-        $servicos = DB::table('tb_servicos')
-        ->where("setor", "OTS")
-        ->get();
+        try{
+            $r = DB::table('tb_servicos')
+            ->where('setor', 'OTS')
+            ->get();
 
-        return json_encode($servicos, JSON_PRETTY_PRINT);
+            return json_encode(['r'=>$r, 'success'=>true], JSON_PRETTY_PRINT);
+        } catch (\Throwable $th) {
+            return json_encode(['r'=>$th, 'success'=>false], JSON_PRETTY_PRINT);
+        }
     }
     public function postServico($setor, $servico)
     {

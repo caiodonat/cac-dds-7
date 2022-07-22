@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\Feature;
+namespace Tests\Feature\Api;
 
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
@@ -9,7 +9,7 @@ use Illuminate\Support\Facades\DB;
 use Tests\TestCase;
 use Carbon\Carbon;
 
-class ApiTest extends TestCase
+class AtendimentoTest extends TestCase
 {
     private function firstDayDB(){
         $carbonNow = Carbon::now('-03:00');
@@ -127,8 +127,8 @@ class ApiTest extends TestCase
         );
     }
 
-    public function test_queueToday(){
-        $r = $this->getJson('api/atendimentos/queue/today');
+    public function test_queue(){
+        $r = $this->getJson('api/atendimentos/queue');
 
         $r->assertJson(fn (AssertableJson $json) =>
         $json->has('r')
@@ -148,8 +148,8 @@ class ApiTest extends TestCase
         );
     }
 
-    public function test_queueTodayNext(){
-        $r = $this->getJson('api/atendimentos/queue/today/next');
+    public function test_queueNext(){
+        $r = $this->getJson('api/atendimentos/queue/next');
 
         $cNow = Carbon::now('-03:00')->toDateString();
 
@@ -166,16 +166,25 @@ class ApiTest extends TestCase
         );
     }
 
-    public function test_chamar_novamente_senha_que_nao_compareceu(){
-        $response = $this->getJson('api/atendimentos/');
+    public function test_queueAlreadyCalled(){
+        $r = $this->getJson('api/atendimentos/queue/already_called');
 
-        $response
-            ->assertJson(fn (AssertableJson $json) =>
-            $json->first(fn ($json) =>
-               $json->where('atendimentosAfterQueueToday')
-                ->etc()
+        $cNow = Carbon::now('-03:00')->toDateString();
+
+        if($r->assertJson(fn (AssertableJson $json) =>
+            $json->has('r')
+            ->where('success', true)
+            ->first(fn ($json1) =>
+                $json1->first(fn ($json2) =>
+                    $json2->where('id_atendimento', 8)
+                    ->where('date_emissao_atendimento', $cNow)
+                    ->whereNotNull('first_call')//incomplete
+                    ->etc()
                 )
-            );
+            )
+        )){
+            echo "XD";
+        }
     }
 
     public function test_exibir_um_atendimento_especifico_do_dia_pelo_numero_atendimento(){
@@ -237,9 +246,4 @@ class ApiTest extends TestCase
                 )
             );
     }
-<<<<<<< HEAD
-
-=======
-    /*/
->>>>>>> ca29cab9a88d236207c4a93b822e1d3cb2082121
 }
