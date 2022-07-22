@@ -114,11 +114,12 @@ class AtendimentoTest extends TestCase
             $json1->each(fn ($json2) =>
                 $json2->has('id_atendimento')
 
-                    ->where('date_emissao_atendimento', (function (string $dt){
-                        $fDayDB = $this->firstDayDB();
-                        $fDM = Carbon::create($fDayDB)->startOfMonth()->toDateString();
-                        $lDM = Carbon::create($fDayDB)->endOfMonth()->toDateString();
-                        return $dt >= $fDM && 
+                    ->where('date_emissao_atendimento',
+                        (function (string $dt){
+                            $fDayDB = $this->firstDayDB();
+                            $fDM = Carbon::create($fDayDB)->startOfMonth()->toDateString();
+                            $lDM = Carbon::create($fDayDB)->endOfMonth()->toDateString();
+                            return $dt >= $fDM && 
                         $dt <= $lDM;
                     }))
                     ->etc()
@@ -171,32 +172,42 @@ class AtendimentoTest extends TestCase
 
         $cNow = Carbon::now('-03:00')->toDateString();
 
-        if($r->assertJson(fn (AssertableJson $json) =>
+        $r->assertJson(fn (AssertableJson $json) =>
             $json->has('r')
             ->where('success', true)
             ->first(fn ($json1) =>
                 $json1->first(fn ($json2) =>
-                    $json2->where('id_atendimento', 8)
+                    $json2->has('id_atendimento')
                     ->where('date_emissao_atendimento', $cNow)
-                    ->whereNotNull('first_call')//incomplete
+                    ->where('first_call',
+                        (function (string $fc){
+
+                            return $fc != null;
+                        })
+                    )
                     ->etc()
                 )
             )
-        )){
-            echo "XD";
-        }
+        );
     }
 
-    public function test_exibir_um_atendimento_especifico_do_dia_pelo_numero_atendimento(){
-        $response = $this->getJson('api/atendimento/numero_atendimento/');
+    public function test_queueNumber(){
+        $r = $this->getJson('api/atendimentos/queue/number/1');
 
-        $response
-            ->assertJson(fn (AssertableJson $json) =>
-            $json->first(fn ($json) =>
-               $json->where('atendimentoTodayNumber')
-                ->etc()
+        $cNow = Carbon::now('-03:00')->toDateString();
+
+        $r->assertJson(fn (AssertableJson $json) =>
+        $json->has('r')
+        ->where('success', true)
+        ->first(fn ($json1) =>
+            $json1->first(fn ($json2) =>
+                $json2->has('id_atendimento')
+                    ->where('date_emissao_atendimento', $cNow)
+                    ->where('numero_atendimento', 1)
+                    ->etc()
                 )
-            );
+            )
+        );
     }
 
     public function test_senhas_a_serem_atendidas(){

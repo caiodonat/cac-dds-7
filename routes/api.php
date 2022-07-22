@@ -45,7 +45,7 @@ Route::get('/atendimentos/queue/next', [AtendimentoController::class, 'queueNext
 Route::get('/atendimentos/queue/already_called', [AtendimentoController::class, 'queueAlreadyCalled']);
 
 //retorna um atendimento especifico (do dia atual) com base na variavel 'numero_atendimento'
-Route::get('atendimento/numero_atendimento/{numero_atendimento}', [AtendimentoController::class, 'atendimentoTodayNumber']);
+Route::get('atendimentos/queue/number/{numero_atendimento}', [AtendimentoController::class, 'queueNumber']);
 
 //chama a proxima senha no telao e altera valor de status_atendimento
 Route::get('/atendimento/to_call_next', [AtendimentoController::class, 'toCallNext']);
