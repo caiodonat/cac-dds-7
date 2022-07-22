@@ -29,7 +29,7 @@
 
     <div class="my-5">
       <h4>Minha fila (todos):</h4>
-      <ul id="fila_espera">
+      <ul class="w-75" id="fila_espera">
       </ul>
     </div>
   </div>
