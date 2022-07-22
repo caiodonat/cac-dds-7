@@ -165,7 +165,7 @@ class AtendimentoController extends Controller
         }
     }
 
-    public function queueToday()
+    public function queue()
     {
         try {
             $cNow = Carbon::now('-03:00')->toDateString();
@@ -182,7 +182,7 @@ class AtendimentoController extends Controller
         }
     }
 
-    public function queueTodayNext()
+    public function queueNext()
     {
         try {
             $cNow = Carbon::now('-03:00')->toDateString();
@@ -199,15 +199,20 @@ class AtendimentoController extends Controller
         }
     }
 
-    public function atendimentosAfterQueueToday()
+    public function queueAlreadyCalled()
     {
-        $carbonNow = Carbon::now('-03:00');
-
-        $atendimentos = Atendimento::where("date_emissao_atendimento", $carbonNow->toDateString())
-            ->where("inicio_atendimento", "!=", null)
+        try {
+            $cNow = Carbon::now('-03:00')->toDateString();
+            
+            $r = DB::table('tb_atendimentos')
+            ->where("date_emissao_atendimento", $cNow)
+            ->whereNotNull("first_call")
             ->get();
 
-        return $atendimentos->toJson(JSON_PRETTY_PRINT);
+            return json_encode(['r'=>$r, 'success'=>true], JSON_PRETTY_PRINT);
+        } catch (\Throwable $th) {
+            return json_encode(['r'=>$th, 'success'=>false], JSON_PRETTY_PRINT);
+        }
     }
 
     public function atendimentoTodayNumber($numero_atendimento)
@@ -239,7 +244,7 @@ class AtendimentoController extends Controller
     { //, $guiche
         $carbonNow = Carbon::now('-03:00');
         Atendimento::where("id_atendimento", "=", $id_atendimento)
-            ->update(['inicio_atendimento' => $carbonNow->toDateTimeString()]);
+            ->update(['started' => $carbonNow->toDateTimeString()]);
 
         //$atendimento = Atendimento::where("id_atendimento", "=", $id_atendimento);//aparentemente não é a mesma coisa
         $atendimento = Atendimento::findOrFail($id_atendimento);

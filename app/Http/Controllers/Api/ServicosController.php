@@ -7,12 +7,21 @@ use Illuminate\Support\Facades\Redis;
 
 use App\Http\Controllers\Controller;
 use App\Models\Servicos as Servicos;
-use DB;
+use Illuminate\Support\Facades\DB;
 
 class ServicosController extends Controller
 {
     public function getPDG()
     {
+        try {
+            $r = DB::table('tb_servicos')
+            ->where('setor', 'PDG')
+            ->get();
+
+            return json_encode(['r'=>$r, 'success'=>true], JSON_PRETTY_PRINT);
+        } catch (\Throwable $th) {
+            return json_encode(['r'=>$th, 'success'=>false], JSON_PRETTY_PRINT);
+        }
         $servicos = DB::table('tb_servicos')
         ->where("setor", "PDG")
         ->get();
