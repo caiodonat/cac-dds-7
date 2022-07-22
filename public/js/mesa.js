@@ -247,14 +247,17 @@ function getProximos(){
     fila.innerHTML = " "
 
     const uri = `https://central-atendimento-cliente.herokuapp.com/api/atendimentos/queue`
-    fetch(uri).then(r => r.json().then(r => {
-
-        r.forEach(r1 => {
-
-        fila.innerHTML += `<li class="list-group-item"> Senha:  ${r1.numero_atendimento}${r1.sufixo_atendimento}</li>`
-        });
-            console.log(r)
-    }))
+    resp = fetch(uri)
+    .then(r =>r.json().then(r =>{
+                if(r.success){
+                    r.r.forEach(r1 => {
+                        fila.innerHTML += `<li class="list-group-item"> Senha:  ${r1.numero_atendimento}${r1.sufixo_atendimento}</li>`
+                    });
+                }else{
+                    console.log("falha -> " + r.r[0]);
+                }
+        })
+    )
 
 }
 

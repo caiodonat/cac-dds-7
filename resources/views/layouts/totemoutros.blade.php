@@ -10,20 +10,20 @@
     <title>{{ config('app.name', 'Laravel') }}</title>
 
     <!-- Scripts -->
-    <script src="{{ asset('js/script.js') }}" defer></script>
+    <script src="{{ asset('js/totem.js') }}" defer></script>
     <script src="{{ asset('js/app.js') }}" defer></script>
     <script src="{{ asset('js/mesa.js') }}" defer></script>
+    <script src="{{ asset('js/script.js') }}" defer></script>
 
     <!-- Fonts -->
     <link rel="dns-prefetch" href="//fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet">
 
     <!-- Styles -->
-    <link href="{{ asset('css/telao.css') }}" rel="stylesheet">
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
-    <link href="{{ asset('css/mesa.css') }}" rel="stylesheet">
+    <link href="{{ asset('css/totem.css') }}" rel="stylesheet">
 </head>
-<body onload="navbar(); getProximos()">
+<body class="container1" onload="servicoOutrosServicos();"> 
     <div id="app">
         <nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm">
             <div class="container">
@@ -78,7 +78,7 @@
                 </div>
             </div>
         </nav>
-        <main class="">
+        <main class="py-4">
             @yield('content')
         </main>
     </div>

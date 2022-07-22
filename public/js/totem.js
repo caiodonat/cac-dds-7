@@ -1,5 +1,5 @@
 function callAlert(){
-    location.href = "alert.html"
+    location.href = "alert"
 }
 
 function EmitirSenha(servicos) {
@@ -95,7 +95,11 @@ function GetData() {
 
 function servicoFinanceiro(){
     servicos = document.getElementById("opcoesFcr");
+<<<<<<< HEAD
+    servicos.innerHTML = " ";
+=======
     servicos.innerHTML = "hi";
+>>>>>>> 03490280f854dee051d064eb3d6c34611f5931ba
 
     const uri = `https://central-atendimento-cliente.herokuapp.com/api/servicos/fcr`
     resp = fetch(uri)
@@ -119,63 +123,78 @@ function servicoFinanceiro(){
 }
 
 function servicoPedagogico(){
-    servicos = document.getElementById("opcoesPdg")
-    servicos.innerHTML = " "
+    servicos = document.getElementById("opcoesPdg");
+    servicos.innerHTML = " ";
 
     const uri = `https://central-atendimento-cliente.herokuapp.com/api/servicos/pdg`
-    fetch(uri).then(r => r.json().then(r =>{
-        r.forEach(r1 => {
-
-            servicos.innerHTML += ` <div class="box-opt">
-            <label for="opt1" id="">
-                <input type="checkbox" value="opcao1" name="opt" id="">
-                ${r1.servico}
-            </label>
-        </div> `
-            console.log(r1.servico)
-        });
-    }))
-
+    resp = fetch(uri)
+    .then(r =>r.json().then(r =>{
+                if(r.success){
+                    r.r.forEach(r1 => {
+                        servicos.innerHTML += `
+                            <div class="box-opt">
+                                <label for="opt1" id="">
+                                    <input type="checkbox" class="messageCheckbox" value="${r1.id_atendimento}" name="opt" id="">
+                                    ${r1.servico}
+                                </label>
+                            </div>
+                        `
+                    });
+                }else{
+                    console.log("falha -> " + r.r[0]);
+                }
+        })
+    )
 }
 
 function servicoSecretaria(){
-    servicos = document.getElementById("opcoesSct")
-    servicos.innerHTML = " "
+    servicos = document.getElementById("opcoesSct");
+    servicos.innerHTML = " ";
 
     const uri = `https://central-atendimento-cliente.herokuapp.com/api/servicos/sct`
-    fetch(uri).then(r => r.json().then(r =>{
-        r.forEach(r1 => {
-
-            servicos.innerHTML += ` <div class="box-opt">
-            <label for="opt1" id="">
-                <input type="checkbox" value="opcao1" name="opt" id="">
-                ${r1.servico}
-            </label>
-        </div> `
-            console.log(r1.servico)
-        });
-    }))
-
+    resp = fetch(uri)
+    .then(r =>r.json().then(r =>{
+                if(r.success){
+                    r.r.forEach(r1 => {
+                        servicos.innerHTML += `
+                            <div class="box-opt">
+                                <label for="opt1" id="">
+                                    <input type="checkbox" class="messageCheckbox" value="${r1.id_atendimento}" name="opt" id="">
+                                    ${r1.servico}
+                                </label>
+                            </div>
+                        `
+                    });
+                }else{
+                    console.log("falha -> " + r.r[0]);
+                }
+        })
+    )
 }
 
 function servicoOutrosServicos(){
-    servicos = document.getElementById("opcoesOts")
-    servicos.innerHTML = " "
+    servicos = document.getElementById("opcoesOts");
+    servicos.innerHTML = " ";
 
     const uri = `https://central-atendimento-cliente.herokuapp.com/api/servicos/ots`
-    fetch(uri).then(r => r.json().then(r =>{
-        r.forEach(r1 => {
-
-            servicos.innerHTML += ` <div class="box-opt">
-            <label for="opt1" id="">
-                <input type="checkbox" value="${r1.servico}" name="opt" id="">
-                ${r1.servico}
-            </label>
-        </div> `
-            console.log(r1.servico)
-        });
-    }))
-
+    resp = fetch(uri)
+    .then(r =>r.json().then(r =>{
+                if(r.success){
+                    r.r.forEach(r1 => {
+                        servicos.innerHTML += `
+                            <div class="box-opt">
+                                <label for="opt1" id="">
+                                    <input type="checkbox" class="messageCheckbox" value="${r1.id_atendimento}" name="opt" id="">
+                                    ${r1.servico}
+                                </label>
+                            </div>
+                        `
+                    });
+                }else{
+                    console.log("falha -> " + r.r[0]);
+                }
+        })
+    )
 }
  
  
