@@ -237,9 +237,4 @@ class ApiTest extends TestCase
                 )
             );
     }
-<<<<<<< HEAD
-
-=======
-    /*/
->>>>>>> ca29cab9a88d236207c4a93b822e1d3cb2082121
 }
