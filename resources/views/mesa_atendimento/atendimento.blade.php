@@ -22,7 +22,7 @@
       </div>
 
       <div class="col-md-9 mt-2">
-        <button class="btn-block btn-chamar" onclick="chamarTela()"><i class="fas  fa-bullhorn fa-fw"></i> Chamar proximo</button>
+        <button class="btn-block btn-chamar" onclick="chamarTela()"><i class="fas  fa-bullhorn fa-fw"></i> Chamar próximo</button>
       </div>
 
     </div>
