@@ -104,11 +104,6 @@ function GetData() {
 
 }
 
-
-
-
-
-
 function GetFila(){
 
     itemLista = document.getElementById("fila_espera");
@@ -261,7 +256,6 @@ function getProximos(){
 
 }
 
-
 function getRequerimento(){
 
     requerimento = document.getElementById("requerimento");
@@ -314,8 +308,6 @@ function getNext(){
 
     }))
 }
-
-
 
 function addAtributos(){
     add = document.getElementById("addRequisitos");

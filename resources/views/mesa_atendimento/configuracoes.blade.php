@@ -18,7 +18,7 @@
       <option value="sct">Secretaria</option>
       <option value="ots">Outros Serviços</option>
     </select>
-    <button type="button" id="btn-config" class="btn mt-4 btn-primary btn-lg">Buscar</button>
+    <button type="button" id="btn-config" class="btn mt-4 btn-primary btn-lg" onclick="selecionarSetor(document.getElementById('select-setor').value)">Buscar</button>
   </div>
   <br>
   <div>
@@ -26,7 +26,9 @@
   </div>
   <div id="post-config">
   </div>
-  <div class="w-75" id="add">
+  <div class="w-75">
+    <div id="add"></div>
+      <!--inner here-->
   </div>
 </div>
 @endsection
