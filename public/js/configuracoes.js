@@ -10,6 +10,7 @@ document.addEventListener("DOMContentLoaded", function (evt) {
 })
 */
 const endpoint = "https://central-atendimento-cliente.herokuapp.com/";
+//const endpoint = "http://127.0.0.1:8000/";
 
 const selecionarSetor = function (value) {
     console.log(value);
@@ -42,7 +43,7 @@ const selecionarSetor = function (value) {
 const postServico = function (setorValue, servicoValue) {
     //falta validar tamanho maximo de char
 
-    const uri = `https://central-atendimento-cliente.herokuapp.com/api/servicos/post/`;
+    const uri = endpoint + "api/servicos/post/";
     const dataObject = {
         method: 'POST',
         headers: {
@@ -56,8 +57,49 @@ const postServico = function (setorValue, servicoValue) {
     }
 
     fetch(uri, dataObject)
-    .then(response => {
-        console.log(response);
-        return response.json();
-    })
+    .then(response => {console.log(response)})
+    .then(json => console.log(json))
 }
+
+function GetFila() {
+    itemLista = document.getElementById("fila_espera");
+  
+    const dataAtendimento = document.getElementById("data-atendimento");
+    console.log(dataAtendimento.value);
+  
+    const uri = "/proxy.php";
+  
+    itemLista.innerHTML = "";
+    const proxyParm = dataAtendimento.value;
+  
+    console.log(proxyParm);
+  
+    const loader = document.getElementById("progresso");
+  
+    //console.log(loader)
+  
+    const btnBuscar = document.getElementById("btn-buscar");
+    btnBuscar.setAttribute("disabled", true);
+  
+    loader.classList.add("progresso");
+  
+    fetch(`${uri}?proxyParm=${proxyParm}`)
+      .then((r) =>
+        r.json().then((r) => {
+          r.forEach((e) => {
+            itemLista.innerHTML += `<li class="list-group-item">${e.numero_atendimento}${e.sufixo_atendimento}</li>`;
+  
+            console.log(itemLista);
+  
+            loader.classList.remove("progresso");
+  
+            btnBuscar.removeAttribute("disabled");
+          });
+        })
+      )
+      .catch((e) => {
+        alert("Ocorreu um erro ao tentar selecionar os atendimentos do dia.");
+        loader.classList.remove("progresso");
+        btnBuscar.removeAttribute("disabled");
+      });
+  }
