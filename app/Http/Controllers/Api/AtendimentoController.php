@@ -231,7 +231,8 @@ class AtendimentoController extends Controller
           'id_service_desk' => $rt->input('id_service_desk')]);
         
         $r = DB::table('tb_atendimentos')
-          ->where('id_atendimento', $rt->input('id_atendimento'));
+          ->where('id_atendimento', $rt->input('id_atendimento'))
+          ->get();
           
       return json_encode(['r' => $r, 'success' => true], JSON_PRETTY_PRINT);
     } catch (\Throwable $th) {

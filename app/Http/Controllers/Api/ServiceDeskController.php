@@ -2,85 +2,70 @@
 
 namespace App\Http\Controllers\Api;
 
-use App\Http\Requests\StoreServiceDeskRequest;
-use App\Http\Requests\UpdateServiceDeskRequest;
-use App\Models\ServiceDesk;
+use App\Http\Controllers\Controller;
+use App\Models\ServiceDesk as ServiceDesk;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
+use Carbon\Carbon;
 
 class ServiceDeskController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function index()
+    public function id($id)
     {
-        //
+        try {
+            $r = DB::table('tb_service_desks')
+            ->where('id_service_desk', $id)
+            ->get();
+
+            return json_encode(['r'=>$r, 'success'=>true], JSON_PRETTY_PRINT);
+        } catch (\Throwable $th) {
+            return json_encode(['r'=>$th, 'success'=>false], JSON_PRETTY_PRINT);
+        }
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
+    public function post(Request $rt)
     {
-        //
+        try {
+            $newS = new ServiceDesk();
+            $cNow = Carbon::now('-03:00');
+
+            $newS->number_desk = $rt->input('number_desk');
+            $newS->id_user = $rt->input('id_user');
+            if(!$newS->opening = $rt->input('opening')){
+                $newS->opening = $cNow->toDateTimeString();
+            }
+
+            $newS->save();
+
+            $r = DB::table('tb_service_desks')
+            ->where('id_service_desk', $newS->id_service_desk)
+            ->get();
+
+            return json_encode(['r'=>$r, 'success'=>true], JSON_PRETTY_PRINT);
+        } catch (\Throwable $th) {
+            return json_encode(['r'=>$th, 'success'=>false], JSON_PRETTY_PRINT);
+        }
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \App\Http\Requests\StoreServiceDeskRequest  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(StoreServiceDeskRequest $request)
-    {
-        //
-    }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Models\ServiceDesk  $serviceDesk
-     * @return \Illuminate\Http\Response
-     */
-    public function show(ServiceDesk $serviceDesk)
-    {
-        //
-    }
+    //PUT
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Models\ServiceDesk  $serviceDesk
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(ServiceDesk $serviceDesk)
+    public function close(Request $rt)
     {
-        //
-    }
+        try {
+            $cNow = Carbon::now('-03:00');
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \App\Http\Requests\UpdateServiceDeskRequest  $request
-     * @param  \App\Models\ServiceDesk  $serviceDesk
-     * @return \Illuminate\Http\Response
-     */
-    public function update(UpdateServiceDeskRequest $request, ServiceDesk $serviceDesk)
-    {
-        //
-    }
+            DB::table('td_service_desk')
+            ->where('id_service_desk', $rt->input('id_service_desk'))
+            ->update(['closing' => $cNow->toDateTimeString()]);
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Models\ServiceDesk  $serviceDesk
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy(ServiceDesk $serviceDesk)
-    {
-        //
+            $r = DB::table('tb_service_desks')
+            ->where('id_service_desk', $rt->input('id_service_desk'))
+            ->get();
+
+            return json_encode(['r'=>$r, 'success'=>true], JSON_PRETTY_PRINT);
+        } catch (\Throwable $th) {
+            return json_encode(['r'=>$th, 'success'=>false], JSON_PRETTY_PRINT);
+        }
     }
 }
