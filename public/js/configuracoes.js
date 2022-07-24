@@ -9,7 +9,7 @@ document.addEventListener("DOMContentLoaded", function (evt) {
     })
 })
 */
-const endpoint = "https://central-atendimento-cliente.herokuapp.com";
+const endpoint = "https://central-atendimento-cliente.herokuapp.com/";
 
 const selecionarSetor = function (value) {
     console.log(value);
@@ -42,7 +42,7 @@ const selecionarSetor = function (value) {
 const postServico = function (setorValue, servicoValue) {
     //falta validar tamanho maximo de char
 
-    const uri = endpoint + `api/servicos/post/`;
+    const uri = `https://central-atendimento-cliente.herokuapp.com/api/servicos/post/`;
     const dataObject = {
         method: 'POST',
         headers: {

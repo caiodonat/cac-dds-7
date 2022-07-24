@@ -23,6 +23,7 @@ class AtendimentoController extends Controller
   public function post(Request $rt)
   {
     try {
+      //now use fetch body's
       $cNow = Carbon::now('-03:00');
       $newA = new Atendimento();
 
