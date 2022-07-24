@@ -42,8 +42,7 @@ const selecionarSetor = function (value) {
 const postServico = function (setorValue, servicoValue) {
     //falta validar tamanho maximo de char
 
-    //const uri = endpoint + `api/servicos/post/`;
-    const uri = `http://127.0.0.1:8000/api/servicos/post/`
+    const uri = endpoint + `api/servicos/post/`;
     const dataObject = {
         method: 'POST',
         headers: {
