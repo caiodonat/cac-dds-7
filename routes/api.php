@@ -15,7 +15,7 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 //POST
 
 //Esta rota vai gerar uma senha para um novo atendimento
-Route::post('/atendimento/post', [AtendimentoController::class, 'createAtendimento']);
+Route::post('/atendimento/post/', [AtendimentoController::class, 'post']);
 
 
 //GET
@@ -67,7 +67,7 @@ Route::put('/atendimento/call_next', [AtendimentoController::class, 'callNext'])
 
 //SERVICOS
 
-Route::post('/servicos/post/{setor}&{servico}', [ServicosController::class, 'postServico']);
+Route::post('/servicos/post/', [ServicosController::class, 'post']);
 
 Route::get('/servicos/pdg', [ServicosController::class, 'getPDG']);
 Route::get('/servicos/fcr', [ServicosController::class, 'getFCR']);

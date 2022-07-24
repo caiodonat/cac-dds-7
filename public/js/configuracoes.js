@@ -28,7 +28,7 @@ const selecionarSetor = function (value) {
                 servico = document.getElementById("add")
                 servico.innerHTML = `
                     <input type="text" class="form-control" id="newServico" placeholder="Adicionar Serviço">
-                    <button class="btn mt-4 btn-primary btn-lg" onclick="addServico(
+                    <button class="btn mt-4 btn-primary btn-lg" onclick="postServico(
                         document.getElementById('select-setor').value,
                         document.getElementById('newServico').value
                     )">addServico</button>`;
@@ -39,7 +39,7 @@ const selecionarSetor = function (value) {
         )
 }
 
-const addServico = function (setorValue, servicoValue) {
+const postServico = function (setorValue, servicoValue) {
     //falta validar tamanho maximo de char
 
     //const uri = endpoint + `api/servicos/post/`;

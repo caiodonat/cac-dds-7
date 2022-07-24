@@ -18,342 +18,313 @@ use Carbon\Carbon;
 
 class AtendimentoController extends Controller
 {
-    //POST
+  //POST
 
-    public function createAtendimento(StoreAtendimentoRequest $request)
-    {
-        //
-        $current = Carbon::now('-03:00');
-        try {
-            $cpf = $request->input("cpf");
-        } catch (\Throwable $th) {
-            $cpf = null;
-        }
+  public function post(Request $rt)
+  {
+    try {
+      $cNow = Carbon::now('-03:00');
+      $newA = new Atendimento();
 
-        $sufixo_atendimento = $request->input("sufixo_atendimento");
-        $observacoes = $request->input("observacoes");
+      //$newA->id_atendimento = $rt->input('id_atendimento');
+      
+      if($newA->date_time_emissao_atendimento = $rt->input('date_time_emissao_atendimento')){
+        $newA->date_emissao_atendimento = Carbon::create($rt->input('date_time_emissao_atendimento'))->toDateString();
+      }else{
+        $newA->date_time_emissao_atendimento = $cNow;
+        $newA->date_emissao_atendimento = $cNow->toDateString();
+      }
 
-        //inicio
-        if ($request->input("date_time_emissao_atendimento") != null) {
-            $date_time = Carbon::create($request->input("date_time_emissao_atendimento"));
+      $newA->cpf = $rt->input('cpf');
 
-            $date_time_emissao_atendimento = $date_time->toDateTimeString();
-            $date_emissao_atendimento = $date_time->toDateString();
-            //fim() |->reservado para teste
-        } else {
-            $date_time_emissao_atendimento = $current->toDateTimeString();
-            $date_emissao_atendimento = $current->toDateString();
-        }
+      if(!$newA->sufixo_atendimento = $rt->input('sufixo_atendimento')){
+        $newA->sufixo_atendimento = "OTS";
+      }
 
+      if(!$newA->numero_atendimento = $rt->input('numero_atendimento')){
+        
+        $lA = DB::table('tb_atendimentos')
+        ->where("date_emissao_atendimento", $cNow->toDateString())
+        ->get()->last();
 
-        //Gerando um novo registro
-        $atendimento = new Atendimento();
+        $newA->numero_atendimento = $lA->numero_atendimento + 1;
+      }
+      
+      $newA->save();
 
-        //cpf
-        $atendimento->cpf = $cpf;
-
-        //numero_atendimento
-        $today = $current->toDateString();
-        $lastAtendimento = Atendimento::all()
-            ->where("date_emissao_atendimento", $today)
-            ->last();
-
-        if ($lastAtendimento != null) {
-            $atendimento->numero_atendimento = $lastAtendimento->numero_atendimento + 1;
-        } else {
-            $atendimento->numero_atendimento = 1;
-        }
-
-
-        //sufixo_atendimento
-        if ($sufixo_atendimento != null) {
-            $atendimento->sufixo_atendimento = $sufixo_atendimento;
-        } else {
-            $atendimento->sufixo_atendimento = "OTS";
-        }
-
-        if ($observacoes != null) {
-            $atendimento->observacoes = $observacoes;
-        } else {
-            $atendimento->observacoes = "Sem Observações";
-        }
-
-        //date_emissao_atendimento
-        $atendimento->date_emissao_atendimento = $date_emissao_atendimento;
-
-        //date_time_emissao_atendimento
-        $atendimento->date_time_emissao_atendimento = $date_time_emissao_atendimento;
-
-        //verificando se foi possivel registrar
-        if ($atendimento->save()) {
-            return $atendimento->toJson(JSON_PRETTY_PRINT);
-        }
-        return json_encode(["erro" => true]);
-    }
-
-    //GET
-
-    public function all()
-    {
-        try {
-            $r = DB::table('tb_atendimentos')
+      $r = DB::table('tb_atendimentos')
+            ->where('id_atendimento', $newA->id_atendimento)
             ->get();
 
-            return json_encode(['r'=>$r, 'success'=>true], JSON_PRETTY_PRINT);
-        } catch (\Throwable $th) {
-            return json_encode(['r'=>$th, 'success'=>false], JSON_PRETTY_PRINT);
-        }
+      return json_encode(['r' => $r, 'success' => true], JSON_PRETTY_PRINT);
+    } catch (\Throwable $th) {
+      return json_encode(['r' => $th, 'success' => false], JSON_PRETTY_PRINT);
     }
+  }
 
-    //retorna um atendimento expecificado por ID
-    public function id($id_atendimento)
-    {
-        try {
-            $r = DB::table('tb_atendimentos')
-            ->where('id_atendimento', $id_atendimento)
-            ->get();
+  //GET
 
-            return json_encode(['r'=>$r, 'success'=>true], JSON_PRETTY_PRINT);
-        } catch (\Throwable $th) {
-            return json_encode(['r'=>$th, 'success'=>false], JSON_PRETTY_PRINT);
-        }
+  public function all()
+  {
+    try {
+      $r = DB::table('tb_atendimentos')
+        ->get();
+
+      return json_encode(['r' => $r, 'success' => true], JSON_PRETTY_PRINT);
+    } catch (\Throwable $th) {
+      return json_encode(['r' => $th, 'success' => false], JSON_PRETTY_PRINT);
     }
+  }
 
-    public function day($date)
-    {
-        try {
-            $dateRequest = Carbon::create($date)->toDateString();
+  //retorna um atendimento expecificado por ID
+  public function id($id_atendimento)
+  {
+    try {
+      $r = DB::table('tb_atendimentos')
+        ->where('id_atendimento', $id_atendimento)
+        ->get();
 
-            $r = DB::table('tb_atendimentos')
-            ->where("date_emissao_atendimento", $dateRequest)
-            ->get();
-
-            return json_encode(['r'=>$r, 'success'=>true], JSON_PRETTY_PRINT);
-        } catch (\Throwable $th) {
-            return json_encode(['r'=>$th, 'success'=>false], JSON_PRETTY_PRINT);
-        }
+      return json_encode(['r' => $r, 'success' => true], JSON_PRETTY_PRINT);
+    } catch (\Throwable $th) {
+      return json_encode(['r' => $th, 'success' => false], JSON_PRETTY_PRINT);
     }
+  }
 
-    public function daysFirstLast($first, $last)
-    {
-        try {
-        $f = Carbon::create($first)->toDateString();
-        $l = Carbon::create($last)->toDateString();
+  public function day($date)
+  {
+    try {
+      $dateRequest = Carbon::create($date)->toDateString();
 
-        $r = DB::table('tb_atendimentos')
+      $r = DB::table('tb_atendimentos')
+        ->where("date_emissao_atendimento", $dateRequest)
+        ->get();
+
+      return json_encode(['r' => $r, 'success' => true], JSON_PRETTY_PRINT);
+    } catch (\Throwable $th) {
+      return json_encode(['r' => $th, 'success' => false], JSON_PRETTY_PRINT);
+    }
+  }
+
+  public function daysFirstLast($first, $last)
+  {
+    try {
+      $f = Carbon::create($first)->toDateString();
+      $l = Carbon::create($last)->toDateString();
+
+      $r = DB::table('tb_atendimentos')
         ->whereBetween('date_emissao_atendimento', [$f, $l])
         ->get();
 
 
-            return json_encode(['r'=>$r, 'success'=>true], JSON_PRETTY_PRINT);
-        } catch (\Throwable $th) {
-            return json_encode(['r'=>$th, 'success'=>false], JSON_PRETTY_PRINT);
-        }
+      return json_encode(['r' => $r, 'success' => true], JSON_PRETTY_PRINT);
+    } catch (\Throwable $th) {
+      return json_encode(['r' => $th, 'success' => false], JSON_PRETTY_PRINT);
     }
+  }
 
-    public function monthMonth($month)
-    {
-        try {
-            $f = Carbon::create($month)->startOfMonth()->toDateString();
-            $l = Carbon::create($month)->endOfMonth()->toDateString();
-            
-            $r = $this->daysFirstLast($f, $l);
+  public function monthMonth($month)
+  {
+    try {
+      $f = Carbon::create($month)->startOfMonth()->toDateString();
+      $l = Carbon::create($month)->endOfMonth()->toDateString();
 
-            return $r;
-        } catch (\Throwable $th) {
-            return $th;
-        }
+      $r = $this->daysFirstLast($f, $l);
+
+      return $r;
+    } catch (\Throwable $th) {
+      return $th;
     }
+  }
 
-    public function queue()
-    {
-        try {
-            $cNow = Carbon::now('-03:00')->toDateString();
-            
-            $r = DB::table('tb_atendimentos')
-            ->where('date_emissao_atendimento', $cNow)
-            ->where("started", null)
-            ->get();
+  public function queue()
+  {
+    try {
+      $cNow = Carbon::now('-03:00')->toDateString();
 
-
-            return json_encode(['r'=>$r, 'success'=>true], JSON_PRETTY_PRINT);
-        } catch (\Throwable $th) {
-            return json_encode(['r'=>$th, 'success'=>false], JSON_PRETTY_PRINT);
-        }
+      $r = DB::table('tb_atendimentos')
+        ->where('date_emissao_atendimento', $cNow)
+        ->where("started", null)
+        ->get();
+      return json_encode(['r' => $r, 'success' => true], JSON_PRETTY_PRINT);
+    } catch (\Throwable $th) {
+      return json_encode(['r' => $th, 'success' => false], JSON_PRETTY_PRINT);
     }
+  }
 
-    public function queueNext()
-    {
-        try {
-            $cNow = Carbon::now('-03:00')->toDateString();
-            
-            $r = DB::table('tb_atendimentos')
-            ->where('date_emissao_atendimento', $cNow)
-            ->where("started", null)
-            ->get()->first();
+  public function queueNext()
+  {
+    try {
+      $cNow = Carbon::now('-03:00')->toDateString();
+
+      $r = DB::table('tb_atendimentos')
+        ->where('date_emissao_atendimento', $cNow)
+        ->where("started", null)
+        ->get()->first();
 
 
-            return json_encode(['r'=>[$r], 'success'=>true], JSON_PRETTY_PRINT);
-        } catch (\Throwable $th) {
-            return json_encode(['r'=>$th, 'success'=>false], JSON_PRETTY_PRINT);
-        }
+      return json_encode(['r' => [$r], 'success' => true], JSON_PRETTY_PRINT);
+    } catch (\Throwable $th) {
+      return json_encode(['r' => $th, 'success' => false], JSON_PRETTY_PRINT);
     }
+  }
 
-    public function queueAlready_called()
-    {
-        try {
-            $cNow = Carbon::now('-03:00')->toDateString();
-            
-            $r = DB::table('tb_atendimentos')
-            ->where("date_emissao_atendimento", $cNow)
-            ->whereNotNull("first_call")
-            ->get();
+  public function queueAlready_called()
+  {
+    try {
+      $cNow = Carbon::now('-03:00')->toDateString();
 
-            return json_encode(['r'=>$r, 'success'=>true], JSON_PRETTY_PRINT);
-        } catch (\Throwable $th) {
-            return json_encode(['r'=>$th, 'success'=>false], JSON_PRETTY_PRINT);
-        }
+      $r = DB::table('tb_atendimentos')
+        ->where("date_emissao_atendimento", $cNow)
+        ->whereNotNull("first_call")
+        ->get();
+
+      return json_encode(['r' => $r, 'success' => true], JSON_PRETTY_PRINT);
+    } catch (\Throwable $th) {
+      return json_encode(['r' => $th, 'success' => false], JSON_PRETTY_PRINT);
     }
+  }
 
-    public function queueNumber($numero_atendimento)
-    {
-        try {
-            $cNow = Carbon::now('-03:00')->toDateString();
-            
-            $r = DB::table('tb_atendimentos')
-            ->where("date_emissao_atendimento", $cNow)
-            ->where("numero_atendimento", $numero_atendimento)
-            ->get();
+  public function queueNumber($numero_atendimento)
+  {
+    try {
+      $cNow = Carbon::now('-03:00')->toDateString();
 
-            return json_encode(['r'=>$r, 'success'=>true], JSON_PRETTY_PRINT);
-        } catch (\Throwable $th) {
-            return json_encode(['r'=>$th, 'success'=>false], JSON_PRETTY_PRINT);
-        }
+      $r = DB::table('tb_atendimentos')
+        ->where("date_emissao_atendimento", $cNow)
+        ->where("numero_atendimento", $numero_atendimento)
+        ->get();
+
+      return json_encode(['r' => $r, 'success' => true], JSON_PRETTY_PRINT);
+    } catch (\Throwable $th) {
+      return json_encode(['r' => $th, 'success' => false], JSON_PRETTY_PRINT);
     }
+  }
 
-    public function queueNextTo_call()
-    {
-        try {
-            $cNow = Carbon::now('-03:00')->toDateString();
-            
-            $r = DB::table('tb_atendimentos')
-            ->where("date_emissao_atendimento", $cNow)
-            ->where('status_atendimento', 'chamando')
-            ->get();
+  public function queueNextTo_call()
+  {
+    try {
+      $cNow = Carbon::now('-03:00')->toDateString();
 
-            return json_encode(['r'=>$r, 'success'=>true], JSON_PRETTY_PRINT);
-        } catch (\Throwable $th) {
-            return json_encode(['r'=>$th, 'success'=>false], JSON_PRETTY_PRINT);
-        }
+      $r = DB::table('tb_atendimentos')
+        ->where("date_emissao_atendimento", $cNow)
+        ->where('status_atendimento', 'chamando')
+        ->get();
+
+      return json_encode(['r' => $r, 'success' => true], JSON_PRETTY_PRINT);
+    } catch (\Throwable $th) {
+      return json_encode(['r' => $th, 'success' => false], JSON_PRETTY_PRINT);
     }
+  }
 
 
-    //UPDATE
+  //UPDATE
 
-    public function atendimentoBegin($id_atendimento)
-    { //, $guiche
-        $carbonNow = Carbon::now('-03:00');
-        Atendimento::where("id_atendimento", "=", $id_atendimento)
-            ->update(['started' => $carbonNow->toDateTimeString()]);
+  public function atendimentoBegin($id_atendimento)
+  { //, $guiche
+    $carbonNow = Carbon::now('-03:00');
+    Atendimento::where("id_atendimento", "=", $id_atendimento)
+      ->update(['started' => $carbonNow->toDateTimeString()]);
 
-        //$atendimento = Atendimento::where("id_atendimento", "=", $id_atendimento);//aparentemente não é a mesma coisa
-        $atendimento = Atendimento::findOrFail($id_atendimento);
+    //$atendimento = Atendimento::where("id_atendimento", "=", $id_atendimento);//aparentemente não é a mesma coisa
+    $atendimento = Atendimento::findOrFail($id_atendimento);
 
-        return json_encode($atendimento, JSON_PRETTY_PRINT);
+    return json_encode($atendimento, JSON_PRETTY_PRINT);
+  }
+
+  public function atendimentoFinish($id_atendimento, $estado_fim_atendimento)
+  { //, $guiche
+    $carbonNow = Carbon::now('-03:00');
+    Atendimento::where("id_atendimento", "=", $id_atendimento)
+      ->update(['fim_atendimento' => $carbonNow
+        ->toDateTimeString()])
+      ->update(['estado_fim_atendimento' => $estado_fim_atendimento]);
+
+    $atendimento = Atendimento::findOrFail($id_atendimento);
+
+    return json_encode($atendimento, JSON_PRETTY_PRINT);
+  }
+
+  public function call($id_atendimento)
+  {
+    //adiciona esse atendimento ($id_atendimento) a uma lista que sera chamada pelo telão, e o telao ficarar verificando (com frequencia) se possui atualizações nessa fila
+
+    $carbonNow = Carbon::now('-03:00');
+
+    DB::table('tb_atendimentos')
+      ->where('id_atendimento', '=', $id_atendimento)
+      ->update([
+        'status_atendimento' => 'chamando',
+        'first_call' => $carbonNow->toDateTimeString()
+      ]);
+
+    $atendimento = Atendimento::findOrFail($id_atendimento);
+
+    return json_encode($atendimento, JSON_PRETTY_PRINT);
+  }
+
+  public function callNext()
+  {
+    //guiche nao pode utilizar essa rota se ele estiver em atendimento
+    //adiciona esse atendimento ($id_atendimento) a uma lista que sera chamada pelo telão, e o telao ficarar verificando (com frequencia) se possui atualizações nessa fila
+    //2 guiches nao podem chamar a mesma senha
+
+    $carbonNow = Carbon::now('-03:00');
+
+    try {
+      $id_atendimento = DB::table('tb_atendimentos')
+        ->where('date_emissao_atendimento', '=', $carbonNow->toDateString())
+        ->value('id_atendimento');
+
+      DB::table('tb_atendimentos')
+        ->where('id_atendimento', $id_atendimento)
+        ->update([
+          'status_atendimento' => 'chamando',
+          'first_call' => $carbonNow->toDateTimeString()
+        ]);
+
+      $atendimento = Atendimento::findOrFail($id_atendimento);
+
+      return json_encode($atendimento, JSON_PRETTY_PRINT);
+    } catch (\Exception $th) {
+      return json_encode(["fila_vazia" => true]);
     }
+  }
 
-    public function atendimentoFinish($id_atendimento, $estado_fim_atendimento)
-    { //, $guiche
-        $carbonNow = Carbon::now('-03:00');
-        Atendimento::where("id_atendimento", "=", $id_atendimento)
-            ->update(['fim_atendimento' => $carbonNow
-                ->toDateTimeString()])
-            ->update(['estado_fim_atendimento' => $estado_fim_atendimento]);
-
-        $atendimento = Atendimento::findOrFail($id_atendimento);
-
-        return json_encode($atendimento, JSON_PRETTY_PRINT);
-    }
-
-    public function call($id_atendimento)
-    {
-        //adiciona esse atendimento ($id_atendimento) a uma lista que sera chamada pelo telão, e o telao ficarar verificando (com frequencia) se possui atualizações nessa fila
-
-        $carbonNow = Carbon::now('-03:00');
-
-        DB::table('tb_atendimentos')
-        ->where('id_atendimento', '=', $id_atendimento)
-        ->update(['status_atendimento' => 'chamando',
-         'first_call' => $carbonNow->toDateTimeString()]);
-
-        $atendimento = Atendimento::findOrFail($id_atendimento);
-
-        return json_encode($atendimento, JSON_PRETTY_PRINT);
-    }
-
-    public function callNext()
-    {
-        //guiche nao pode utilizar essa rota se ele estiver em atendimento
-        //adiciona esse atendimento ($id_atendimento) a uma lista que sera chamada pelo telão, e o telao ficarar verificando (com frequencia) se possui atualizações nessa fila
-        //2 guiches nao podem chamar a mesma senha
-        
-        $carbonNow = Carbon::now('-03:00');
-
-        try {
-            $id_atendimento = DB::table('tb_atendimentos')
-            ->where('date_emissao_atendimento', '=', $carbonNow->toDateString())
-            ->value('id_atendimento');
-            
-            DB::table('tb_atendimentos')
-            ->where('id_atendimento', $id_atendimento)
-            ->update(['status_atendimento' => 'chamando',
-            'first_call' => $carbonNow->toDateTimeString()]);
-            
-            $atendimento = Atendimento::findOrFail($id_atendimento);
-
-            return json_encode($atendimento, JSON_PRETTY_PRINT);
-
-        } catch (\Exception $th) {
-            return json_encode(["fila_vazia"=>true]);
-        }
-    }
-
-    public function toCallNext()
-    {   /*
+  public function toCallNext()
+  {   /*
         *   metodo utilizado pelo telao para verificar qual senha deve ser chamada
         */
 
-        $carbonNow = Carbon::now('-03:00');
+    $carbonNow = Carbon::now('-03:00');
 
-        $id_atendimento = Atendimento::where("date_emissao_atendimento", $carbonNow
-        ->toDateString())
-        ->where("inicio_atendimento", "=", null)
-        ->get()->first()->value('id_atendimento');
-        
-        $atendimento = Atendimento::
-          where('date_emissao_atendimento', $carbonNow->toDateString())
-        ->where('status_atendimento', "=", 'chamando')
-        ->get()->first();
-        if($atendimento != null){
-            Atendimento::where("id_atendimento", "=", $atendimento->id_atendimento)
-            ->update(['status_atendimento' => 'aguardando']);
+    $id_atendimento = Atendimento::where("date_emissao_atendimento", $carbonNow
+      ->toDateString())
+      ->where("inicio_atendimento", "=", null)
+      ->get()->first()->value('id_atendimento');
 
-        try{
-            $id_atendimento_next = DB::table('tb_atendimentos')
-            ->where('date_emissao_atendimento', $carbonNow->toDateString())
-            ->where('status_atendimento', 'chamando')
-            ->value('id_atendimento');
+    $atendimento = Atendimento::where('date_emissao_atendimento', $carbonNow->toDateString())
+      ->where('status_atendimento', "=", 'chamando')
+      ->get()->first();
+    if ($atendimento != null) {
+      Atendimento::where("id_atendimento", "=", $atendimento->id_atendimento)
+        ->update(['status_atendimento' => 'aguardando']);
 
-            $atendimento = Atendimento::findOrFail($id_atendimento_next);
+      try {
+        $id_atendimento_next = DB::table('tb_atendimentos')
+          ->where('date_emissao_atendimento', $carbonNow->toDateString())
+          ->where('status_atendimento', 'chamando')
+          ->value('id_atendimento');
 
-            $atendimento->status_atendimento = "aguardando";
+        $atendimento = Atendimento::findOrFail($id_atendimento_next);
 
-            if($atendimento->save()){
-                return json_encode($atendimento, JSON_PRETTY_PRINT);
-            }
-        }catch(\Exception $e){
-            return json_encode(["fila_vazia"=>true]);
+        $atendimento->status_atendimento = "aguardando";
+
+        if ($atendimento->save()) {
+          return json_encode($atendimento, JSON_PRETTY_PRINT);
         }
-        }
+      } catch (\Exception $e) {
+        return json_encode(["fila_vazia" => true]);
+      }
     }
+  }
 }

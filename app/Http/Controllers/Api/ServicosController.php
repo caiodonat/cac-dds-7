@@ -11,6 +11,25 @@ use Illuminate\Support\Facades\DB;
 
 class ServicosController extends Controller
 {
+    public function post(Request $rt)
+    {
+        try {
+            $newS = new Servicos();
+
+            $newS->setor = $rt->input('setor');
+            $newS->servico = $rt->input('servico');
+            $newS->save();
+
+            $r = DB::table('tb_servicos')
+            ->where('id_servicos', $newS->id_servicos)
+            ->get();
+
+            return json_encode(['r'=>$r, 'success'=>true], JSON_PRETTY_PRINT);
+        } catch (\Throwable $th) {
+            return json_encode(['r'=>$th, 'success'=>false], JSON_PRETTY_PRINT);
+        }
+    }
+    
     public function getPDG()
     {
         try {
@@ -23,6 +42,7 @@ class ServicosController extends Controller
             return json_encode(['r'=>$th, 'success'=>false], JSON_PRETTY_PRINT);
         }
     }
+
     public function getFCR()
     {
         try{
@@ -35,6 +55,7 @@ class ServicosController extends Controller
             return json_encode(['r'=>$th, 'success'=>false], JSON_PRETTY_PRINT);
         }
     }
+
     public function getSCT()
     {
         try{
@@ -47,6 +68,7 @@ class ServicosController extends Controller
             return json_encode(['r'=>$th, 'success'=>false], JSON_PRETTY_PRINT);
         }
     }
+
     public function getOTS()
     {
         try{
@@ -59,17 +81,5 @@ class ServicosController extends Controller
             return json_encode(['r'=>$th, 'success'=>false], JSON_PRETTY_PRINT);
         }
     }
-    public function postServico($setor, $servico)
-    {
-            $newServico = new Servicos();
-        try {
-            $newServico->setor = $setor;
-            $newServico->servico = $servico;
-            if($newServico->save()){
-                return json_encode(["save_with_success" => true]);    
-            }
-        } catch (\Throwable $th) {
-            return json_encode(["save_with_success" => false]);
-        }
-    }
+    
 }
