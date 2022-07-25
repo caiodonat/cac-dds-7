@@ -42,9 +42,12 @@ function EmitirSenha(servicos) {
         } )
         .catch( err =>
         {
+            
             console.log( 'Fetch Error :-S', err );
+            location.href = "errorAlert"
         } );
 }
+    
 
 
 function GetData() {
@@ -96,10 +99,10 @@ function GetData() {
 function servicoFinanceiro(){
     servicos = document.getElementById("opcoesFcr");
 <<<<<<< HEAD
-    servicos.innerHTML = " ";
+    servicos.innerHTML = "";
 =======
     servicos.innerHTML = "hi";
->>>>>>> 03490280f854dee051d064eb3d6c34611f5931ba
+>>>>>>> 0694b70dd8fd50916b192482be9b4239ef6fd9d9
 
     const uri = `https://central-atendimento-cliente.herokuapp.com/api/servicos/fcr`
     resp = fetch(uri)
@@ -109,7 +112,7 @@ function servicoFinanceiro(){
                         servicos.innerHTML += `
                             <div class="box-opt">
                                 <label for="opt1" id="">
-                                    <input type="checkbox" class="messageCheckbox" value="${r1.id_atendimento}" name="opt" id="">
+                                    <input type="radio" class="messageCheckbox" value="${r1.id_atendimento}" name="opt" id="">
                                     ${r1.servico}
                                 </label>
                             </div>
@@ -134,7 +137,7 @@ function servicoPedagogico(){
                         servicos.innerHTML += `
                             <div class="box-opt">
                                 <label for="opt1" id="">
-                                    <input type="checkbox" class="messageCheckbox" value="${r1.id_atendimento}" name="opt" id="">
+                                    <input type="radio" class="messageCheckbox" value="${r1.id_atendimento}" name="opt" id="">
                                     ${r1.servico}
                                 </label>
                             </div>
@@ -159,7 +162,7 @@ function servicoSecretaria(){
                         servicos.innerHTML += `
                             <div class="box-opt">
                                 <label for="opt1" id="">
-                                    <input type="checkbox" class="messageCheckbox" value="${r1.id_atendimento}" name="opt" id="">
+                                    <input type="radio" class="messageCheckbox" value="${r1.id_atendimento}" name="opt" id="">
                                     ${r1.servico}
                                 </label>
                             </div>
@@ -184,7 +187,7 @@ function servicoOutrosServicos(){
                         servicos.innerHTML += `
                             <div class="box-opt">
                                 <label for="opt1" id="">
-                                    <input type="checkbox" class="messageCheckbox" value="${r1.id_atendimento}" name="opt" id="">
+                                    <input type="radio" class="messageCheckbox" value="${r1.id_atendimento}" name="opt" id="">
                                     ${r1.servico}
                                 </label>
                             </div>

@@ -92,6 +92,12 @@ Route::get('/totem/alert', function(){
    return view('totem.alert');
 })->name('alert');
 
+<<<<<<< HEAD
+Route::get('/totem/errorAlert', function(){
+   return view('totem.errorAlert');
+})->name('errorAlert');
+=======
+>>>>>>> 0694b70dd8fd50916b192482be9b4239ef6fd9d9
 Auth::routes();
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
