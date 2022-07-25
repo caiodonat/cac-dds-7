@@ -16,7 +16,7 @@ const buscarDia = function(dia){
     .then(r =>r.json().then(r =>{
                 if(r.success){
                     r.r.forEach(r1 => {
-                        monitor.innerHTML +=  monitor.innerHTML += `<li class="list-group-item">${r1.numero_atendimento}${r1.sufixo_atendimento}</li>`  
+                        monitor.innerHTML +=  monitor.innerHTML += `<li class="list-group-item">Senha: ${r1.numero_atendimento}${r1.sufixo_atendimento}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ID: ${r1.id_atendimento}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Serviço: ${r1.servicos}</li>`  
                     });
                 }else{
                     console.log("falha -> " + r.r[0]);
