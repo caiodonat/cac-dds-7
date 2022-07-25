@@ -46,6 +46,7 @@ const postServico = function (setorValue, servicoValue) {
     const uri = endpoint + "api/servicos/post/";
     const dataObject = {
         method: 'POST',
+        mode: 'no-cors',
         headers: {
         'Accept': 'application/json',
         'Content-Type': 'application/json'

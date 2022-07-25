@@ -20,7 +20,6 @@ Route::post('/atendimento/post/', [Atendimento::class, 'post']);
 
 
 //GET
-
 //retorna todos os atendimentos no DB
 Route::get('/atendimentos/all', [Atendimento::class, 'all']);
 
@@ -74,7 +73,6 @@ Route::get('/servicos/pdg', [ServicosController::class, 'getPDG']);
 Route::get('/servicos/fcr', [ServicosController::class, 'getFCR']);
 Route::get('/servicos/sct', [ServicosController::class, 'getSCT']);
 Route::get('/servicos/ots', [ServicosController::class, 'getOTS']);
-
 
 //ServiceDeskController
 
