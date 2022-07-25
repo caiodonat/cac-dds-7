@@ -32,7 +32,7 @@
     <br>
     <input type="numeric" id="campo-texto" class="field_cpf" placeholder="CPF (Opcional)" aria-label="Search"
         aria-describedby="search-addon" />
-    <button id='getData' class="btn-emitirsenha" onclick="EmitirSenha('FCR'); callAlert(); optionsChecked();">Emitir
+    <button id='getData' class="btn-emitirsenha" onclick="EmitirSenha('FCR'); optionsChecked();">Emitir
         Senha</button>
 </div>
 </div>
