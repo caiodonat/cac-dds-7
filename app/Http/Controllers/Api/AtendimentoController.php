@@ -22,36 +22,36 @@ class AtendimentoController extends Controller
       $newA = new Atendimento();
 
       //$newA->id_atendimento = $rt->input('id_atendimento');//not possible
-      
-      if($newA->date_time_emissao_atendimento = $rt->input('date_time_emissao_atendimento')){
+
+      if ($newA->date_time_emissao_atendimento = $rt->input('date_time_emissao_atendimento')) {
         $newA->date_emissao_atendimento = Carbon::create($rt->input('date_time_emissao_atendimento'))->toDateString();
-      }else{
+      } else {
         $newA->date_time_emissao_atendimento = $cNow;
         $newA->date_emissao_atendimento = $cNow->toDateString();
       }
 
       $newA->cpf = $rt->input('cpf');
 
-      if(!$newA->numero_atendimento = $rt->input('numero_atendimento')){
-        try{
-        $lA = DB::table('tb_atendimentos')
-        ->where("date_emissao_atendimento", $cNow->toDateString())
-        ->get()->last();
+      if (!$newA->numero_atendimento = $rt->input('numero_atendimento')) {
+        try {
+          $lA = DB::table('tb_atendimentos')
+            ->where("date_emissao_atendimento", $cNow->toDateString())
+            ->get()->last();
 
-        $newA->numero_atendimento = $lA->numero_atendimento + 1;
-        } catch (\Throwable){
+          $newA->numero_atendimento = $lA->numero_atendimento + 1;
+        } catch (\Throwable) {
           $newA->numero_atendimento = 1;
         }
       }
 
-      if($newA->servicos = $rt->input('servicos')){
+      if ($newA->servicos = $rt->input('servicos')) {
         $newA->sufixo_atendimento = DB::table('tb_servicos')
           ->where('id_servicos', $rt->input('servicos'))
           ->value('setor');
-      }else{
+      } else {
         $newA->sufixo_atendimento = "OTS";
       }
-      
+
       $newA->save();
 
       $r = DB::table('tb_atendimentos')
@@ -227,29 +227,23 @@ class AtendimentoController extends Controller
 
       DB::table('tb_atendimentos')
         ->where('id_atendimento', $rt->input('id_atendimento'))
-        ->update(['started' => $cNow->toDateTimeString(),
-          'id_service_desk' => $rt->input('id_service_desk')]);
-        
-        $r = DB::table('tb_atendimentos')
-          ->where('id_atendimento', $rt->input('id_atendimento'))
-          ->get();
-          
+        ->update([
+          'started' => $cNow->toDateTimeString(),
+          'id_service_desk' => $rt->input('id_service_desk')
+        ]);
+
+      $r = DB::table('tb_atendimentos')
+        ->where('id_atendimento', $rt->input('id_atendimento'))
+        ->get();
+
       return json_encode(['r' => $r, 'success' => true], JSON_PRETTY_PRINT);
     } catch (\Throwable $th) {
       return json_encode(['r' => $th, 'success' => false], JSON_PRETTY_PRINT);
     }
-    $carbonNow = Carbon::now('-03:00');
-    Atendimento::where("id_atendimento", "=", $id_atendimento)
-      ->update(['started' => $carbonNow->toDateTimeString()]);
-
-    //$atendimento = Atendimento::where("id_atendimento", "=", $id_atendimento);//aparentemente não é a mesma coisa
-    $atendimento = Atendimento::findOrFail($id_atendimento);
-
-    return json_encode($atendimento, JSON_PRETTY_PRINT);
   }
 
   public function atendimentoFinish($id_atendimento, $estado_fim_atendimento)
-  { //, $guiche
+  {
     $carbonNow = Carbon::now('-03:00');
     Atendimento::where("id_atendimento", "=", $id_atendimento)
       ->update(['fim_atendimento' => $carbonNow

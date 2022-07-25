@@ -230,28 +230,55 @@ class AtendimentoTest extends TestCase
 
     public function test_queueNextTo_call()
     {
-        $r = $this->getJson('api/atendimentos/queue/next/to_call');
+      $r = $this->getJson('api/atendimentos/queue/next/to_call');
 
-        $cNow = Carbon::now('-03:00')->toDateString();
+      $cNow = Carbon::now('-03:00')->toDateString();
 
-        $r->assertJson(fn (AssertableJson $json) =>
-        $json->has('r')
-        ->where('success', true)
-        ->first(fn ($json1) =>
-            $json1->first(fn ($json2) =>
-                $json2->has('id_atendimento')
-                    ->where('date_emissao_atendimento', $cNow)
-                    ->where('status_atendimento', 'chamando')
-                    ->etc()
-                )
-            )
-        );
+      $r->assertJson(fn (AssertableJson $json) =>
+      $json->has('r')
+      ->where('success', true)
+      ->first(fn ($json1) =>
+          $json1->first(fn ($json2) =>
+              $json2->has('id_atendimento')
+                  ->where('date_emissao_atendimento', $cNow)
+                  ->where('status_atendimento', 'chamando')
+                  ->etc()
+              )
+          )
+      );
     }
 
 
     //UPDATE
 
-    public function test_chamar_senha_no_telao_e_alterar_o_valor_do_staus_do_atendimetno(){
+    public function test_begin()
+    {
+      $id_a = 1;
+      $id_sD = 1;
+      $r = $this->putJson('api/atendimento/begin/',
+      ['id_atendimento' => $id_a, 'id_service_desk' => $id_sD]);
+
+      $cNow = Carbon::now('-03:00')->toDateTimeString();
+
+      $r->assertJson(fn (AssertableJson $json) =>
+      $json->has('r')
+      ->where('success', true)
+      ->first(fn ($json1) =>
+          $json1->first(fn ($json2) =>
+              $json2->where('id_atendimento', $id_a)
+                ->where('started', $cNow)
+                ->where('id_service_desk',
+                  (function (string $id){
+                    $cNow = Carbon::now('-03:00')->toDateTimeString();
+
+                    return $id == $cNow;
+                  })
+                )
+                ->etc()
+              )
+          )
+      );
+
         $response = $this->getJson('api/atendimento/to_call_next');
 
         $response

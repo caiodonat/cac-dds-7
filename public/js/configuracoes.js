@@ -60,7 +60,7 @@ const postServico = function (setorValue, servicoValue) {
     .then(response => {console.log(response)})
     .then(json => console.log(json))
 }
-
+/*
 function GetFila() {
     itemLista = document.getElementById("fila_espera");
   
@@ -103,3 +103,4 @@ function GetFila() {
         btnBuscar.removeAttribute("disabled");
       });
   }
+*/  
