@@ -98,7 +98,11 @@ function GetData() {
 
 function servicoFinanceiro(){
     servicos = document.getElementById("opcoesFcr");
+<<<<<<< HEAD
     servicos.innerHTML = "";
+=======
+    servicos.innerHTML = "hi";
+>>>>>>> 0694b70dd8fd50916b192482be9b4239ef6fd9d9
 
     const uri = `https://central-atendimento-cliente.herokuapp.com/api/servicos/fcr`
     resp = fetch(uri)

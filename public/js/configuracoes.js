@@ -46,6 +46,7 @@ const postServico = function (setorValue, servicoValue) {
     const uri = endpoint + "api/servicos/post/";
     const dataObject = {
         method: 'POST',
+        mode: 'no-cors',
         headers: {
         'Accept': 'application/json',
         'Content-Type': 'application/json'
@@ -60,7 +61,7 @@ const postServico = function (setorValue, servicoValue) {
     .then(response => {console.log(response)})
     .then(json => console.log(json))
 }
-
+/*
 function GetFila() {
     itemLista = document.getElementById("fila_espera");
   
@@ -103,3 +104,4 @@ function GetFila() {
         btnBuscar.removeAttribute("disabled");
       });
   }
+*/  

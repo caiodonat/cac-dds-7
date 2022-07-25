@@ -11,7 +11,8 @@ use Carbon\Carbon;
 
 class AtendimentoTest extends TestCase
 {
-    private function firstDayDB(){
+    private function firstDayDB()
+    {
         $carbonNow = Carbon::now('-03:00');
 
         try {
@@ -28,18 +29,28 @@ class AtendimentoTest extends TestCase
         }
     }
 
+    public function test_post()
+    {
+        $r = $this->getJson('/api/atendimento/post?id_atendimento=1&date_time_emissao_atendimento%202022-07-23%2007=07%3A07&cpf=11122233344&sufixo_atendimento=ots');
+        $r->assertJson(fn (AssertableJson $json) =>
+            $json->where('success', true)
+            ->has('r')
+        );
+    }
+
     //retorna todos os atendimentos no DB
-    public function test_all(){
-        $response = $this->getJson('/api/atendimentos/all');
-        $response
-        ->assertJson(fn (AssertableJson $json) =>
+    public function test_all()
+    {
+        $r = $this->getJson('/api/atendimentos/all');
+        $r->assertJson(fn (AssertableJson $json) =>
             $json->where('success', true)
             ->has('r')
      );
     }
 
     //retorna um atendimento expecificado por ID
-    public function test_id(){
+    public function test_id()
+    {
         $response = $this->getJson('/api/atendimentos/id/1');
  
         $response
@@ -54,7 +65,8 @@ class AtendimentoTest extends TestCase
     }
 
     //retorna os atendimentos do dia atual
-    public function test_day(){
+    public function test_day()
+    {
         $day = $this->firstDayDB()->toDateString();
 
         $response = $this->getJson("/api/atendimentos/day/{$day}");
@@ -74,7 +86,8 @@ class AtendimentoTest extends TestCase
     }
 
     //retorna os atendimentos realizados dentro de um espaço de tempo
-    public function test_daysFirstLast(){
+    public function test_daysFirstLast()
+    {
         $fDayDB = $this->firstDayDB();
         $fDay7 = Carbon::create($fDayDB)->addDays(7);
         
@@ -102,7 +115,8 @@ class AtendimentoTest extends TestCase
     }
     
     //retorna os atendimentos realizados no mês
-    public function test_monthMonth(){
+    public function test_monthMonth()
+    {
         $fDayDB = $this->firstDayDB()->toDateString();
         
         $r = $this->getJson("/api/atendimentos/month/{$fDayDB}");
@@ -128,7 +142,8 @@ class AtendimentoTest extends TestCase
         );
     }
 
-    public function test_queue(){
+    public function test_queue()
+    {
         $r = $this->getJson('api/atendimentos/queue');
 
         $r->assertJson(fn (AssertableJson $json) =>
@@ -149,7 +164,8 @@ class AtendimentoTest extends TestCase
         );
     }
 
-    public function test_queueNext(){
+    public function test_queueNext()
+    {
         $r = $this->getJson('api/atendimentos/queue/next');
 
         $cNow = Carbon::now('-03:00')->toDateString();
@@ -167,7 +183,8 @@ class AtendimentoTest extends TestCase
         );
     }
 
-    public function test_queueAlreadyCalled(){
+    public function test_queueAlreadyCalled()
+    {
         $r = $this->getJson('api/atendimentos/queue/already_called');
 
         $cNow = Carbon::now('-03:00')->toDateString();
@@ -191,7 +208,8 @@ class AtendimentoTest extends TestCase
         );
     }
 
-    public function test_queueNumber(){
+    public function test_queueNumber()
+    {
         $r = $this->getJson('api/atendimentos/queue/number/1');
 
         $cNow = Carbon::now('-03:00')->toDateString();
@@ -210,26 +228,57 @@ class AtendimentoTest extends TestCase
         );
     }
 
-    public function test_queueNextTo_call(){
-        $r = $this->getJson('api/atendimentos/queue/next/to_call');
+    public function test_queueNextTo_call()
+    {
+      $r = $this->getJson('api/atendimentos/queue/next/to_call');
 
-        $cNow = Carbon::now('-03:00')->toDateString();
+      $cNow = Carbon::now('-03:00')->toDateString();
 
-        $r->assertJson(fn (AssertableJson $json) =>
-        $json->has('r')
-        ->where('success', true)
-        ->first(fn ($json1) =>
-            $json1->first(fn ($json2) =>
-                $json2->has('id_atendimento')
-                    ->where('date_emissao_atendimento', $cNow)
-                    ->where('status_atendimento', 'chamando')
-                    ->etc()
-                )
-            )
-        );
+      $r->assertJson(fn (AssertableJson $json) =>
+      $json->has('r')
+      ->where('success', true)
+      ->first(fn ($json1) =>
+          $json1->first(fn ($json2) =>
+              $json2->has('id_atendimento')
+                  ->where('date_emissao_atendimento', $cNow)
+                  ->where('status_atendimento', 'chamando')
+                  ->etc()
+              )
+          )
+      );
     }
 
-    public function test_chamar_senha_no_telao_e_alterar_o_valor_do_staus_do_atendimetno(){
+
+    //UPDATE
+
+    public function test_begin()
+    {
+      $id_a = 1;
+      $id_sD = 1;
+      $r = $this->putJson('api/atendimento/begin/',
+      ['id_atendimento' => $id_a, 'id_service_desk' => $id_sD]);
+
+      $cNow = Carbon::now('-03:00')->toDateTimeString();
+
+      $r->assertJson(fn (AssertableJson $json) =>
+      $json->has('r')
+      ->where('success', true)
+      ->first(fn ($json1) =>
+          $json1->first(fn ($json2) =>
+              $json2->where('id_atendimento', $id_a)
+                ->where('started', $cNow)
+                ->where('id_service_desk',
+                  (function (string $id){
+                    $cNow = Carbon::now('-03:00')->toDateTimeString();
+
+                    return $id == $cNow;
+                  })
+                )
+                ->etc()
+              )
+          )
+      );
+
         $response = $this->getJson('api/atendimento/to_call_next');
 
         $response
