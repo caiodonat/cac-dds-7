@@ -44,13 +44,13 @@ function chamarTela(){
     location.href = "chamadoatendimento"
 }
 
- function iniciarAtendimento(){
-    location.href = "inicioatendimento"
-}
+//  function iniciarAtendimento(){
+//     location.href = "inicioatendimento"
+// }
 
-function encerrarAtendimento(){
-    location.href = "atendimento"
-}
+// function encerrarAtendimento(){
+//     location.href = "atendimento"
+// }
 
 function buscarSenha(){
     location.href = "/configuracao.html"
@@ -327,6 +327,65 @@ function addAtributos(){
 }
 
 
-function Teste(){
-    
+  
+function iniciarAtendimento(){
+    const uri =  `https://central-atendimento-cliente.herokuapp.com/api/atendimento/begin`
+    const dataObject = {
+        method: 'PUT',
+        // mode: 'no-cors',
+        headers: {
+        // 'Accept': 'application/json',
+        'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+            "id_service_desk": "1",
+            "id_atendimento" : "1"
+        })
+    }
+
+    fetch(uri, dataObject)
+    .then(response => {console.log(response)})
+    .then(json => console.log(json))
 }
+
+function chamarSenha(){
+    const uri =  `https://central-atendimento-cliente.herokuapp.com/api/atendimento/call_next`
+    const dataObject = {
+        method: 'PUT',
+        // mode: 'no-cors',
+        headers: {
+        // 'Accept': 'application/json',
+        'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+            "id_service_desk": "1",
+            "id_atendimento" : "1"
+        })
+    }
+
+    fetch(uri, dataObject)
+    .then(response => {console.log(response)})
+    .then(location.href = "inicioatendimento")
+    .then(json => console.log(json))
+}
+
+function encerrarAtendimento(){
+    const uri =  `https://central-atendimento-cliente.herokuapp.com/api/atendimento/finish/${id_atendimento}&${$estado_fim_atendimento}`
+    const dataObject = {
+        method: 'PUT',
+        // mode: 'no-cors',
+        headers: {
+        // 'Accept': 'application/json',
+        'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+            "id_service_desk": "1",
+            "id_atendimento" : "1"
+        })
+    }
+
+    fetch(uri, dataObject)
+    .then(response => {console.log(response)})
+    .then(json => console.log(json))
+}
+

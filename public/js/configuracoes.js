@@ -1,15 +1,5 @@
-/*
-document.addEventListener("DOMContentLoaded", function (evt) {
-    document.getElementById("btn-config").addEventListener("click", function () {
-        const select = document.getElementById('select-setor');
-        value = select.options[select.selectedIndex].value;
-        selecionarSetor(select.value)
-        console.log(value)
 
-    })
-})
-*/
-const endpoint = "https://central-atendimento-cliente.herokuapp.com/";
+// const endpoint = "https://central-atendimento-cliente.herokuapp.com/";
 //const endpoint = "http://127.0.0.1:8000/";
 
 const selecionarSetor = function (value) {
@@ -29,7 +19,7 @@ const selecionarSetor = function (value) {
                 servico = document.getElementById("add")
                 servico.innerHTML = `
                     <input type="text" class="form-control" id="newServico" placeholder="Adicionar Serviço">
-                    <button class="btn mt-4 btn-primary btn-lg" onclick="postServico(
+                    <button class="btn mt-4 btn-primary btn-lg" onclick="postServico1(
                         document.getElementById('select-setor').value,
                         document.getElementById('newServico').value
                     )">addServico</button>`;
@@ -40,20 +30,20 @@ const selecionarSetor = function (value) {
         )
 }
 
-const postServico = function (setorValue, servicoValue) {
+const postServico1 = function (setorValue, servicoValue) {
     //falta validar tamanho maximo de char
 
-    const uri = endpoint + "api/servicos/post/";
+    const uri= 'https://central-atendimento-cliente.herokuapp.com/api/servicos/post';
     const dataObject = {
         method: 'POST',
-        mode: 'no-cors',
+        //mode: 'no-cors',
         headers: {
-        'Accept': 'application/json',
+        //'Accept': 'application/json',
         'Content-Type': 'application/json'
         },
         body: JSON.stringify({
-            setor: setorValue,
-            servico: servicoValue,
+            "setor": `${setorValue}`,
+            "servico": `${servicoValue}`,
         })
     }
 
@@ -61,47 +51,3 @@ const postServico = function (setorValue, servicoValue) {
     .then(response => {console.log(response)})
     .then(json => console.log(json))
 }
-/*
-function GetFila() {
-    itemLista = document.getElementById("fila_espera");
-  
-    const dataAtendimento = document.getElementById("data-atendimento");
-    console.log(dataAtendimento.value);
-  
-    const uri = "/proxy.php";
-  
-    itemLista.innerHTML = "";
-    const proxyParm = dataAtendimento.value;
-  
-    console.log(proxyParm);
-  
-    const loader = document.getElementById("progresso");
-  
-    //console.log(loader)
-  
-    const btnBuscar = document.getElementById("btn-buscar");
-    btnBuscar.setAttribute("disabled", true);
-  
-    loader.classList.add("progresso");
-  
-    fetch(`${uri}?proxyParm=${proxyParm}`)
-      .then((r) =>
-        r.json().then((r) => {
-          r.forEach((e) => {
-            itemLista.innerHTML += `<li class="list-group-item">${e.numero_atendimento}${e.sufixo_atendimento}</li>`;
-  
-            console.log(itemLista);
-  
-            loader.classList.remove("progresso");
-  
-            btnBuscar.removeAttribute("disabled");
-          });
-        })
-      )
-      .catch((e) => {
-        alert("Ocorreu um erro ao tentar selecionar os atendimentos do dia.");
-        loader.classList.remove("progresso");
-        btnBuscar.removeAttribute("disabled");
-      });
-  }
-*/  
