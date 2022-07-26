@@ -15,7 +15,7 @@
     <a class="mx-5" href="{{ url('/mesa_atendimento/atendimento') }}"> <img src="../img/agente-de-call-center.png" alt=""></a>
     <a class="mx-5" href="{{ url('/mesa_atendimento/monitor') }}"><img src="../img/reporter.png" alt=""></a>
     <a class="mx-5" href="{{ url('/mesa_atendimento/triagem') }}"><img src="../img/browser.png" alt=""></a>
-    <a class="mx-4" href="{{ url('/mesa_atendimento/configuracoes') }}"><img src="../img/contexto.png" alt=""></a>
+    <a class="mx-5" href="{{ url('/mesa_atendimento/configuracoes') }}"><img src="../img/contexto.png" alt=""></a>
   </div>
   <div>
     <p class="atendimento">Atendimento</p>
