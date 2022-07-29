@@ -93,5 +93,5 @@ Route::get('/totem/alert', function(){
 })->name('alert');
 
 Auth::routes();
-
+//test merge
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
