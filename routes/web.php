@@ -14,11 +14,7 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-   return view('inicio');
-});
-
-Route::get('/teste', function () {
-   return view('teste');
+    return view('inicio');
 });
 
 Route::get('/carbon', function () {
@@ -26,72 +22,74 @@ Route::get('/carbon', function () {
 });
 Route::get('testando', function () {
     return view('apenas um teste');
-}) ->name('testando.aplicativo');
+})->name('testando.aplicativo')->middleware('auth');
 
 Route::get('telao/telao', function () {
-    return view('telao.telao')->middleware('auth');
-}) ->name('telao');
+    return view('telao.telao');
+})->name('telao')->middleware('auth');
 
 Route::get('totem/totem', function () {
     return view('totem.totem');
-}) ->name('totem')->middleware('auth');
+})->name('totem')->middleware('auth');
 
-Route::get('/mesa_atendimento/principal', function(){
+Route::get('/mesa_atendimento/principal', function () {
     return view('mesa_atendimento.principal');
- })->name('principal')->middleware('auth');
+})->name('principal')->middleware('auth');
 
- Route::get('/mesa_atendimento/atendimento', function(){
+Route::get('/mesa_atendimento/atendimento', function () {
     return view('mesa_atendimento.atendimento');
- })->name('atendimento')->middleware('auth');
+})->name('atendimento')->middleware('auth');
 
- Route::get('/mesa_atendimento/chamadoatendimento', function(){
+Route::get('/mesa_atendimento/chamadoatendimento', function () {
     return view('mesa_atendimento.chamadoatendimento');
- })->name('chamadoatendimento')->middleware('auth');
+})->name('chamadoatendimento')->middleware('auth');
 
- Route::get('/mesa_atendimento/inicioatendimento', function(){
+Route::get('/mesa_atendimento/inicioatendimento', function () {
     return view('mesa_atendimento.inicioatendimento');
- })->name('inicioatendimento')->middleware('auth');
+})->name('inicioatendimento')->middleware('auth');
 
- Route::get('/mesa_atendimento/monitor', function(){
+Route::get('/mesa_atendimento/monitor', function () {
     return view('mesa_atendimento.monitor');
- })->name('monitor')->middleware('auth');
+})->name('monitor');
 
- Route::get('/mesa_atendimento/triagem', function(){
+Route::get('/mesa_atendimento/triagem', function () {
     return view('mesa_atendimento.triagem');
- })->name('triagem')->middleware('auth');
+})->name('triagem')->middleware('auth');
 
- Route::get('/mesa_atendimento/configuracoes', function(){
+Route::get('/mesa_atendimento/configuracoes', function () {
     return view('mesa_atendimento.configuracoes');
- })->name('configuracoes')->middleware('auth');
+})->name('configuracoes')->middleware('auth');
 
- Route::get('/totem/financeiro', function(){
-   return view('totem.financeiro');
+Route::get('/totem/financeiro', function () {
+    return view('totem.financeiro');
 })->name('financeiro')->middleware('auth');
 
-Route::get('/totem/totem', function(){
-   return view('totem.totem');
+Route::get('/totem/totem', function () {
+    return view('totem.totem');
 })->name('inicio')->middleware('auth');
 
-Route::get('/totem/outros', function(){
-   return view('totem.outros');
+Route::get('/totem/outros', function () {
+    return view('totem.outros');
 })->name('outros')->middleware('auth');
 
-Route::get('/totem/secretaria', function(){
-   return view('totem.secretaria');
+Route::get('/totem/secretaria', function () {
+    return view('totem.secretaria');
 })->name('secretaria')->middleware('auth');
 
-Route::get('/totem/pedagogico', function(){
-   return view('totem.pedagogico');
+Route::get('/totem/pedagogico', function () {
+    return view('totem.pedagogico');
 })->name('pedagogico')->middleware('auth');
 
-Route::get('/totem/painel', function(){
-   return view('totem.painel');
+Route::get('/totem/painel', function () {
+    return view('totem.painel');
 })->name('painel')->middleware('auth');
 
-Route::get('/totem/alert', function(){
-   return view('totem.alert');
+Route::get('/totem/alert', function () {
+    return view('totem.alert');
 })->name('alert');
 
 Auth::routes();
-//test merge
+/*
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+Auth::routes();
+*/
