@@ -32,7 +32,8 @@
 
 .boxG {
     /* position: relative; */
-    background-color: rgba(0, 0, 255, 0.623);
+    /* background-color: rgba(0, 0, 255, 0.623); */
+    background: linear-gradient(#005CA8, rgba(43, 89, 214, 0.767));
     color: #fff;
     border: 10px solid outset;
     box-shadow: 5px 2px 2px rgb(56, 56, 56);
@@ -73,14 +74,15 @@
 
 
 .btn-chamar:hover{
-    background-color: rgba(45, 45, 223, 0.623);
+    background: linear-gradient(#005CA8, rgba(43, 89, 214, 0.767));
     color: black;
 }
 
 
 .btn-chamar{
-    background-color: rgba(0, 0, 255, 0.623);
-    color:black;
+    background: linear-gradient(#005CA8, rgba(43, 89, 214, 0.767));
+    /* background-color: rgba(0, 0, 255, 0.623); */
+    color:#fff;
     height: 150px;
     width: 400px;
     font-size: 2rem;

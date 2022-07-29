@@ -4,7 +4,7 @@
 
 const selecionarSetor = function (value) {
     console.log(value);
-    
+
     servicos = document.getElementById("servicos-setores")
     servicos.innerHTML = " "
 
@@ -15,14 +15,14 @@ const selecionarSetor = function (value) {
                 r.r.forEach(r1 => {
                     servicos.innerHTML += ` <li class="list-group-item">${r1.servico}<button type="button" class="btn mx-3 btn-outline-danger"><i class="fa-solid fa-trash"></i></button></li>`
                 });
-            
+
                 servico = document.getElementById("add")
                 servico.innerHTML = `
                     <input type="text" class="form-control" id="newServico" placeholder="Adicionar Serviço">
                     <button class="btn mt-4 btn-primary btn-lg" onclick="postServico1(
                         document.getElementById('select-setor').value,
                         document.getElementById('newServico').value
-                    )">addServico</button>`;
+                    )">Adicionar</button>`;
             } else {
                 console.log("falha -> " + r.r[0]);
             }

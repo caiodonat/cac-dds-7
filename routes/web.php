@@ -14,11 +14,11 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-   return view('inicio');
+    return view('inicio');
 });
 
 Route::get('/teste', function () {
-   return view('teste');
+    return view('teste');
 });
 
 Route::get('/carbon', function () {
@@ -26,79 +26,76 @@ Route::get('/carbon', function () {
 });
 Route::get('testando', function () {
     return view('apenas um teste');
-}) ->name('testando.aplicativo');
+})->name('testando.aplicativo');
 
 Route::get('telao/telao', function () {
     return view('telao.telao');
-}) ->name('telao');
+})->name('telao');
 
 Route::get('totem/totem', function () {
     return view('totem.totem');
-}) ->name('totem');
+})->name('totem');
 
-Route::get('/mesa_atendimento/principal', function(){
+Route::get('/mesa_atendimento/principal', function () {
     return view('mesa_atendimento.principal');
- })->name('principal');
+})->name('principal');
 
- Route::get('/mesa_atendimento/atendimento', function(){
+Route::get('/mesa_atendimento/atendimento', function () {
     return view('mesa_atendimento.atendimento');
- })->name('atendimento');
+})->name('atendimento');
 
- Route::get('/mesa_atendimento/chamadoatendimento', function(){
+Route::get('/mesa_atendimento/chamadoatendimento', function () {
     return view('mesa_atendimento.chamadoatendimento');
- })->name('chamadoatendimento');
+})->name('chamadoatendimento');
 
- Route::get('/mesa_atendimento/inicioatendimento', function(){
+Route::get('/mesa_atendimento/inicioatendimento', function () {
     return view('mesa_atendimento.inicioatendimento');
- })->name('inicioatendimento');
+})->name('inicioatendimento');
 
- Route::get('/mesa_atendimento/monitor', function(){
+Route::get('/mesa_atendimento/monitor', function () {
     return view('mesa_atendimento.monitor');
- })->name('monitor');
+})->name('monitor');
 
- Route::get('/mesa_atendimento/triagem', function(){
+Route::get('/mesa_atendimento/triagem', function () {
     return view('mesa_atendimento.triagem');
- })->name('triagem');
+})->name('triagem');
 
- Route::get('/mesa_atendimento/configuracoes', function(){
+Route::get('/mesa_atendimento/configuracoes', function () {
     return view('mesa_atendimento.configuracoes');
- })->name('configuracoes');
+})->name('configuracoes');
 
- Route::get('/totem/financeiro', function(){
-   return view('totem.financeiro');
+Route::get('/totem/financeiro', function () {
+    return view('totem.financeiro');
 })->name('financeiro');
 
-Route::get('/totem/totem', function(){
-   return view('totem.totem');
+Route::get('/totem/totem', function () {
+    return view('totem.totem');
 })->name('inicio');
 
-Route::get('/totem/outros', function(){
-   return view('totem.outros');
+Route::get('/totem/outros', function () {
+    return view('totem.outros');
 })->name('outros');
 
-Route::get('/totem/secretaria', function(){
-   return view('totem.secretaria');
+Route::get('/totem/secretaria', function () {
+    return view('totem.secretaria');
 })->name('secretaria');
 
-Route::get('/totem/pedagogico', function(){
-   return view('totem.pedagogico');
+Route::get('/totem/pedagogico', function () {
+    return view('totem.pedagogico');
 })->name('pedagogico');
 
-Route::get('/totem/painel', function(){
-   return view('totem.painel');
+Route::get('/totem/painel', function () {
+    return view('totem.painel');
 })->name('painel');
 
-Route::get('/totem/alert', function(){
-   return view('totem.alert');
+Route::get('/totem/alert', function () {
+    return view('totem.alert');
 })->name('alert');
 
-<<<<<<< HEAD
-Route::get('/totem/errorAlert', function(){
-   return view('totem.errorAlert');
+Route::get('/totem/errorAlert', function () {
+    return view('totem.errorAlert');
 })->name('errorAlert');
-=======
-Auth::routes();
->>>>>>> e488d183b475dddc3e19bc5bbdedaa4fb1ed51c8
+
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
