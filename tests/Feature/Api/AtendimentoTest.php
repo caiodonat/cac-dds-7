@@ -299,35 +299,21 @@ class AtendimentoTest extends TestCase
         ->where('success', true)
         ->first(fn ($json1) =>
           $json1->first(fn ($json2) =>
-            $json2->where('id_atendimento', $id_a)
-              ->where('id_service_desk', $id_sD)
-              ->where('started',
-                (function (string $std) {
-                  //$stdC = Carbon::create($std)->toDateTimeString();
-                  $cNow = Carbon::now('-03:00')->toTimeString();
-                  //$cNow2 = $cNow->addSeconds(10); 
-                  //$cNow;
-                  echo $cNow, $std;
-                  return $std >= $cNow;
-                })
+              $json2->where('id_atendimento', $id_a)
+                ->where('id_service_desk', $id_sD)
+                ->where('started',
+                  (function (string $id){
+                    $cNow = Carbon::now('-03:00');
+                    $id_c = Carbon::create($id);
+                    return 60 >= $cNow->diffInSeconds($id_c);//verifica com uma latencia maxima de 60 seg.
+                  })
+                )
+                ->etc()
               )
               ->etc()
           )
-        )
-    );
-
-    $response = $this->getJson('api/atendimento/to_call_next');
-
-    $response
-      ->assertJson(
-        fn (AssertableJson $json) =>
-        $json->first(
-          fn ($json) =>
-          $json->where('ToCallNext')
-            ->etc()
-        )
       );
-  }
+    }
 
   public function test_iniciar_atendimento()
   {
