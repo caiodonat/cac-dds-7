@@ -223,6 +223,7 @@ class AtendimentoController extends Controller
   public function begin(Request $rt)
   {
     try {
+      //echo $rt;
       $cNow = Carbon::now('-03:00');
 
       DB::table('tb_atendimentos')
