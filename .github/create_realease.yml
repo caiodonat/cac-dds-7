@@ -20,6 +20,6 @@ jobs:
         uses: devmasx/merge-branch@master
         with:
           type: now
-          from_branch: dev
+          from_branch: servidor
           target_branch: main
           github_token: ${{ github.token }}
