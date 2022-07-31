@@ -56,7 +56,7 @@ Route::get('/atendimentos/queue/next/to_call', [Atendimento::class, 'queueNextTo
 Route::put('/atendimento/begin/', [Atendimento::class, 'begin']);
 
 //encerramento do atendimento
-Route::put('/atendimento/finish/{id_atendimento}&{$estado_fim_atendimento}', [Atendimento::class, 'atendimentoFinish']);
+Route::put('/atendimento/finish/', [Atendimento::class, 'finish']);
 
 //chama o uma senha especifica da fila
 Route::put('/atendimento/call/{id_atendimento}', [Atendimento::class, 'call']);

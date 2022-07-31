@@ -8,7 +8,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Redis;
 use Illuminate\Support\Facades\DB;
 use Carbon\Carbon;
-
+use Symfony\Component\HttpKernel\Event\RequestEvent;
 
 class AtendimentoController extends Controller
 {
@@ -244,17 +244,27 @@ class AtendimentoController extends Controller
     }
   }
 
-  public function atendimentoFinish($id_atendimento, $estado_fim_atendimento)
+  public function finish(Request $rt)
   {
-    $carbonNow = Carbon::now('-03:00');
-    Atendimento::where("id_atendimento", "=", $id_atendimento)
-      ->update(['fim_atendimento' => $carbonNow
-        ->toDateTimeString()])
-      ->update(['estado_fim_atendimento' => $estado_fim_atendimento]);
+    try {
+      //echo $rt;
+      $cNow = Carbon::now('-03:00');
 
-    $atendimento = Atendimento::findOrFail($id_atendimento);
+      DB::table('tb_atendimentos')
+        ->where('id_atendimento', $rt->input('id_atendimento'))
+        ->update([
+          'finished' => $cNow->toDateTimeString(),
+          'status_atendimento' => $rt->input('status_atendimento')
+        ]);
 
-    return json_encode($atendimento, JSON_PRETTY_PRINT);
+      $r = DB::table('tb_atendimentos')
+        ->where('id_atendimento', $rt->input('id_atendimento'))
+        ->get();
+
+      return json_encode(['r' => $r, 'success' => true], JSON_PRETTY_PRINT);
+    } catch (\Throwable $th) {
+      return json_encode(['r' => $th, 'success' => false], JSON_PRETTY_PRINT);
+    }
   }
 
   public function call($id_atendimento)
