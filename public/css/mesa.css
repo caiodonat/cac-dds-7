@@ -1,0 +1,164 @@
+.container2{
+    padding-left: 15%;
+    background-image: linear-gradient(rgb(255, 255, 255), rgba(175, 193, 240, 0.719));
+    background-repeat: no-repeat;
+    font-family: Arial, Helvetica, sans-serif;
+    overflow: hidden;
+    height: 100vh;
+}
+
+.container1{
+    background-image: linear-gradient(rgb(255, 255, 255), rgba(175, 193, 240, 0.719));
+    background-repeat: no-repeat;
+    font-family: Arial, Helvetica, sans-serif;
+    overflow: hidden;
+    height: 100vh;
+}
+
+.unidade{
+    padding-left: 65px;
+    padding-top: 25px;
+}
+
+.unidadep {
+    padding-left: 65px;
+}
+
+.nomes p{
+    display: inline-block;
+    padding-left: 65px;
+    margin-right: 58px;
+}
+
+.boxG {
+    /* position: relative; */
+    /* background-color: rgba(0, 0, 255, 0.623); */
+    background: linear-gradient(#005CA8, rgba(43, 89, 214, 0.767));
+    color: #fff;
+    border: 10px solid outset;
+    box-shadow: 5px 2px 2px rgb(56, 56, 56);
+	width: 250px;
+	height: 250px;
+	/* margin: auto; */
+	text-align: center;
+    /* right: 770px; */
+    cursor: pointer;
+
+}
+
+
+
+.numero{
+    font-size: 130px;
+}
+
+.alterar-box{
+    display: flex;
+}
+
+
+.chamar{
+    display: block;
+    height: 100px;
+    width: 35rem;
+    position: relative;
+    /* left: 400px; */
+    bottom: 160px;
+}
+
+.tabelaProx{
+    width: 700px;
+    height: 300px;
+    left: 40%;
+}
+
+
+.btn-chamar:hover{
+    background: linear-gradient(#005CA8, rgba(43, 89, 214, 0.767));
+    color: black;
+}
+
+
+.btn-chamar{
+    background: linear-gradient(#005CA8, rgba(43, 89, 214, 0.767));
+    /* background-color: rgba(0, 0, 255, 0.623); */
+    color:#fff;
+    height: 150px;
+    width: 400px;
+    font-size: 2rem;
+    font-weight: bolder;
+    border-radius: 8px;
+}
+
+
+
+.btn-atd{
+    background-color: rgba(0, 0, 0, 0.322);
+}
+
+.table{
+    line-height: 15px;
+    text-indent: 1px;
+    width: 70%;
+}
+
+.btn-atd:houver{
+    background-color: aqua;
+    font-weight: bolder;
+}
+
+btn-encerrar{
+    background-color: red;
+}
+
+
+.progresso {
+    position: absolute;
+    left: 40px;
+    display: block;
+    margin: 0 auto;
+    height: 150px;
+    width: 100%;
+    background-image: url('/img/progresso.gif');
+    background-repeat: no-repeat;
+    background-position: center center;
+    z-index: 999;
+}
+
+.config-subtitle{
+    background-color: rgb(194, 182, 182);
+    height: 30px;
+    border-radius: 6px;
+}
+
+p.atendimento{
+    position: absolute;
+    padding-left: 2%;
+    padding-top: 1%;
+}
+
+p.monitor{
+    position: absolute;
+    padding-left: 11.3%;
+    padding-top: 1%;
+}
+
+p.triagem{
+    position: absolute;
+    padding-left: 19.7%;
+    padding-top: 1.1%;
+}
+
+p.config{
+    position: absolute;
+    padding-left: 27.2%;
+    padding-top: 1.1%;
+}
+
+IMG.displayed {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: auto;
+    margin-bottom: auto;
+}
