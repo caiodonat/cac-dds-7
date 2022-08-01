@@ -2,7 +2,9 @@ function callAlert(){
     location.href = "alert"
 }
 
-function EmitirSenha(servicos) {
+
+
+function EmitirSenha(servicosGeral) {
 
     //localStorage.setItem("senha", bot.value)
     //alert(bot.value)
@@ -18,10 +20,10 @@ function EmitirSenha(servicos) {
         },
         mode: "cors",
         body: JSON.stringify({
-            servicos: servicos
+            servicos: servicosGeral
         }),
     }
-    
+
     fetch((endPoint + route), initDetails )
         .then( response =>
         {
@@ -42,12 +44,12 @@ function EmitirSenha(servicos) {
         } )
         .catch( err =>
         {
-            
+
             console.log( 'Fetch Error :-S', err );
             location.href = "errorAlert"
         } );
 }
-    
+
 
 
 function GetData() {
@@ -70,7 +72,7 @@ function GetData() {
         },
         mode: "cors"
     }
-    
+
     fetch((endPoint + route + date), initDetails )
         .then( response =>
         {
@@ -99,6 +101,8 @@ function GetData() {
 function servicoFinanceiro(){
     servicos = document.getElementById("opcoesFcr");
     servicos.innerHTML = "";
+    btnF = document.getElementById("getData")
+    btnF.innerHTML = ""
 
     const uri = `https://central-atendimento-cliente.herokuapp.com/api/servicos/fcr`
     resp = fetch(uri)
@@ -108,12 +112,16 @@ function servicoFinanceiro(){
                         servicos.innerHTML += `
                             <div class="box-opt">
                                 <label for="opt1" id="">
-                                    <input type="radio" class="messageCheckbox" value="${r1.id_atendimento}" name="opt" id="">
+                                    <input type="radio" class="messageCheckbox" value="${r1.id_servicos}" name="opt" id="sGeral">
                                     ${r1.servico}
                                 </label>
                             </div>
                         `
-                    });
+                    }
+                    );
+                        // const servicosGeral = document.getElementById("sGeral").value
+                        // // console.log(servicosGeral).value
+                        // btnF.innerHTML += `<button id='getData' class="btn-emitirsenha" onclick="EmitirSenha("${servicosGeral}"); optionsChecked();">Emitir`
                 }else{
                     console.log("falha -> " + r.r[0]);
                 }
@@ -133,7 +141,7 @@ function servicoPedagogico(){
                         servicos.innerHTML += `
                             <div class="box-opt">
                                 <label for="opt1" id="">
-                                    <input type="radio" class="messageCheckbox" value="${r1.id_atendimento}" name="opt" id="">
+                                    <input type="radio" class="messageCheckbox" value="${r1.id_servicos}" name="opt" id="">
                                     ${r1.servico}
                                 </label>
                             </div>
@@ -158,7 +166,7 @@ function servicoSecretaria(){
                         servicos.innerHTML += `
                             <div class="box-opt">
                                 <label for="opt1" id="">
-                                    <input type="radio" class="messageCheckbox" value="${r1.id_atendimento}" name="opt" id="">
+                                    <input type="radio" class="messageCheckbox" value="${r1.id_servicos}" name="opt" id="">
                                     ${r1.servico}
                                 </label>
                             </div>
@@ -183,7 +191,7 @@ function servicoOutrosServicos(){
                         servicos.innerHTML += `
                             <div class="box-opt">
                                 <label for="opt1" id="">
-                                    <input type="radio" class="messageCheckbox" value="${r1.id_atendimento}" name="opt" id="">
+                                    <input type="radio" class="messageCheckbox" value="${r1.id_servicos}" name="opt" id="">
                                     ${r1.servico}
                                 </label>
                             </div>
@@ -195,12 +203,12 @@ function servicoOutrosServicos(){
         })
     )
 }
- 
- 
- 
+
+
+
  function optionsChecked(){
 
-            var checkedValue = null; 
+            var checkedValue = null;
             var inputElements = document.getElementsByClassName('messageCheckbox');
                 for(var i=0; inputElements[i]; ++i){
                     console.log(
@@ -212,5 +220,5 @@ function servicoOutrosServicos(){
                         break;
                     }
                 }
-            return checkedValue; 
+            return checkedValue;
         }

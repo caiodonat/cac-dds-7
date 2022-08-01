@@ -1,6 +1,6 @@
 @extends("layouts.totemoutros")
 @section('content')
-    
+
     <div class="logo_senai">
         <div class="voltar mx-5 my-5">
         <a href="{{ url('/totem/totem') }}"><img src="../img/de-volta.png" class=""></a>
@@ -38,7 +38,8 @@
 
     <input type="numeric" id="campo-texto" class="field_cpf" placeholder="CPF (Opcional)" aria-label="Search"
         aria-describedby="search-addon" />
-    <button id='getData' class="btn-emitirsenha" onclick="EmitirSenha('OTS'); callAlert(); optionsChecked();">Emitir Senha</button>
+        <button id='getData' class="btn-emitirsenha" onclick="EmitirSenha(optionsChecked()); optionsChecked();">Emitir
+    Senha</button>
     </div>
 
     @endsection
