@@ -10,18 +10,7 @@ use Carbon\Carbon;
 
 class ServiceDeskController extends Controller
 {
-    public function id($id)
-    {
-        try {
-            $r = DB::table('tb_service_desks')
-            ->where('id_service_desk', $id)
-            ->get();
-
-            return json_encode(['r'=>$r, 'success'=>true], JSON_PRETTY_PRINT);
-        } catch (\Throwable $th) {
-            return json_encode(['r'=>$th, 'success'=>false], JSON_PRETTY_PRINT);
-        }
-    }
+  //POST
 
     public function post(Request $rt)
     {
@@ -39,6 +28,22 @@ class ServiceDeskController extends Controller
 
             $r = DB::table('tb_service_desks')
             ->where('id_service_desk', $newS->id_service_desk)
+            ->get();
+
+            return json_encode(['r'=>$r, 'success'=>true], JSON_PRETTY_PRINT);
+        } catch (\Throwable $th) {
+            return json_encode(['r'=>$th, 'success'=>false], JSON_PRETTY_PRINT);
+        }
+    }
+
+
+    //GET
+
+    public function id($id)
+    {
+        try {
+            $r = DB::table('tb_service_desks')
+            ->where('id_service_desk', $id)
             ->get();
 
             return json_encode(['r'=>$r, 'success'=>true], JSON_PRETTY_PRINT);
