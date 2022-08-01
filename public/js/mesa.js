@@ -27,15 +27,16 @@ function navbar(){
 
 function setGuiche(){
 
-    const teste = document.getElementById("guiche")
+    teste = document.getElementById("guicheNum")
     teste.innerHTML = " "
 
-    const select = document.getElementById('guicheId');
-	text = select.options[select.selectedIndex].text;
+    const select = document.getElementById('guicheId')
+	  text = select.options[select.selectedIndex].text;
     const idGuiche = text
-	console.log(text);
+	console.log('fdssd');
 
-    teste.innerHTML = `<h1 class="numero">${idGuiche}</h1>`
+
+    teste.innerHTML = `<h1 class="numero">${jus}</h1>`
 
 }
 
@@ -327,7 +328,7 @@ function addAtributos(){
 }
 
 
-  
+
 function iniciarAtendimento(){
     const uri =  `https://central-atendimento-cliente.herokuapp.com/api/atendimento/begin`
     const dataObject = {
