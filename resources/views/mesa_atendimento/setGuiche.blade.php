@@ -13,16 +13,15 @@
       <div class="card-body">
         <div class="boxG p-2">
           <h5>Guichê</h5>
-          <h1 class="numero" id="guiche">2</h1>
+          <h1 class="numero" id="guicheNum">2</h1>
           <div class="alterar-box">
-          </div>
-          <div class="col-md-6">
-            <select class="form-select" id="select-setor" aria-label="Default select example">
-              <option selected>Selecione seu Perfil</option>
-              <option value="adm">Administrador</option>
-              <option value="fc">Funcionario</option>
-              <option value="vst">Visitante</option>
+            <select class="form-select" id="guicheId" aria-label="Default select example">
+              <option selected>Selecione o Guiche</option>
+              <option value="1">1</option>
+              <option value="2">2</option>
+              <option value="3">3</option>
             </select>
+            <button onload="setGuiche()">Confirmar</button>
           </div>
         </div>
       </div>
