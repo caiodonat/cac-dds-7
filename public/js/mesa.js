@@ -1,3 +1,6 @@
+const endPoint = `https://cac-dds-7.herokuapp.com/`;
+const endPoint_local = `http://127.0.0.1:8000/`;
+
 function navbar(){
     nav = document.getElementById("myTab")
     nav.innerHTML = " "
@@ -25,19 +28,26 @@ function navbar(){
   }
 
 
-function setGuiche(){
+function postServiceDesk(number_desk, id_user){
+    const url =  endPoint_local + `api/service_desk/post/`
 
-    teste = document.getElementById("guicheNum")
-    teste.innerHTML = " "
-
-    const select = document.getElementById('guicheId')
-	  text = select.options[select.selectedIndex].text;
-    const idGuiche = text
-	console.log('fdssd');
-
-
-    teste.innerHTML = `<h1 class="numero">${jus}</h1>`
-
+    fetch(url, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        "number_desk": `${number_desk}`,
+        "id_user" : `${id_user}`
+      })
+    })
+      .then(r =>r.json().then(r =>{
+        if(r.success){
+          alert("Ação realizada com Exito");
+        }else{
+          alert("Falha");
+        }
+      }))
 }
 
 

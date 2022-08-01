@@ -15,17 +15,20 @@
           <h5>Guichê</h5>
           <h1 class="numero" id="guicheNum">2</h1>
           <div class="alterar-box">
-            <select class="form-select" id="guicheId" aria-label="Default select example">
+            <select class="form-select" id="number_desk" aria-label="Default select example">
               <option selected>Selecione o Guiche</option>
               <option value="1">1</option>
               <option value="2">2</option>
               <option value="3">3</option>
             </select>
-            <button onload="setGuiche()">Confirmar</button>
+            <button onclick="">Confirmar</button>
           </div>
         </div>
       </div>
-      <a href="#" class="btn btn-primary mt-4">Go somewhere</a>
+      <button class="btn btn-primary mt-4" onclick="postServiceDesk(
+        document.getElementById('number_desk').value,
+        '{{ Auth::user()->id }}')">
+        Begin office hour</button>
     </div>
   </div>
 </div>
