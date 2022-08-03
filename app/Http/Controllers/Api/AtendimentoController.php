@@ -246,7 +246,7 @@ class AtendimentoController extends Controller
         ->where('id_atendimento', $rt->input('id_atendimento'))
         ->update([
           'started' => $cNow->toDateTimeString(),
-          'id_service_desk' => $rt->input('id_service_desk'),
+          'user_desk' => $rt->input('id_service_desk'),
           'status_atendimento' => 'em_atendimento'
         ]);
 
