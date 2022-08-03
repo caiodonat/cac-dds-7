@@ -14,13 +14,13 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-//POST
+  //POST
 
 //Esta rota vai gerar uma senha para um novo atendimento
 Route::post('/atendimento/post/', [Atendimento::class, 'post']);
 
+  //GET
 
-//GET
 //retorna todos os atendimentos no DB
 Route::get('/atendimentos/all', [Atendimento::class, 'all']);
 
@@ -54,8 +54,7 @@ Route::get('atendimentos/queue/number/{numero_atendimento}', [Atendimento::class
 Route::get('/atendimentos/queue/next/to_call', [Atendimento::class, 'queueNextTo_call']);
 
 
-
-//PUT
+  //PUT
 
 //inicio do atendimento
 Route::put('/atendimento/begin/', [Atendimento::class, 'begin']);

@@ -283,22 +283,29 @@ class AtendimentoController extends Controller
     }
   }
 
-  public function call($id_atendimento)
+  public function call(Request $rt)
   {
     //adiciona esse atendimento ($id_atendimento) a uma lista que sera chamada pelo telão, e o telao ficarar verificando (com frequencia) se possui atualizações nessa fila
 
-    $carbonNow = Carbon::now('-03:00');
+    try {
+      $cNow = Carbon::now('-03:00');
 
-    DB::table('tb_atendimentos')
-      ->where('id_atendimento', '=', $id_atendimento)
-      ->update([
-        'status_atendimento' => 'chamando',
-        'first_call' => $carbonNow->toDateTimeString()
-      ]);
+      DB::table('tb_atendimentos')
+        ->where('id_atendimento', $rt->input('id_atendimento'))
+        ->update([
+          'first_call' => $cNow->toDateTimeString(),
+          'user_desk' => $rt->input('user_desk'),
+          'status_atendimento' => 'chamando'
+        ]);
 
-    $atendimento = Atendimento::findOrFail($id_atendimento);
+      $r = DB::table('tb_atendimentos')
+        ->where('id_atendimento', $rt->input('id_atendimento'))
+        ->get();
 
-    return json_encode($atendimento, JSON_PRETTY_PRINT);
+      return json_encode(['r' => $r, 'success' => true], JSON_PRETTY_PRINT);
+    } catch (\Throwable $th) {
+      return json_encode(['r' => $th, 'success' => false], JSON_PRETTY_PRINT);
+    }
   }
 
   public function callNext()
@@ -310,20 +317,22 @@ class AtendimentoController extends Controller
     $carbonNow = Carbon::now('-03:00');
 
     try {
-      $id_atendimento = DB::table('tb_atendimentos')
+      $atm = DB::table('tb_atendimentos')
         ->where('date_emissao_atendimento', '=', $carbonNow->toDateString())
-        ->value('id_atendimento');
+        ->where('status_atendimento', null)
+        //->value('id_atendimento')
+        ->first();
 
       DB::table('tb_atendimentos')
-        ->where('id_atendimento', $id_atendimento)
+        ->where('id_atendimento', $atm->id_atendimento)
         ->update([
           'status_atendimento' => 'chamando',
           'first_call' => $carbonNow->toDateTimeString()
         ]);
 
-      $atendimento = Atendimento::findOrFail($id_atendimento);
+      $r = Atendimento::findOrFail($atm->id_atendimento);
 
-      return json_encode($atendimento, JSON_PRETTY_PRINT);
+      return json_encode($r, JSON_PRETTY_PRINT);
     } catch (\Exception $th) {
       return json_encode(["fila_vazia" => true]);
     }
