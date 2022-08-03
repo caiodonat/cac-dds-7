@@ -79,15 +79,7 @@ Route::get('/servicos/fcr', [ServicosController::class, 'getFCR']);
 Route::get('/servicos/sct', [ServicosController::class, 'getSCT']);
 Route::get('/servicos/ots', [ServicosController::class, 'getOTS']);
 
-//ServiceDeskController
-
-Route::post('/service_desk/post/', [ServiceDesk::class, 'post']);
-
-Route::get('/service_desks/id/{id}', [ServiceDesk::class, 'id']);
-
-Route::get('/service_desks/free_desk/', [ServiceDesk::class, 'freeDesk']);
-
 
 //UserController
 
-Route::get('/user/id/{id}', [User::class, 'show']);
+Route::put('/user/set/number_desk', [User::class, 'setNumber_desk']);

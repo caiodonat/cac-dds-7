@@ -48,8 +48,8 @@
                     <option selected>access_level</option>
                     <option value="admin">Administrador</option>
                     <option value="employee">Funcionario</option>
-                    <option value="totem">totem</option>
-                    <option value="telao">telao</option>
+                    <option value="totem">Totem</option>
+                    <option value="telao">T elao</option>
                   </select>
                 </div>
               </div>

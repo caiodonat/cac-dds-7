@@ -1,6 +1,3 @@
-const endPoint = `https://cac-dds-7.herokuapp.com/`;
-const endPoint_local = `http://127.0.0.1:8000/`;
-
 function navbar() {
   nav = document.getElementById("myTab")
   nav.innerHTML = " "
@@ -27,11 +24,12 @@ function navbar() {
   </li>`
 }
 
-function postServiceDesk(number_desk, id_user) {
-  const url = endPoint_local + `api/service_desk/post/`
+function putServiceDesk(number_desk, id_user) {
+  const url = endPoint_local + `api/user/set/number_desk`
 
+  console.log(number_desk, id_user);
   fetch(url, {
-    method: 'POST',
+    method: 'PUT',
     headers: {
       'Content-Type': 'application/json'
     },
@@ -47,6 +45,8 @@ function postServiceDesk(number_desk, id_user) {
         alert("Falha");
       }
     }))
+
+    location.href = "principal";
 }
 
 function chamarTela() {
