@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\AtendimentoController as Atendimento;
 use App\Http\Controllers\Api\ServicosController;
 use App\Http\Controllers\Api\ServiceDeskController as ServiceDesk;
+use App\Http\Controllers\UserController as User;
 use App\Http\Controllers\Api\ApiController;
 
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
@@ -42,13 +43,17 @@ Route::get('/atendimentos/queue', [Atendimento::class, 'queue']);
 Route::get('/atendimentos/queue/next', [Atendimento::class, 'queueNext']);
 
 //Esta rota vai chamar a senha anterior caso a mesma nao tenha comparecido ao guiche
-Route::get('/atendimentos/queue/already_called', [Atendimento::class, 'queueAlready_called']);
+Route::get('/atendimentos/queue/already_called/', [Atendimento::class, 'queueAlready_called']);
+
+Route::get('/atendimentos/queue/next/already_called/', [Atendimento::class, 'queueNextAlready_called']);
 
 //retorna um atendimento especifico (do dia atual) com base na variavel 'numero_atendimento'
 Route::get('atendimentos/queue/number/{numero_atendimento}', [Atendimento::class, 'queueNumber']);
 
 //chama a proxima senha no telao e altera valor de status_atendimento
 Route::get('/atendimentos/queue/next/to_call', [Atendimento::class, 'queueNextTo_call']);
+
+
 
 //PUT
 
@@ -79,3 +84,10 @@ Route::get('/servicos/ots', [ServicosController::class, 'getOTS']);
 Route::post('/service_desk/post/', [ServiceDesk::class, 'post']);
 
 Route::get('/service_desks/id/{id}', [ServiceDesk::class, 'id']);
+
+Route::get('/service_desks/free_desk/', [ServiceDesk::class, 'freeDesk']);
+
+
+//UserController
+
+Route::get('/user/id/{id}', [User::class, 'show']);
