@@ -278,8 +278,15 @@ function salvarID(){
   const uri = `http://central-atendimento-cliente.herokuapp.com/api/atendimentos/queue/next/already_called`
   fetch(uri).then(r => r.json().then(r => {
 
-    console.log(r)
-    sessionStorage.setItem(r.id_atendimento)
+    console.log(r.r.id_atendimento)
+
+    sessionStorage.setItem("idAtendimento", r.r.id_atendimento)
+
+    var idAtendimento = sessionStorage.getItem("idAtendimento")
+    console.log(idAtendimento)
+    var userDesk = {{ Auth::user()->number_desk }}
+    console.log(userDesk)
+
 
 }))
 
@@ -369,7 +376,7 @@ function iniciarAtendimento() {
     },
     body: JSON.stringify({
       "id_service_desk": "1",
-      "id_atendimento": "1"
+      "id_atendimento": `${idAtendimento}`
     })
   }
 
@@ -391,7 +398,7 @@ function chamarSenha() {
     },
     body: JSON.stringify({
       "id_service_desk": "1",
-      "id_atendimento": "1"
+      "id_atendimento": `${idAtendimento}`
     })
   }
 
@@ -412,7 +419,7 @@ function encerrarAtendimento() {
     },
     body: JSON.stringify({
       "id_service_desk": "1",
-      "id_atendimento": "1"
+      "id_atendimento": `${idAtendimento}`
     })
   }
 
