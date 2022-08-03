@@ -177,7 +177,8 @@ class AtendimentoController extends Controller
       $r = DB::table('tb_atendimentos')
         ->where("date_emissao_atendimento", $cNow)
         ->whereNotNull("first_call")
-        ->get();
+        ->get()
+        ->reverse();
 
       return json_encode(['r' => $r, 'success' => true], JSON_PRETTY_PRINT);
     } catch (\Throwable $th) {
