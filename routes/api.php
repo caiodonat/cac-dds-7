@@ -50,9 +50,6 @@ Route::get('/atendimentos/queue/next/already_called/', [Atendimento::class, 'que
 //retorna um atendimento especifico (do dia atual) com base na variavel 'numero_atendimento'
 Route::get('atendimentos/queue/number/{numero_atendimento}', [Atendimento::class, 'queueNumber']);
 
-//chama a proxima senha no telao e altera valor de status_atendimento
-Route::get('/atendimentos/queue/next/to_call', [Atendimento::class, 'queueNextTo_call']);
-
 
   //PUT
 
@@ -63,7 +60,7 @@ Route::put('/atendimento/begin/', [Atendimento::class, 'begin']);
 Route::put('/atendimento/finish/', [Atendimento::class, 'finish']);
 
 //chama o uma senha especifica da fila
-Route::put('/atendimento/call/{id_atendimento}', [Atendimento::class, 'call']);
+Route::put('/atendimento/call/', [Atendimento::class, 'call']);
 
 //chama a fila de chamada a proxima senha da fila de espera
 Route::put('/atendimento/call_next', [Atendimento::class, 'callNext']);
