@@ -1,155 +1,117 @@
-function myFunction(){
-    location.href = "/atdandamento.html"
+const endPoint = `https://cac-dds-7.herokuapp.com/`;
+const endPoint_local = `http://127.0.0.1:8000/`;
+
+function myFunction() {
+  location.href = "/atdandamento.html"
 }
 
-function iniciarAtendimento(){
-    location.href = "/iniciaratendimento.html"
+function iniciarAtendimento() {
+  location.href = "/iniciaratendimento.html"
 }
 
-function encerrarAtendimento(){
-    location.href = "/atendimento.html"
+function encerrarAtendimento() {
+  location.href = "/atendimento.html"
 }
-function atualizarAatendimentoJS(){
+function atualizarAatendimentoJS() {
 
-        const endPoint = 'https://central-atendimento-cliente.herokuapp.com/api';
-        const route = '/atendimento/queue_next';
+  const endPoint = 'https://central-atendimento-cliente.herokuapp.com/api';
+  const route = '/atendimento/queue_next';
 
 
-        const initDetails = {
-            method: 'get',
-            headers: {
-                "Content-Type": "application/json; charset=utf-8"
-            },
-            mode: "cors"
-        }
+  const initDetails = {
+    method: 'get',
+    headers: {
+      "Content-Type": "application/json; charset=utf-8"
+    },
+    mode: "cors"
+  }
 
-        fetch((endPoint + route), initDetails )
-            .then( response =>
-            {
-                document.getElementById("senhaAtual").innerHTML = `${response.numero_atendimento}${response.sufixo_atendimento}`;
+  fetch((endPoint + route), initDetails)
+    .then(response => {
+      document.getElementById("senhaAtual").innerHTML = `${response.numero_atendimento}${response.sufixo_atendimento}`;
 
-                if ( response.status !== 200 )
-                {
-                    console.log( 'Looks like there was a problem. Status Code: ' +
-                        response.status );
-                    return;
-                }
+      if (response.status !== 200) {
+        console.log('Looks like there was a problem. Status Code: ' +
+          response.status);
+        return;
+      }
 
-                console.log( response.headers.get( "Content-Type" ) );
-                return response.json();
-            }
-            ).then( myJson =>
-            {
-                document.getElementById("senhaAtual").innerHTML = `${myJson.numero_atendimento}-${myJson.sufixo_atendimento}`;
-                console.log( JSON.stringify( myJson ) );
-            } )
-            .catch( err =>
-            {
-                console.log( 'Fetch Error :-S', err );
-            } );
+      console.log(response.headers.get("Content-Type"));
+      return response.json();
+    }
+    ).then(myJson => {
+      document.getElementById("senhaAtual").innerHTML = `${myJson.numero_atendimento}-${myJson.sufixo_atendimento}`;
+      console.log(JSON.stringify(myJson));
+    })
+    .catch(err => {
+      console.log('Fetch Error :-S', err);
+    });
 }
 
-function fila(){
-    const primeiraFila = document.getElementById("primeiroFila");
-    primeiraFila.innerHTML = `
+function fila() {
+  const primeiraFila = document.getElementById("primeiroFila");
+  primeiraFila.innerHTML = `
         <tr>
         <th class="tabela-1">SENHAS ANTERIORES</th>
         <th class="tabela-1"onclick="callNext()">GUICHÊ</strong></th>
         <tr>
         </tr>`
 
-    const uri = `https://central-atendimento-cliente.herokuapp.com/api/atendimentos/queue`
-    fetch(uri).then(r=>r.json().then(r => {
-       r.forEach(r1=> {
+  const uri = `https://central-atendimento-cliente.herokuapp.com/api/atendimentos/queue`
+  fetch(uri).then(r => r.json().then(r => {
+    r.forEach(r1 => {
 
-        primeiraFila.innerHTML += `
+      primeiraFila.innerHTML += `
         <th class="tabela-1">${r1.numero_atendimento}${r1.sufixo_atendimento}</th>` + `<th class="tabela-2">${r1.numero_atendimento}</th>
         </tr>`
 
-       });
-    }))
+    });
+  }))
 }
-
-// function callNext(){
-//     call = document.getElementById("senhaAtual");
-//     call.innerHTML = "";
-
-//     const uri = `https://central-atendimento-cliente.herokuapp.com/api/atendimento/to_call_next`
-
-//     fetch(uri).then(r=>r.json().then(r=>{
-//         call.innerHTML += `<a id="senhaAtual" class="senhaTelao">${r.numero_atendimento} - ${r.sufixo_atendimento}</a>`
-//     }))
-// }
 
 function callNext() {
-  const url = endPoint_local + `api/atendimentos/queue/next/already_called/`
-
-  last_atendimento = 0;
-
-  fetch(url, {
-      method: 'GET',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      //body: JSON.stringify({})
-    })
-    .then(r => r.json().then(r => {
-      if (r.success) {
-        if (last_atendimento == r.r.id_atendimento) {} else {
-          last_atendimento = r.r.id_atendimento;
-
-          call = document.getElementById("senhaAtual");
-          call.innerHTML = "";
-
-          call.innerHTML += `<a id="senhaAtual" class="senhaTelao">${r.r.numero_atendimento}-${r.r.sufixo_atendimento}</a>`
-        }
-      }
-    }))
 }
 
-setInterval('callNext()', 1000);
-
-function teste(){
-    const primeiraFila = document.getElementById("primeiroFila");
-    primeiraFila.innerHTML = `
+function teste() {
+  const primeiraFila = document.getElementById("primeiroFila");
+  primeiraFila.innerHTML = `
         <tr>
         <th class="tabela-1">SENHAS ANTERIORES</th>
         <th class="tabela-1"onclick="callNext()">GUICHÊ</strong></th>
         <tr>
         </tr>`
 
-    const uri = `https://central-atendimento-cliente.herokuapp.com/api/atendimentos/queue`
-    fetch(uri).then(r=>r.json().then(r => {
-    r.slice(-3).forEach(r1=> {
+  const uri = `https://central-atendimento-cliente.herokuapp.com/api/atendimentos/queue`
+  fetch(uri).then(r => r.json().then(r => {
+    r.slice(-3).forEach(r1 => {
 
-        primeiraFila.innerHTML += `<th class="tabela-1">${r1.numero_atendimento}${r1.sufixo_atendimento}</th>` + `<th class="tabela-2">${r1.numero_atendimento}</th>
+      primeiraFila.innerHTML += `<th class="tabela-1">${r1.numero_atendimento}${r1.sufixo_atendimento}</th>` + `<th class="tabela-2">${r1.numero_atendimento}</th>
         </tr>`
     })
 
-       }));
-    }
+  }));
+}
 
-    function diaHora(){
-        data = document.getElementById("data")
+function diaHora() {
+  data = document.getElementById("data")
 
-        now = new Date
-        document.write ("Hoje é " + now.getDay() + ", " + now.getDate() + " de " + now.getMonth() + " de " + now.getFullYear() )
+  now = new Date
+  document.write("Hoje é " + now.getDay() + ", " + now.getDate() + " de " + now.getMonth() + " de " + now.getFullYear())
 
-        data = now
-    }
+  data = now
+}
 
+function time() {
+  today = new Date();
+  h = today.getHours();
+  m = today.getMinutes();
+  s = today.getSeconds();
+  document.getElementById('hora').innerHTML = h + ":" + m;
 
-    function time(){
-today=new Date();
-h=today.getHours();
-m=today.getMinutes();
-s=today.getSeconds();
-document.getElementById('hora').innerHTML=h+":"+m;
-
-let data = new Date();
-let dataFormatada = ((data.getDate() )) + "/" + ((data.getMonth() + 1)) + "/" + data.getFullYear();
-console.log(dataFormatada);
-document.getElementById("data").innerHTML = dataFormatada
+  let data = new Date();
+  let dataFormatada = ((data.getDate())) + "/" + ((data.getMonth() + 1)) + "/" + data.getFullYear();
+  console.log(dataFormatada);
+  document.getElementById("data").innerHTML = dataFormatada
 
 
 

@@ -5,7 +5,7 @@
 <ul class="nav nav-tabs" id="myTab" role="tablist">
   </ul>
   <div>
-    <h1 class="mt-5">Bem-vindo</h1>
+    <h1 class="mt-5">Bem-vindo - {{ Auth::user()->number_desk }}</h1>
   </div>
   <div class="my-5">
     <h2 class="">Unidade</h2>
@@ -24,6 +24,5 @@
     <p class="config">Configuracoes</p>
   </div>
   </div>
-
 
 @endsection

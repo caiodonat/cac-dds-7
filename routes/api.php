@@ -7,19 +7,20 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\AtendimentoController as Atendimento;
 use App\Http\Controllers\Api\ServicosController;
 use App\Http\Controllers\Api\ServiceDeskController as ServiceDesk;
+use App\Http\Controllers\UserController as User;
 use App\Http\Controllers\Api\ApiController;
 
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-//POST
+  //POST
 
 //Esta rota vai gerar uma senha para um novo atendimento
 Route::post('/atendimento/post/', [Atendimento::class, 'post']);
 
+  //GET
 
-//GET
 //retorna todos os atendimentos no DB
 Route::get('/atendimentos/all', [Atendimento::class, 'all']);
 
@@ -42,15 +43,15 @@ Route::get('/atendimentos/queue', [Atendimento::class, 'queue']);
 Route::get('/atendimentos/queue/next', [Atendimento::class, 'queueNext']);
 
 //Esta rota vai chamar a senha anterior caso a mesma nao tenha comparecido ao guiche
-Route::get('/atendimentos/queue/already_called', [Atendimento::class, 'queueAlready_called']);
+Route::get('/atendimentos/queue/already_called/', [Atendimento::class, 'queueAlready_called']);
+
+Route::get('/atendimentos/queue/next/already_called/', [Atendimento::class, 'queueNextAlready_called']);
 
 //retorna um atendimento especifico (do dia atual) com base na variavel 'numero_atendimento'
 Route::get('atendimentos/queue/number/{numero_atendimento}', [Atendimento::class, 'queueNumber']);
 
-//chama a proxima senha no telao e altera valor de status_atendimento
-Route::get('/atendimentos/queue/next/to_call', [Atendimento::class, 'queueNextTo_call']);
 
-//PUT
+  //PUT
 
 //inicio do atendimento
 Route::put('/atendimento/begin/', [Atendimento::class, 'begin']);
@@ -59,7 +60,7 @@ Route::put('/atendimento/begin/', [Atendimento::class, 'begin']);
 Route::put('/atendimento/finish/', [Atendimento::class, 'finish']);
 
 //chama o uma senha especifica da fila
-Route::put('/atendimento/call/{id_atendimento}', [Atendimento::class, 'call']);
+Route::put('/atendimento/call/', [Atendimento::class, 'call']);
 
 //chama a fila de chamada a proxima senha da fila de espera
 Route::put('/atendimento/call_next', [Atendimento::class, 'callNext']);
@@ -74,8 +75,7 @@ Route::get('/servicos/fcr', [ServicosController::class, 'getFCR']);
 Route::get('/servicos/sct', [ServicosController::class, 'getSCT']);
 Route::get('/servicos/ots', [ServicosController::class, 'getOTS']);
 
-//ServiceDeskController
 
-Route::post('/service_desk/post/', [ServiceDesk::class, 'post']);
+//UserController
 
-Route::get('/service_desks/id/{id}', [ServiceDesk::class, 'id']);
+Route::put('/user/set/number_desk', [User::class, 'setNumber_desk']);

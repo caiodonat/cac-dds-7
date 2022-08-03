@@ -20,12 +20,13 @@
               <option value="1">1</option>
               <option value="2">2</option>
               <option value="3">3</option>
+              <option value="4">4</option>
             </select>
             <button class=" mx-1 btn btn-light btn-sm" onclick="setGuiche()">Confirmar</button>
           </div>
         </div>
       </div>
-      <button class="btn btn-primary mt-4" onclick="postServiceDesk(
+      <button class="btn btn-primary mt-4" onclick="putServiceDesk(
         document.getElementById('number_desk').value,
         '{{ Auth::user()->id }}')">
         Confirmar Guiche Selecionado</button>
