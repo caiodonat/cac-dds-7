@@ -27,6 +27,18 @@ function navbar(){
   </li>`
   }
 
+  function setGuiche(){
+    const guiche = document.getElementById("guicheNum");
+    guiche.innerHTML = " "
+
+    var select = document.getElementById('number_desk');
+	var value = select.options[select.selectedIndex].value;
+
+  guiche.innerHTML += `<h1 class="numero" id="guicheNum">${value}</h1>`
+
+
+  }
+
 
 function postServiceDesk(number_desk, id_user){
     const url =  endPoint_local + `api/service_desk/post/`
@@ -48,6 +60,7 @@ function postServiceDesk(number_desk, id_user){
           alert("Falha");
         }
       }))
+      location.href = "principal"
 }
 
 
@@ -252,7 +265,7 @@ function getProximos(){
     fila = document.getElementById("fila_espera");
     fila.innerHTML = " "
 
-    const uri = `https://central-atendimento-cliente.herokuapp.com/api/atendimentos/queue`
+    const uri = `https://central-atendimento-cliente.herokuapp.com/api/atendimentos/queue/next`
     resp = fetch(uri)
     .then(r =>r.json().then(r =>{
                 if(r.success){
@@ -266,6 +279,20 @@ function getProximos(){
     )
 
 }
+
+function salvarID(){
+  const uri = `http://central-atendimento-cliente.herokuapp.com/api/atendimentos/queue/next/already_called`
+  fetch(uri).then(r => r.json().then(r => {
+
+    console.log(r)
+    sessionStorage.setItem(r.id_atendimento)
+
+}))
+
+}
+
+
+
 
 function getRequerimento(){
 
@@ -350,13 +377,15 @@ function iniciarAtendimento(){
         },
         body: JSON.stringify({
             "id_service_desk": "1",
-            "id_atendimento" : "1"
+            "id_atendimento" : "2"
         })
     }
 
     fetch(uri, dataObject)
     .then(response => {console.log(response)})
     .then(json => console.log(json))
+
+    location.href = "inicioatendimento"
 }
 
 function chamarSenha(){
@@ -370,7 +399,7 @@ function chamarSenha(){
         },
         body: JSON.stringify({
             "id_service_desk": "1",
-            "id_atendimento" : "1"
+            "id_atendimento" : "2"
         })
     }
 
@@ -398,5 +427,7 @@ function encerrarAtendimento(){
     fetch(uri, dataObject)
     .then(response => {console.log(response)})
     .then(json => console.log(json))
+
+    location.href = "atendimento"
 }
 

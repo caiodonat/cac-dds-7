@@ -22,7 +22,7 @@ function atualizarAatendimentoJS(){
             },
             mode: "cors"
         }
-        
+
         fetch((endPoint + route), initDetails )
             .then( response =>
             {
@@ -54,7 +54,7 @@ function fila(){
     primeiraFila.innerHTML = `
         <tr>
         <th class="tabela-1">SENHAS ANTERIORES</th>
-        <th class="tabela-1"onclick="callNext()">GUICHÊ</strong></th> 
+        <th class="tabela-1"onclick="callNext()">GUICHÊ</strong></th>
         <tr>
         </tr>`
 
@@ -65,28 +65,56 @@ function fila(){
         primeiraFila.innerHTML += `
         <th class="tabela-1">${r1.numero_atendimento}${r1.sufixo_atendimento}</th>` + `<th class="tabela-2">${r1.numero_atendimento}</th>
         </tr>`
-           
+
        });
     }))
 }
 
-function callNext(){
-    call = document.getElementById("senhaAtual");
-    call.innerHTML = "";
+// function callNext(){
+//     call = document.getElementById("senhaAtual");
+//     call.innerHTML = "";
 
-    const uri = `https://central-atendimento-cliente.herokuapp.com/api/atendimento/to_call_next`
+//     const uri = `https://central-atendimento-cliente.herokuapp.com/api/atendimento/to_call_next`
 
-    fetch(uri).then(r=>r.json().then(r=>{
-        call.innerHTML += `<a id="senhaAtual" class="senhaTelao">${r.numero_atendimento} - ${r.sufixo_atendimento}</a>`
+//     fetch(uri).then(r=>r.json().then(r=>{
+//         call.innerHTML += `<a id="senhaAtual" class="senhaTelao">${r.numero_atendimento} - ${r.sufixo_atendimento}</a>`
+//     }))
+// }
+
+function callNext() {
+  const url = endPoint_local + `api/atendimentos/queue/next/already_called/`
+
+  last_atendimento = 0;
+
+  fetch(url, {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      //body: JSON.stringify({})
+    })
+    .then(r => r.json().then(r => {
+      if (r.success) {
+        if (last_atendimento == r.r.id_atendimento) {} else {
+          last_atendimento = r.r.id_atendimento;
+
+          call = document.getElementById("senhaAtual");
+          call.innerHTML = "";
+
+          call.innerHTML += `<a id="senhaAtual" class="senhaTelao">${r.r.numero_atendimento}-${r.r.sufixo_atendimento}</a>`
+        }
+      }
     }))
 }
+
+setInterval('callNext()', 1000);
 
 function teste(){
     const primeiraFila = document.getElementById("primeiroFila");
     primeiraFila.innerHTML = `
         <tr>
         <th class="tabela-1">SENHAS ANTERIORES</th>
-        <th class="tabela-1"onclick="callNext()">GUICHÊ</strong></th> 
+        <th class="tabela-1"onclick="callNext()">GUICHÊ</strong></th>
         <tr>
         </tr>`
 
@@ -97,19 +125,20 @@ function teste(){
         primeiraFila.innerHTML += `<th class="tabela-1">${r1.numero_atendimento}${r1.sufixo_atendimento}</th>` + `<th class="tabela-2">${r1.numero_atendimento}</th>
         </tr>`
     })
-           
+
        }));
     }
 
     function diaHora(){
         data = document.getElementById("data")
-        
+
         now = new Date
         document.write ("Hoje é " + now.getDay() + ", " + now.getDate() + " de " + now.getMonth() + " de " + now.getFullYear() )
 
         data = now
     }
-    
+
+
     function time(){
 today=new Date();
 h=today.getHours();
@@ -118,7 +147,7 @@ s=today.getSeconds();
 document.getElementById('hora').innerHTML=h+":"+m;
 
 let data = new Date();
-let dataFormatada = ((data.getDate() )) + "/" + ((data.getMonth() + 1)) + "/" + data.getFullYear(); 
+let dataFormatada = ((data.getDate() )) + "/" + ((data.getMonth() + 1)) + "/" + data.getFullYear();
 console.log(dataFormatada);
 document.getElementById("data").innerHTML = dataFormatada
 

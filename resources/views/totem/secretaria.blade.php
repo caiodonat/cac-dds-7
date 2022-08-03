@@ -36,7 +36,7 @@
 </div>
 <br>
 
-<input type="numeric" id="campo-texto" class="field_cpf" placeholder="CPF (Opcional)" aria-label="Search" aria-describedby="search-addon" />
+<input type="numeric" id="campo-texto" class="field_cpf" placeholder="CPF (Opcional)" aria-label="Search" aria-describedby="search-addon" minlength="11" maxlength="11"/>
 <button id='getData' class="btn-emitirsenha" onclick="EmitirSenha(optionsChecked());">Emitir
   Senha</button>
 
