@@ -3,16 +3,13 @@
 @section('content')
 
 <script>
-  function tt2(){
-  window.userID =  {{ Auth::user()->number_desk }};
-  var phpVar = window.userID
-  console.log(phpVar);
-  sessionStorage.setItem("phpVar", oi);
-  }
+  function auth2(){
+    $auth20 = {{ Auth::user()->number_desk }}
 
-  function asd(){
-  console.log(sessionStorage.getItem("oi"));
-}
+    var auth21 = `${ {{ Auth::user()->number_desk }} }`;
+
+    console.log(auth21);
+  }
 </script>
 
 <div class="container2">
@@ -21,7 +18,7 @@
   <div class="w-75">
     <div class="card">
       <div class="card-header">
-        Selecione o Guiche:
+        Guiche anterior: {{ Auth::user()->number_desk }}, Selecione o Guiche:
       </div>
       <div class="card-body">
         <div class="boxG p-2">
@@ -35,11 +32,11 @@
               <option value="3">3</option>
               <option value="4">4</option>
             </select>
-            <button class=" mx-1 btn btn-light btn-sm" onclick="setGuiche(); asd()">Confirmar</button>
+            <button class=" mx-1 btn btn-light btn-sm" onclick="setGuiche()">Confirmar</button>
           </div>
         </div>
       </div>
-      <button class="btn btn-primary mt-4" onclick="tt2();putServiceDesk(
+      <button class="btn btn-primary mt-4" onclick="putServiceDesk(
         document.getElementById('number_desk').value,
         '{{ Auth::user()->id }}')">
         Confirmar Guiche Selecionado</button>

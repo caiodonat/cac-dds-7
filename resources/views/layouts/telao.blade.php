@@ -23,7 +23,7 @@
   <link href="{{ asset('css/mesa.css') }}" rel="stylesheet">
 </head>
 
-<body onload="teste(); time(); data()">
+<body onload="teste(); time(); data(); callNext();">
   <div id="app">
     <main class="py-4">
       @yield('content')

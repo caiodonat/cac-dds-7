@@ -70,7 +70,34 @@ function fila() {
 }
 
 function callNext() {
-}
+  const url = endPoint_local + `api/atendimentos/queue/already_called/`
+
+  last_atendimento = 0;
+
+  fetch(url, {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      //body: JSON.stringify({})
+    })
+    .then(r => r.json().then(r => {
+      if (r.success) {
+        if (last_atendimento == r.r.id_atendimento) {} else {
+
+          console.log("r.r[0].id_atendimento: " + r.r[0].id_atendimento);
+/*
+          last_atendimento = r.r.id_atendimento;
+          call = document.getElementById("senhaAtual");
+          call.innerHTML = "";
+
+          call.innerHTML += `<a id="senhaAtual" class="senhaTelao">${r.r.numero_atendimento}-${r.r.sufixo_atendimento}</a>`  
+*/   
+        }
+      }   
+    }))
+  }
+
 
 function teste() {
   const primeiraFila = document.getElementById("primeiroFila");

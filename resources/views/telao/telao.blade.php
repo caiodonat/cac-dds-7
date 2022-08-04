@@ -1,38 +1,8 @@
 @extends("layouts.telao")
 
 @section('content')
-<script>
-  function callNext1() {
-    const url = endPoint_local + `api/atendimentos/queue/next/already_called/`
-
-    last_atendimento = 0;
-
-    fetch(url, {
-        method: 'GET',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        //body: JSON.stringify({})
-      })
-      .then(r => r.json().then(r => {
-        if (r.success) {
-          if (last_atendimento == r.r.id_atendimento) {} else {
-            last_atendimento = r.r.id_atendimento;
-
-            call = document.getElementById("senhaAtual");
-            call.innerHTML = "";
-
-            call.innerHTML += `<a id="senhaAtual" class="senhaTelao">${r.r.numero_atendimento}-${r.r.sufixo_atendimento}</a>`
-          }
-        }
-      }))
-  }
-
-  setInterval('callNext1()', 1000);
-</script>
 
 <body>
-
   <div>
     <div>
       <header class="cabecalho">
@@ -40,7 +10,7 @@
       </header>
       <main>
         <section class="senha-guiche">
-          <h1 class="senha" onclick="callNext1()"><strong>SENHA</strong>
+          <h1 class="senha" onclick="callNext()"><strong>SENHA</strong>
             <h1 class="guiche"><strong>GUICHÊ</strong>
         </section>
         <div class="tabela-azul">
