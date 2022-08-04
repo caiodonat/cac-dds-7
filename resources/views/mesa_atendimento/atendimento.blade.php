@@ -1,19 +1,20 @@
 @extends("layouts.mesa")
 
 @section('content')
-<script>
+
+<!-- <script>
   function tt2(){
   window.userID =  {{ Auth::user()->number_desk }};
   var phpVar = window.userID
   console.log(phpVar);
   }
-</script>
+</script> -->
 
 <div class="container2">
 <ul class="nav nav-tabs" id="myTab" role="tablist">
   </ul>
   <div>
-    <h3 class=" mt-5" onclick="tt2()">ATENDIMENTO</h3>
+    <h3 class=" mt-5">ATENDIMENTO</h3>
     <p class="mb-5">Efetue os atendimentos às senhas distribuidas dos servicos que voce atende</p>
     <div class="row">
 
