@@ -2,6 +2,19 @@
 
 @section('content')
 
+<script>
+  function tt2(){
+  window.userID =  {{ Auth::user()->number_desk }};
+  var phpVar = window.userID
+  console.log(phpVar);
+  sessionStorage.setItem("phpVar", oi);
+  }
+
+  function asd(){
+  console.log(sessionStorage.getItem("oi"));
+}
+</script>
+
 <div class="container2">
   <h2 class="mt-5">Bem-Vindo a Mesa de Atendimento,</h2>
   <h3 class="mt-3">E necessario selecionar o guiche para entrar na Mesa de Atendimento:</h3>
@@ -22,11 +35,11 @@
               <option value="3">3</option>
               <option value="4">4</option>
             </select>
-            <button class=" mx-1 btn btn-light btn-sm" onclick="setGuiche()">Confirmar</button>
+            <button class=" mx-1 btn btn-light btn-sm" onclick="setGuiche(); asd()">Confirmar</button>
           </div>
         </div>
       </div>
-      <button class="btn btn-primary mt-4" onclick="putServiceDesk(
+      <button class="btn btn-primary mt-4" onclick="tt2();putServiceDesk(
         document.getElementById('number_desk').value,
         '{{ Auth::user()->id }}')">
         Confirmar Guiche Selecionado</button>

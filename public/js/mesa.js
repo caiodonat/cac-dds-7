@@ -40,6 +40,9 @@ function navbar() {
 // function postServiceDesk(number_desk, id_user){
 //     const url =  endPoint_local + `api/service_desk/post/`
 
+
+
+
 function putServiceDesk(number_desk, id_user) {
   const url = endPoint_local + `api/user/set/number_desk`
 
@@ -57,12 +60,12 @@ function putServiceDesk(number_desk, id_user) {
     .then(r => r.json().then(r => {
       if (r.success) {
         alert("Ação realizada com Exito");
+    location.href = "principal";
       } else {
         alert("Falha");
       }
     }))
 
-    location.href = "principal";
 }
 
 // function chamarTela() {
@@ -370,6 +373,8 @@ function salvarID(){
 //   }))
 // }
 
+
+
 function iniciarAtendimento() {
   const uri = `https://central-atendimento-cliente.herokuapp.com/api/atendimento/begin`
   const dataObject = {
@@ -380,7 +385,7 @@ function iniciarAtendimento() {
       'Content-Type': 'application/json'
     },
     body: JSON.stringify({
-      "id_service_desk": "1",
+      "id_service_desk": `${phpVar}`,
       "id_atendimento": `${idAtendimento}`
     })
   }
@@ -402,7 +407,7 @@ function chamarSenha() {
       'Content-Type': 'application/json'
     },
     body: JSON.stringify({
-      "id_service_desk": "1",
+      "id_service_desk": `${phpVar}`,
       "id_atendimento": `${idAtendimento}`
     })
   }
@@ -423,7 +428,7 @@ function encerrarAtendimento() {
       'Content-Type': 'application/json'
     },
     body: JSON.stringify({
-      "id_service_desk": "1",
+      "id_service_desk": `${phpVar}`,
       "id_atendimento": `${idAtendimento}`
     })
   }
