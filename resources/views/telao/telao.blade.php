@@ -10,13 +10,13 @@
       </header>
       <main>
         <section class="senha-guiche">
-          <h1 class="senha" onclick="callNext()"><strong>SENHA</strong>
+          <h1 class="senha" onclick="teste()"><strong>SENHA</strong>
             <h1 class="guiche"><strong>GUICHÊ</strong>
         </section>
         <div class="tabela-azul">
           <header class="vertical-line-2"></header>
           <h1 id="senhaAtual" class="senhaTelao">M-08</a>
-            <h1 class="guicheTelao" id="nmrGuiche">02</a>
+            <h1 id="guicheAtual" class="guicheTelao" id="nmrGuiche">02</a>
         </div>
         <div>
           <h1 class="hora" id="hora"></h1>

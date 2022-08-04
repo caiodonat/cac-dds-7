@@ -113,12 +113,15 @@ function teste() {
         </tr>`
 
 
-  //const uri = `https://central-atendimento-cliente.herokuapp.com/api/atendimentos/queue`
   fetch(url).then(r => r.json().then(r => {
 
-    document.getElementById("senhaAtual").innerHTML = `${r.r.numero_atendimento}-${r.r.sufixo_atendimento}`;
-    r.r.slice(-3).forEach(r1 => {
+    console.log(r.r.slice(-1)[0].numero_atendimento, r.r.slice(-1)[0].sufixo_atendimento, r.r.slice(-1)[0].user_desk);
 
+    document.getElementById("senhaAtual").innerHTML = `${r.r.slice(-1)[0].numero_atendimento} - ${r.r.slice(-1)[0].sufixo_atendimento}`;
+
+    document.getElementById("guicheAtual").innerHTML = `${r.r.slice(-1)[0].user_desk}`;
+    
+    r.r.slice(-3).forEach(r1 => {
       primeiraFila.innerHTML += `<th class="tabela-1">${r1.numero_atendimento} - ${r1.sufixo_atendimento}</th>` + `<th class="tabela-2">${r1.numero_atendimento}</th>
         </tr>`
     })
