@@ -13,6 +13,7 @@ function encerrarAtendimento() {
   location.href = "/atendimento.html"
 }
 function atualizarAatendimentoJS() {
+/*  
 
   const endPoint = 'https://central-atendimento-cliente.herokuapp.com/api';
   const route = '/atendimento/queue_next';
@@ -46,9 +47,10 @@ function atualizarAatendimentoJS() {
     .catch(err => {
       console.log('Fetch Error :-S', err);
     });
+*/    
 }
 
-function fila() {
+/*function fila() {
   const primeiraFila = document.getElementById("primeiroFila");
   primeiraFila.innerHTML = `
         <tr>
@@ -57,7 +59,7 @@ function fila() {
         <tr>
         </tr>`
 
-  const uri = `https://central-atendimento-cliente.herokuapp.com/api/atendimentos/queue`
+  const uri = `https://central-atendimento-cliente.herokuapp.com/api/atendimentos/queue/next`
   fetch(uri).then(r => r.json().then(r => {
     r.forEach(r1 => {
 
@@ -67,12 +69,14 @@ function fila() {
 
     });
   }))
-}
+}*/
 
 function callNext() {
 }
 
 function teste() {
+        const url =  endPoint_local + `api/atendimentos/queue/already_called/`
+
   const primeiraFila = document.getElementById("primeiroFila");
   primeiraFila.innerHTML = `
         <tr>
@@ -81,15 +85,36 @@ function teste() {
         <tr>
         </tr>`
 
-  const uri = `https://central-atendimento-cliente.herokuapp.com/api/atendimentos/queue`
-  fetch(uri).then(r => r.json().then(r => {
-    r.slice(-3).forEach(r1 => {
 
-      primeiraFila.innerHTML += `<th class="tabela-1">${r1.numero_atendimento}${r1.sufixo_atendimento}</th>` + `<th class="tabela-2">${r1.numero_atendimento}</th>
+  //const uri = `https://central-atendimento-cliente.herokuapp.com/api/atendimentos/queue`
+  fetch(url).then(r => r.json().then(r => {
+
+    document.getElementById("senhaAtual").innerHTML = `${r.r.numero_atendimento}-${r.r.sufixo_atendimento}`;
+    r.r.slice(-3).forEach(r1 => {
+
+      primeiraFila.innerHTML += `<th class="tabela-1">${r1.numero_atendimento} - ${r1.sufixo_atendimento}</th>` + `<th class="tabela-2">${r1.numero_atendimento}</th>
         </tr>`
     })
 
   }));
+
+/*                  
+  fetch(url)
+    .then(r =>r.json().then(r =>{
+                if(r.success){
+                  //console.log(r.r);
+                  r.forEach(r1 => {
+                    console.log(r1);
+                  });
+                   r.r.forEach(r1 => {
+                        primeiraFila.innerHTML += `<li class="list-group-item"> Senha:  ${r1.numero_atendimento}${r1.sufixo_atendimento}</li>`
+                    });
+                }else{
+                    console.log("falha -> " + r.r[0]);
+                }
+        })
+    )
+*/                    
 }
 
 function diaHora() {
