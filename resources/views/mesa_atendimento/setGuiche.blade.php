@@ -3,13 +3,21 @@
 @section('content')
 
 <script>
-  function auth2(){
-    $auth20 = {{ Auth::user()->number_desk }}
-
-    var auth21 = `${ {{ Auth::user()->number_desk }} }`;
-
-    console.log(auth21);
+/*
+  function tt2(){
+  window.userID =  {{ Auth::user()->number_desk }};
+  var phpVar = window.userID
+  console.log(phpVar);
+  sessionStorage.setItem("phpVar1", phpVar);
   }
+  function asd(){
+   console.log(sessionStorage.getItem("phpVar1" , lol))
+  // console.log(sessionStorage.getItem("phpVar"));
+  console.log(phpVar1)
+
+  function changeGuicheNum
+  }
+*/
 </script>
 
 <div class="container2">

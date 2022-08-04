@@ -382,8 +382,7 @@ function iniciarAtendimento() {
       'Content-Type': 'application/json'
     },
     body: JSON.stringify({
-      "id_service_desk": `${{{ Auth:: user()-> number_desk }
-} }`,
+      "id_service_desk": `{{ Auth::user()->number_desk }}`,
       "id_atendimento": `${ idAtendimento } `
     })
   }
@@ -396,7 +395,8 @@ function iniciarAtendimento() {
 }
 
 function chamarSenha() {
-  const uri = `https://central-atendimento-cliente.herokuapp.com/api/atendimento/call_next`;
+  const url = endPoint_local + `api/atendimento/call_next`
+ // const uri = `https://central-atendimento-cliente.herokuapp.com/api/atendimento/call_next`;
 dataObject = {
   method: 'PUT',
   // mode: 'no-cors',
@@ -405,12 +405,12 @@ dataObject = {
     'Content-Type': 'application/json'
   },
   body: JSON.stringify({
-    "id_service_desk": `${{{ Auth:: user()-> number_desk }} }`,
+    "id_service_desk": `{{ Auth::user()->number_desk }}`,
       "id_atendimento": `${ idAtendimento } `
     })
   }
 
-  fetch(uri, dataObject)
+  fetch(url, dataObject)
     .then(response => { console.log(response) })
     .then(location.href = "inicioatendimento")
     .then(json => console.log(json))
@@ -426,7 +426,7 @@ dataObject = {
     'Content-Type': 'application/json'
   },
   body: JSON.stringify({
-    "id_service_desk": `${{{ Auth:: user()-> number_desk }} }`,
+    "id_service_desk": `{{ Auth::user()->number_desk }}`,
       "id_atendimento": `${ idAtendimento } `
     })
   }
@@ -437,4 +437,3 @@ dataObject = {
 
     location.href = "atendimento"
 }
-

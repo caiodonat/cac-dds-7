@@ -13,7 +13,7 @@
 
         <div class="boxG p-2">
           <h5>Guichê</h5>
-          <h1 class="numero" id="guiche">2</h1>
+          <h1 class="numero" id="guiche">{{ Auth::user()->number_desk }}</h1>
           <div class="alterar-box">
           </div>
 
