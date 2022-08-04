@@ -65,9 +65,7 @@ function putServiceDesk(number_desk, id_user) {
 
 }
 
-// function chamarTela() {
-//   location.href = "chamadoatendimento"
-// }
+
 
 //  function iniciarAtendimento(){
 //     location.href = "inicioatendimento"
@@ -280,13 +278,14 @@ function salvarID() {
 
     console.log(r.r.id_atendimento)
 
-    sessionStorage.setItem("idAtendimento", r.r.id_atendimento)
+    sessionStorage.setItem("id_atendimento", r.r.id_atendimento)
 
-    var idAtendimento = sessionStorage.getItem("idAtendimento")
-    console.log(idAtendimento)
+    var id_atendimento = sessionStorage.getItem("id_atendimento")
+    console.log(id_atendimento)
     // var userDesk = {{ Auth::user()->number_desk }}
-    console.log(userDesk)
+    // console.log(userDesk)
 
+    eval(chamarSenha)();
 
   }))
 
@@ -383,7 +382,7 @@ function iniciarAtendimento() {
     },
     body: JSON.stringify({
       "id_service_desk": `{{ Auth::user()->number_desk }}`,
-      "id_atendimento": `${ idAtendimento } `
+      "id_atendimento": `${idAtendimento} `
     })
   }
 
@@ -395,6 +394,10 @@ function iniciarAtendimento() {
 }
 
 function chamarSenha() {
+
+  var id_atendimento = sessionStorage.getItem("id_atendimento")
+  console.log(id_atendimento)  
+
   const url = endPoint_local + `api/atendimento/call_next`
  // const uri = `https://central-atendimento-cliente.herokuapp.com/api/atendimento/call_next`;
 dataObject = {
@@ -406,7 +409,7 @@ dataObject = {
   },
   body: JSON.stringify({
     "id_service_desk": `{{ Auth::user()->number_desk }}`,
-      "id_atendimento": `${ idAtendimento } `
+      "id_atendimento": `${id_atendimento}`
     })
   }
 
@@ -427,7 +430,7 @@ dataObject = {
   },
   body: JSON.stringify({
     "id_service_desk": `{{ Auth::user()->number_desk }}`,
-      "id_atendimento": `${ idAtendimento } `
+      "id_atendimento": `${id_atendimento}`
     })
   }
 
