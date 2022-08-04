@@ -3,16 +3,21 @@
 @section('content')
 
 <script>
+/*
   function tt2(){
   window.userID =  {{ Auth::user()->number_desk }};
   var phpVar = window.userID
   console.log(phpVar);
-  sessionStorage.setItem("phpVar", oi);
+  sessionStorage.setItem("phpVar1", phpVar);
   }
-
   function asd(){
-  console.log(sessionStorage.getItem("oi"));
-}
+   console.log(sessionStorage.getItem("phpVar1" , lol))
+  // console.log(sessionStorage.getItem("phpVar"));
+  console.log(phpVar1)
+
+  function changeGuicheNum
+  }
+*/
 </script>
 
 <div class="container2">
@@ -35,7 +40,7 @@
               <option value="3">3</option>
               <option value="4">4</option>
             </select>
-            <button class=" mx-1 btn btn-light btn-sm" onclick="setGuiche(); asd()">Confirmar</button>
+            <button class=" mx-1 btn btn-light btn-sm" onclick="tt2(); setGuiche()">Confirmar</button>
           </div>
         </div>
       </div>
