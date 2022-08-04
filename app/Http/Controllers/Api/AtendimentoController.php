@@ -186,7 +186,7 @@ class AtendimentoController extends Controller
     }
   }
 
-  public function queueNextAlready_called()
+  public function queueNextAlready_called()//gonna disappear
   {
     try {
       $cNow = Carbon::now('-03:00')->toDateString();

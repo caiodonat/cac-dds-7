@@ -2,13 +2,31 @@
 
 @section('content')
 
+<script>
+/*
+  function tt2(){
+  window.userID =  {{ Auth::user()->number_desk }};
+  var phpVar = window.userID
+  console.log(phpVar);
+  sessionStorage.setItem("phpVar1", phpVar);
+  }
+  function asd(){
+   console.log(sessionStorage.getItem("phpVar1" , lol))
+  // console.log(sessionStorage.getItem("phpVar"));
+  console.log(phpVar1)
+
+  function changeGuicheNum
+  }
+*/
+</script>
+
 <div class="container2">
   <h2 class="mt-5">Bem-Vindo a Mesa de Atendimento,</h2>
   <h3 class="mt-3">E necessario selecionar o guiche para entrar na Mesa de Atendimento:</h3>
   <div class="w-75">
     <div class="card">
       <div class="card-header">
-        Selecione o Guiche:
+        Guiche anterior: {{ Auth::user()->number_desk }}, Selecione o Guiche:
       </div>
       <div class="card-body">
         <div class="boxG p-2">
