@@ -1,8 +1,10 @@
 @extends("layouts.mesa")
 
 @section('content')
+
+{{ Session::put('user_number_desk', Auth::user()->number_desk) }}
 <div class="container2">
-<ul class="nav nav-tabs" id="myTab" role="tablist"></ul>
+  <ul class="nav nav-tabs" id="myTab" role="tablist"></ul>
   <div>
     <h3 class="mt-5">ATENDIMENTO</h3>
     <p class="mb-5">Efetue os atendimentos às senhas distribuidas dos servicos que voce atende</p>
@@ -12,7 +14,7 @@
 
         <div class="boxG p-2">
           <h5>Guichê</h5>
-          <h1 class="numero" id="guiche">2</h1>
+          <h1 class="numero" id="guiche" value={{ Auth::user()->number_desk }}>{{ Auth::user()->number_desk }}</h1>
         </div>
       </div>
       <div class="tabelaProx">
@@ -34,5 +36,5 @@
       </ul>
     </div>
   </div>
-  </div>
+</div>
 @endsection

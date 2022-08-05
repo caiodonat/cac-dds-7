@@ -10,7 +10,7 @@
                 </header>
                 <main>
                     <section class="senha-guiche">
-                        <h1 class="senha" onclick="teste()"><strong>SENHA</strong>
+                        <h1 class="senha" onclick="refreshQueue()"><strong>SENHA</strong>
                             <h1 class="guiche"><strong>GUICHÊ</strong>
                     </section>
                     <div class="tabela-azul">

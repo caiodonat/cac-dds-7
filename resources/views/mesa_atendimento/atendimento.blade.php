@@ -1,9 +1,9 @@
 @extends("layouts.mesa")
 
 @section('content')
+
 <div class="container2">
-<ul class="nav nav-tabs" id="myTab" role="tablist">
-  </ul>
+  <ul class="nav nav-tabs" id="myTab" role="tablist"></ul>
   <div>
     <h3 class=" mt-5" onclick="tt2()">ATENDIMENTO</h3>
     <p class="mb-5">Efetue os atendimentos às senhas distribuidas dos servicos que voce atende</p>
@@ -33,5 +33,5 @@
       </ul>
     </div>
   </div>
-  </div>
-  @endsection
+</div>
+@endsection

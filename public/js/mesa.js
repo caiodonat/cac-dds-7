@@ -34,9 +34,6 @@ function setGuiche() {
   guiche.innerHTML += `<h1 class="numero" id="guicheNum">${value}</h1>`;
 }
 
-// function postServiceDesk(number_desk, id_user){
-//     const url =  endPoint_local + `api/service_desk/post/`
-
 function putServiceDesk(number_desk, id_user) {
   const url = endPoint_local + `api/user/set/number_desk`;
 
@@ -61,18 +58,6 @@ function putServiceDesk(number_desk, id_user) {
     })
   );
 }
-
-//  function iniciarAtendimento(){
-//     location.href = "inicioatendimento"
-// }
-
-// function encerrarAtendimento(){
-//     location.href = "atendimento"
-// }
-
-// function buscarSenha() {
-//   location.href = "/configuracao.html"
-// }
 
 function salvar() {
   const bot = document.getElementById("campo-texto");
@@ -282,83 +267,13 @@ function salvarID() {
     })
   );
 }
-// function tt2(){
-//   window.userID =  {{ Auth::user()->number_desk }};
-//   var phpVar = window.userID
-//   console.log(phpVar);
-//   }
-
-// function getRequerimento(){
-
-//   requerimento = document.getElementById("requerimento");
-//   requerimento.innerHTML = " "
-
-//   const uri = `https://central-atendimento-cliente.herokuapp.com/api/atendimentos/queue_next`
-//   fetch(uri).then(r => r.json().then(r => {
-
-//     console.log(r)
-//     requerimento.innerHTML += `<li class="list-group-item"> Senha:  ${r.numero_atendimento}${r.sufixo_atendimento}</li>`
-//     requerimento.innerHTML += `<li class="list-group-item"> CPF:  ${r.cpf}</li>`
-//     requerimento.innerHTML += `<li class="list-group-item"> Data e Hora da Emissao:  ${r.date_time_emissao_atendimento}</li>`
-//     requerimento.innerHTML += `<li class="list-group-item"> Estado:  ${r.estado_fim_atendimento}</li>`
-//     requerimento.innerHTML += `<li class="list-group-item"> Atendimento:  ${r.fim_atendimento}</li>`
-//     requerimento.innerHTML += `<li class="list-group-item"> ID Atendimento:  ${r.id_atendimento}</li>`
-//     requerimento.innerHTML += `<li class="list-group-item"> Observações:  ${r.observacoes}</li>`
-
-//   }))
-// }
-
-// function getNext() {
-
-//   fila = document.getElementById("fila_espera");
-//   fila.innerHTML = " "
-
-//   const uri = `https://central-atendimento-cliente.herokuapp.com/api/atendimentos/queue`
-//   fetch(uri).then(r => r.json().then(r => {
-
-//     r.forEach(r1 => {
-
-//       fila.innerHTML += `<li class="list-group-item"> Senha:  ${r1.numero_atendimento}${r1.sufixo_atendimento}</li>`
-//     });
-//     console.log(r)
-//   }))
-
-//   itemLista = document.getElementById("proximo");
-//   itemLista.innerHTML = ""
-
-//   const uris = `https://central-atendimento-cliente.herokuapp.com/api/atendimento/queue_next`
-
-//   fetch(uris).then(r => r.json().then(r => {
-
-//     console.log(r)
-//     itemLista.innerHTML += `<li class="list-group-item"> Senha:  ${r.numero_atendimento}${r.sufixo_atendimento}</li>`
-//     itemLista.innerHTML += `<li class="list-group-item"> Data e Hora Emissao:  ${r.date_time_emissao_atendimento}</li>`
-//     itemLista.innerHTML += `<li class="list-group-item"> Observacoes:  ${r.observacoes}</li>`
-
-//   }))
-// }
-
-// function addAtributos() {
-//   add = document.getElementById("addRequisitos");
-//   add.innerHTML = " "
-
-//   const uri = `https://central-atendimento-cliente.herokuapp.com/api/atendimento/queue_next`
-//   fetch(uri).then(r => r.json().then(r => {
-
-//     console.log(r)
-//     add.innerHTML += `<label>CPF: </label>`
-//     add.innerHTML += `<input type="text" class="form-control" placeholder="CPF: ${r.cpf}">`
-//     add.innerHTML += `<label>Observacoes: </label>`
-//     add.innerHTML += `<input type="text" class="form-control" placeholder="Observacoes: ${r.observacoes}">`
-//     add.innerHTML += `<button type="button" class="btn mt-1 btn-success">Enviar</button>`
-
-//   }))
-// }
 
 function iniciarAtendimento() {
 
   var id_atendimento = sessionStorage.getItem("id_atendimento")
-  console.log(id_atendimento)
+  var user_number_desk = document.getElementById("guiche").innerHTML;
+
+  console.log(id_atendimento, user_number_desk)
 
   const uri = `https://central-atendimento-cliente.herokuapp.com/api/atendimento/begin`
   dataObject = {
@@ -369,7 +284,7 @@ function iniciarAtendimento() {
       "Content-Type": "application/json",
     },
     body: JSON.stringify({
-      "id_service_desk": `{{ Auth::user()->number_desk }}`,
+      "id_service_desk": `${user_number_desk}`,
       "id_atendimento": `${id_atendimento} `
     })
   }
@@ -411,7 +326,9 @@ function chamarSenha() {
 function encerrarAtendimento() {
 
   var id_atendimento = sessionStorage.getItem("id_atendimento")
-  console.log(id_atendimento)
+  var user_number_desk = document.getElementById("guiche").innerHTML;
+
+  console.log(id_atendimento, user_number_desk)
 
   const uri = `https://central-atendimento-cliente.herokuapp.com/api/atendimento/finish`;
 dataObject = {

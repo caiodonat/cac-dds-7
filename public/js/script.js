@@ -2,6 +2,7 @@ const endPoint = `https://cac-dds-7.herokuapp.com/`;
 const endPoint_local = `http://127.0.0.1:8000/`;
 var last_atendimento = 0;
 
+
 function myFunction() {
   location.href = "/atdandamento.html"
 }

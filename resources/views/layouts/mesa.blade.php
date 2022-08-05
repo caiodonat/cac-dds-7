@@ -26,6 +26,7 @@
 </head>
 
 <body onload="navbar(); getProximos()">
+{{ Session::put('user_number_desk', Auth::user()->number_desk) }}
     <div id="app">
         <nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm">
             <div class="container">

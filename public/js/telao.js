@@ -1,14 +1,14 @@
 
-function observer() {
-/*
+function refreshQueue() {
+
   url = endPoint_local + `api/atendimentos/queue/already_called/`
 
   fetch(url).then(r => r.json().then(r => {
     if (r.success) {
-      if (last_atendimento == r.r.id_atendimento) { 
-        console.log("-");
+      if (last_atendimento >= r.r.slice(-1)[0].id_atendimento) { 
+        console.log(last_atendimento,"-",r.r.id_atendimento);
       } else {
-        console.log(".");
+        console.log(last_atendimento,"-",r.r.id_atendimento);
         last_atendimento = r.r.id_atendimento;
 
         document.getElementById("primeiroFila").innerHTML = `
@@ -36,8 +36,22 @@ function observer() {
       }
     }
   }));
-*/
+}
+
+function time() {
+  today = new Date();
+
+  document.getElementById("hora").innerHTML = 
+    today.getHours() + ":" + today.getMinutes();
+
+  document.getElementById("data").innerHTML = 
+    ((today.getDate())) + "/" + ((today.getMonth() + 1)) + "/" + today.getFullYear();
 }
 
 //observer
-setInterval('observer()', 1000);
+function myOnload() {
+  refreshQueue();
+  time();
+}
+setInterval('refreshQueue()', 5000);
+setInterval('time()', 60000);

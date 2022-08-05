@@ -13,7 +13,7 @@
 
                 <div class="boxG p-2">
                     <h5>Guichê</h5>
-                    <h1 class="numero" id="guiche">2</h1>
+          <h1 class="numero" id="guiche" value={{ Auth::user()->number_desk }}>{{ Auth::user()->number_desk }}</h1>
                 </div>
             </div>
          <div class="col-md-9 mt-2">
