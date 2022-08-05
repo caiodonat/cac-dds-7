@@ -26,7 +26,6 @@
 </head>
 
 <body onload="navbar(); getProximos()">
-{{ Session::put('user_number_desk', Auth::user()->number_desk) }}
     <div id="app">
         <nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm">
             <div class="container">
@@ -90,6 +89,10 @@
     </div>
     @stack('myjs')
     <h6 id="endPont" value={{ env('APP_URL') }}>.</h6>
+    <!-- Scripts -->
+    <script src="{{ asset('js/script.js') }}" defer></script>
+    <script src="{{ asset('js/app.js') }}" defer></script>
+    <script src="{{ asset('js/mesa.js') }}" defer></script>
 </body>
 
 <script type="text/javascript">
