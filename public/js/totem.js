@@ -15,7 +15,7 @@ function EmitirSenha(servicosGeral) {
       "Content-Type": "application/json"
     },
     body: JSON.stringify({
-      id_servicos: servicosGeral
+      "id_servicos": servicosGeral
     })
   }).then((r) =>
     r.json().then((r) => {
@@ -30,7 +30,7 @@ function EmitirSenha(servicosGeral) {
 }
 
 function GetData() {
-
+/*
   //localStorage.setItem("senha", bot.value)
   //alert(bot.value)
 
@@ -68,6 +68,7 @@ function GetData() {
     .catch(err => {
       console.log('Fetch Error :-S', err);
     });
+*/
 }
 
 
