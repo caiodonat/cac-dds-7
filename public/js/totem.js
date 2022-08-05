@@ -12,10 +12,11 @@ function EmitirSenha(servicosGeral) {
   fetch(url, {
     method: 'POST',
     headers: {
-      "Content-Type": "application/json"
+      "Content-Type": "application/json",
+      'Accept': 'application/json'
     },
     body: JSON.stringify({
-      "id_servicos": servicosGeral
+      "id_servicos": `${servicosGeral}`
     })
   }).then((r) =>
     r.json().then((r) => {
