@@ -10,11 +10,10 @@ function EmitirSenha(servicosGeral) {
   url = endPoint + `api/atendimento/post/`;
 
   fetch(url, {
-    method: 'post',
+    method: 'POST',
     headers: {
-      "Content-Type": "application/json; charset=utf-8"
+      "Content-Type": "application/json"
     },
-    mode: "cors",
     body: JSON.stringify({
       id_servicos: servicosGeral
     }),
