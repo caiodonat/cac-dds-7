@@ -1,5 +1,5 @@
-endPoint = document.getElementById("endPoint").innerHTML;
-endPoint_local = document.getElementById("endPoint").innerHTML;
+let endPoint = document.getElementById("endPoint").innerHTML;
+let endPoint_local = document.getElementById("endPoint").innerHTML;
 var last_atendimento = 0;
 
 
