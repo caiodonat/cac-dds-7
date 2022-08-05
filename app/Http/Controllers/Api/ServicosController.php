@@ -29,6 +29,19 @@ class ServicosController extends Controller
         }
     }
     
+    public function getId($id)
+    {
+        try {
+            $r = DB::table('tb_servicos')
+            ->where('id_servicos', $id)
+            ->value('servico');
+
+            return json_encode(['r'=>$r, 'success'=>true], JSON_PRETTY_PRINT);
+        } catch (\Throwable $th) {
+            return json_encode(['r'=>$th, 'success'=>false], JSON_PRETTY_PRINT);
+        }
+    }
+
     public function getPDG()
     {
         try {

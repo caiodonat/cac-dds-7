@@ -31,11 +31,32 @@ class AtendimentoTest extends TestCase
 
   public function test_post()
   {
-    $r = $this->getJson('/api/atendimento/post?id_atendimento=1&date_time_emissao_atendimento%202022-07-23%2007=07%3A07&cpf=11122233344&sufixo_atendimento=ots');
+    $cpf = 11122233344;
+    $servicos = 1;
+
+    $r = $this->postJson(
+      'api/atendimento/post/',
+      ['cpf' => $cpf, 'servicos' => $servicos]
+    );
     $r->assertJson(
       fn (AssertableJson $json) =>
       $json->where('success', true)
-        ->has('r')
+        ->has('r', 1)
+    );
+    $r->assertJson(
+      fn (AssertableJson $json) =>
+      $json->has('r', 1)
+        ->where('success', true)
+        ->first(
+          fn ($json1) =>
+          $json1->first(
+            fn ($json2) =>
+            $json2->has('id_atendimento')
+              ->where('cpf', $cpf)
+              ->where('servicos', $servicos)
+              ->etc()
+          )
+        )
     );
   }
 
@@ -297,51 +318,56 @@ class AtendimentoTest extends TestCase
       fn (AssertableJson $json) =>
       $json->has('r')
         ->where('success', true)
-        ->first(fn ($json1) =>
-          $json1->first(fn ($json2) =>
-              $json2->where('id_atendimento', $id_a)
-                ->where('id_service_desk', $id_sD)
-                ->where('started',
-                  (function (string $id){
-                    $cNow = Carbon::now('-03:00');
-                    $id_c = Carbon::create($id);
-                    return 60 >= $cNow->diffInSeconds($id_c);//verifica com uma latencia maxima de 60 seg.
-                  })
-                )
-                ->etc()
+        ->first(
+          fn ($json1) =>
+          $json1->first(
+            fn ($json2) =>
+            $json2->where('id_atendimento', $id_a)
+              ->where('id_service_desk', $id_sD)
+              ->where(
+                'started',
+                (function (string $id) {
+                  $cNow = Carbon::now('-03:00');
+                  $id_c = Carbon::create($id);
+                  return 60 >= $cNow->diffInSeconds($id_c); //verifica com uma latencia maxima de 60 seg.
+                })
               )
               ->etc()
           )
-      );
-    }
-
-  public function test_iniciar_atendimento()
-  {
-    $response = $this->putJson('api/atendimento/begin/{id_atendimento}');
-
-    $response
-      ->assertJson(
-        fn (AssertableJson $json) =>
-        $json->first(
-          fn ($json) =>
-          $json->where('atendimentoBegin')
             ->etc()
         )
-      );
+    );
   }
 
-  public function test_encerrar_atendimento()
+  public function test_finish()
   {
-    $response = $this->putJson('api/atendimento/finish/{id_atendimento}&{$estado_fim_atendimento}');
+    $id_a = 1;
+    $r = $this->putJson(
+      'api/atendimento/finish/',
+      ['id_atendimento' => $id_a, 'status_atendimento' => 'concluido']
+    );
 
-    $response
-      ->assertJson(
-        fn (AssertableJson $json) =>
-        $json->first(
-          fn ($json) =>
-          $json->where('atendimentoFinish')
+    $r->assertJson(
+      fn (AssertableJson $json) =>
+      $json->has('r')
+        ->where('success', true)
+        ->first(
+          fn ($json1) =>
+          $json1->first(
+            fn ($json2) =>
+            $json2->where('id_atendimento', $id_a)
+              ->where(
+                'finished',
+                (function (string $id) {
+                  $cNow = Carbon::now('-03:00');
+                  $id_c = Carbon::create($id);
+                  return 60 >= $cNow->diffInSeconds($id_c); //verifica com uma latencia maxima de 60 seg.
+                })
+              )
+              ->etc()
+          )
             ->etc()
         )
-      );
+    );
   }
 }

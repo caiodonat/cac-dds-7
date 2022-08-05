@@ -1,14 +1,13 @@
-@extends("layouts.totem")
+@extends('layouts.totem')
 @section('content')
-
-<div class="voltar mx-5 my-5">
+    <div class="voltar mx-5 my-5">
         <a href="{{ url('/totem/totem') }}"><img src="../img/de-volta.png" class=""></a>
     </div>
 
-    
+
     <div class="senailogo">
         <div class="d-flex  justify-content-center  align-items-center w-100 my-5">
-            <img src="../img/logo_senai_novo.svg">
+            <img src="../img/LOGO_LOGO.png">
         </div>
 
 
@@ -40,5 +39,4 @@
         <br>
 
     </div>
-
 @endsection

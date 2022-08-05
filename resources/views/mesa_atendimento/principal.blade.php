@@ -5,7 +5,7 @@
 <ul class="nav nav-tabs" id="myTab" role="tablist">
   </ul>
   <div>
-    <h1 class="mt-5">Bem-vindo</h1>
+    <h1 class="mt-5">Bem-vindo - Guiche: {{ Auth::user()->number_desk }}</h1>
   </div>
   <div class="my-5">
     <h2 class="">Unidade</h2>
@@ -17,13 +17,12 @@
     <a class="mx-5" href="{{ url('/mesa_atendimento/triagem') }}"><img src="../img/browser.png" alt=""></a>
     <a class="mx-5" href="{{ url('/mesa_atendimento/configuracoes') }}"><img src="../img/contexto.png" alt=""></a>
   </div>
-  <div>
+  <!-- <div>
     <p class="atendimento">Atendimento</p>
     <p class="monitor">Monitor</p>
     <p class="triagem">Triagem</p>
     <p class="config">Configuracoes</p>
+  </div> -->
   </div>
-  </div>
-
 
 @endsection

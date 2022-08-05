@@ -14,11 +14,13 @@ class CreateAtendimentosTable extends Migration
       $table->dateTime('date_time_emissao_atendimento');
 
       $table->bigInteger('cpf')->unsigned()->nullable(); //bigIncrements->(8-byte)
-      $table->enum('sufixo_atendimento', ['PDG', 'FCR', 'SCT', 'OTS']);
       $table->integer('numero_atendimento');
-      $table->unsignedInteger('servicos')->nullable(); //FK
 
-      $table->unsignedInteger('id_service_desk')->nullable(); //FK
+      $table->unsignedInteger('id_servicos')->nullable(); //FK
+      $table->enum('sufixo_atendimento', ['PDG', 'FCR', 'SCT', 'OTS']);
+      $table->string('servico')->nullable(); //FK
+
+      $table->enum('user_desk', [1, 2, 3, 4])->nullable(); //FK
       $table->string('observacoes')->nullable();
 
       //$table->dateTime('created')->nullable();
@@ -29,8 +31,8 @@ class CreateAtendimentosTable extends Migration
     });
 
     Schema::table('tb_atendimentos', function (Blueprint $table) {
-      $table->foreign('id_service_desk')->references('id_service_desk')->on('tb_service_desks');
-      $table->foreign('servicos')->references('id_servicos')->on('tb_servicos');
+      //$table->foreign('user_desk')->references('number_desk')->on('users');
+      $table->foreign('id_servicos')->references('id_servicos')->on('tb_servicos');
     });
   }
 
