@@ -420,7 +420,8 @@ dataObject = {
   },
   body: JSON.stringify({
     "id_service_desk": `{{ Auth::user()->number_desk }}`,
-    "id_atendimento": `${id_atendimento}`
+    "id_atendimento": `${id_atendimento}`,
+    "status_atendimento": `concluido`
     })
   }
 
