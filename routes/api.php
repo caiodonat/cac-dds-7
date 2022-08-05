@@ -63,7 +63,7 @@ Route::put('/atendimento/finish/', [Atendimento::class, 'finish']);
 Route::put('/atendimento/call/', [Atendimento::class, 'call']);
 
 //chama a fila de chamada a proxima senha da fila de espera
-Route::put('/atendimento/call_next', [Atendimento::class, 'callNext']);
+Route::put('/atendimento/queue/call_next', [Atendimento::class, 'queue_callNext']);
 
 
 //SERVICOS

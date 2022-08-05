@@ -14,6 +14,7 @@ function iniciarAtendimento() {
 function encerrarAtendimento() {
   location.href = "/atendimento.html"
 }
+
 function atualizarAatendimentoJS() {
   /*  
   

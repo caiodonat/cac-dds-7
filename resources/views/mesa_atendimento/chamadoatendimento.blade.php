@@ -2,7 +2,6 @@
 
 @section('content')
 
-{{ Session::put('user_number_desk', Auth::user()->number_desk) }}
 <div class="container2">
   <ul class="nav nav-tabs" id="myTab" role="tablist"></ul>
   <div>
@@ -17,7 +16,7 @@
           <h1 class="numero" id="guiche" value={{ Auth::user()->number_desk }}>{{ Auth::user()->number_desk }}</h1>
         </div>
       </div>
-      <div class="tabelaProx">
+      <div class="tabelaProx" style="height: 100px;">
         <ul id="proximo"></ul>
         <button class="btn btn-block btn-atd" onclick="chamarSenha()"><i class="fas  fa-bullhorn fa-fw"></i> Chamar
           Novamente</button>
@@ -31,9 +30,35 @@
     </div>
 
     <div class="my-5">
-      <h4>Minha fila (todos):</h4>
-      <ul id="fila_espera">
-      </ul>
+      <h4>Senhas atual:</h4>
+      <table class="w-75 table table-hover">
+        <thead>
+          <tr>
+            <th scope="col">ID</th>
+            <th scope="col">Senha</th>
+            <th scope="col">Servico</th>
+          </tr>
+        </thead>
+        <tbody id="table_current_senha">
+          <!-- input here -->
+        </tbody>
+      </table>
+    </div>
+    
+    <div class="my-5">
+      <h4>Fila de Senhas:</h4>
+      <table class="w-75 table table-hover">
+        <thead>
+          <tr>
+            <th scope="col">ID</th>
+            <th scope="col">Senha</th>
+            <th scope="col">Servico</th>
+          </tr>
+        </thead>
+        <tbody id="table_espera">
+          <!-- input here -->
+        </tbody>
+      </table>
     </div>
   </div>
 </div>

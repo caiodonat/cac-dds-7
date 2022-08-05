@@ -251,7 +251,7 @@ class AtendimentoController extends Controller
         ->where('id_atendimento', $rt->input('id_atendimento'))
         ->update([
           'started' => $cNow->toDateTimeString(),
-          'user_desk' => $rt->input('id_service_desk'),
+          'user_desk' => $rt->input('user_desk'),
           'status_atendimento' => 'em_atendimento'
         ]);
 
@@ -313,7 +313,7 @@ class AtendimentoController extends Controller
     }
   }
 
-  public function callNext(Request $rt)
+  public function queue_callNext(Request $rt)
   {
     //guiche nao pode utilizar essa rota se ele estiver em atendimento
     //adiciona esse atendimento ($id_atendimento) a uma lista que sera chamada pelo telão, e o telao ficarar verificando (com frequencia) se possui atualizações nessa fila

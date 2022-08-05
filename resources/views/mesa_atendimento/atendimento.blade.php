@@ -23,14 +23,14 @@
 
       <div class="col-md-9 mt-2">
 
-        <button class="btn-block btn-chamar" onclick="salvarID()"><i class="fas  fa-bullhorn fa-fw"></i> Chamar próximo</button>
+        <button class="btn-block btn-chamar" onclick="callNext()"><i class="fas  fa-bullhorn fa-fw"></i> Chamar próximo</button>
       </div>
 
     </div>
 
     <div class="my-5">
-      <h4>Minha fila (todos):</h4>
-      <table class="w-75 table table-hover"">
+      <h4>Fila de Senhas:</h4>
+      <table class="w-75 table table-hover">
         <thead>
           <tr>
             <th scope="col">ID</th>

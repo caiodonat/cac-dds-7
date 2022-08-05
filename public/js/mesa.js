@@ -234,12 +234,11 @@ function salvar() {
 // }
 
 function getProximos() {
-  const url = endPoint_local + `api/atendimentos/queue/next/`
+  url = endPoint + `api/atendimentos/queue`
 
   fila = document.getElementById("table_espera");
 
-  const uri = `https://central-atendimento-cliente.herokuapp.com/api/atendimentos/queue`;
-  fetch(uri).then((r) =>
+  fetch(url).then((r) =>
     r.json().then((r) => {
       if (r.success) {
         r.r.forEach((r1) => {
@@ -253,16 +252,40 @@ function getProximos() {
       }
     })
   );
+
+  if (document.getElementById("table_current_senha") == null) { } else {
+
+    url = endPoint + `api/atendimentos/id/${sessionStorage.getItem("id_atendimento")}`
+
+    console.log(sessionStorage.getItem("id_atendimento"));
+
+
+    fetch(url).then((r) =>
+      r.json().then((r) => {
+        if (r.success) {
+          r.r.forEach((r1) => {
+            document.getElementById("table_current_senha").innerHTML +=
+              `<td>${r1.id_atendimento}</td>
+            <td>${r1.numero_atendimento} - ${r1.sufixo_atendimento}</td>
+            <td>${r1.servico}</td>`
+          });
+        } else {
+          console.log("falha -> " + r.r[0]);
+        }
+      })
+    );
+  }
 }
 
 function salvarID() {
-  const url = endPoint_local + `api/atendimentos/queue/already_called/`
-  const uri = `http://central-atendimento-cliente.herokuapp.com/api/atendimentos/queue/next/already_called`;
-  fetch(uri).then((r) =>
-    r.json().then((r) => {
-      console.log(r.r.id_atendimento);
+  url = endPoint + `api/atendimentos/queue/next/already_called/`
+  //const uri = `http://central-atendimento-cliente.herokuapp.com/api/atendimentos/queue/next/already_called`;
 
-      sessionStorage.setItem("id_atendimento", r.r.id_atendimento);
+  fetch(url).then((r) =>
+    r.json().then((r) => {
+      console.log(r.r[0].id_atendimento);
+
+      sessionStorage.setItem("id_atendimento", r.r[0].id_atendimento);
 
       var id_atendimento = sessionStorage.getItem("id_atendimento");
       console.log(id_atendimento);
@@ -274,13 +297,34 @@ function salvarID() {
   );
 }
 
+function callNext() {
+  url = endPoint + `api/atendimento/queue/call_next`;
+
+  fetch(url, {
+    method: 'PUT',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify({
+      "user_desk": document.getElementById("guiche").innerHTML
+    })
+  }).then((r) =>
+    r.json().then((r) => {
+      if (r.success) {
+        console.log(r.r[0].id_atendimento);
+        sessionStorage.setItem("id_atendimento", r.r[0].id_atendimento);
+
+        alert("Ação realizada com Exito");
+        location.href = "chamadoatendimento";
+      } else {
+        alert("Falha");
+      }
+    })
+  );
+}
+
 function iniciarAtendimento() {
   url = endPoint_local + `api/atendimento/begin`;
-
-  var id_atendimento = sessionStorage.getItem("id_atendimento")
-  var user_number_desk = document.getElementById("guiche").innerHTML;
-
-  console.log(id_atendimento, user_number_desk)
 
   fetch(url, {
     method: "PUT",
@@ -288,8 +332,8 @@ function iniciarAtendimento() {
       "Content-Type": "application/json",
     },
     body: JSON.stringify({
-      "id_service_desk": `${user_number_desk}`,
-      "id_atendimento": `${id_atendimento} `
+      "user_desk": document.getElementById("guiche").innerHTML,
+      "id_atendimento": sessionStorage.getItem("id_atendimento"),
     })
   }).then((r) =>
     r.json().then((r) => {
@@ -304,28 +348,28 @@ function iniciarAtendimento() {
 }
 
 function chamarSenha() {
-  var id_atendimento = sessionStorage.getItem("id_atendimento");
-  console.log(id_atendimento);
+  console.log(sessionStorage.getItem("id_atendimento"), );
 
-  const url = endPoint_local + `api/atendimento/call_next`;
-  // const uri = `https://central-atendimento-cliente.herokuapp.com/api/atendimento/call_next`;
-  dataObject = {
+  const url = endPoint + `api/atendimento/call/`;
+
+  fetch(url, {
     method: "PUT",
-    // mode: 'no-cors',
     headers: {
-      // 'Accept': 'application/json',
       "Content-Type": "application/json",
     },
     body: JSON.stringify({
-      id_service_desk: `{{ Auth::user()->number_desk }}`,
-      id_atendimento: `${id_atendimento}`,
+      "user_desk": document.getElementById("guiche").innerHTML,
+      "id_atendimento": sessionStorage.getItem("id_atendimento"),
     }),
-  };
-
-  fetch(url, dataObject)
-    .then(response => { console.log(response) })
-    .then(location.href = "chamadoatendimento")
-    .then(json => console.log(json))
+  }).then((r) =>
+    r.json().then((r) => {
+      if (r.success) {
+        alert("Ação realizada com Exito");
+      } else {
+        alert("Falha");
+      }
+    })
+  );
 }
 
 function encerrarAtendimento() {
@@ -337,7 +381,7 @@ function encerrarAtendimento() {
       'Content-Type': 'application/json'
     },
     body: JSON.stringify({
-      "id_service_desk": document.getElementById("guiche").innerHTML,
+      "user_desk": document.getElementById("guiche").innerHTML,
       "id_atendimento": sessionStorage.getItem("id_atendimento"),
       "status_atendimento": `concluido`
     })
