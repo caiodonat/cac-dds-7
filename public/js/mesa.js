@@ -372,6 +372,10 @@ function salvarID() {
 
 
 function iniciarAtendimento() {
+
+  var id_atendimento = sessionStorage.getItem("id_atendimento")
+  console.log(id_atendimento)
+
   const uri = `https://central-atendimento-cliente.herokuapp.com/api/atendimento/begin`
   dataObject = {
     method: 'PUT',
@@ -382,7 +386,7 @@ function iniciarAtendimento() {
     },
     body: JSON.stringify({
       "id_service_desk": `{{ Auth::user()->number_desk }}`,
-      "id_atendimento": `${idAtendimento} `
+      "id_atendimento": `${id_atendimento} `
     })
   }
 
@@ -415,12 +419,16 @@ dataObject = {
 
   fetch(url, dataObject)
     .then(response => { console.log(response) })
-    .then(location.href = "inicioatendimento")
+    .then(location.href = "chamadoatendimento")
     .then(json => console.log(json))
 }
 
 function encerrarAtendimento() {
-  const uri = `https://central-atendimento-cliente.herokuapp.com/api/atendimento/finish/${id_atendimento}&${$estado_fim_atendimento}`;
+
+  var id_atendimento = sessionStorage.getItem("id_atendimento")
+  console.log(id_atendimento)
+
+  const uri = `https://central-atendimento-cliente.herokuapp.com/api/atendimento/finish`;
 dataObject = {
   method: 'PUT',
   // mode: 'no-cors',
@@ -430,7 +438,7 @@ dataObject = {
   },
   body: JSON.stringify({
     "id_service_desk": `{{ Auth::user()->number_desk }}`,
-      "id_atendimento": `${id_atendimento}`
+    "id_atendimento": `${id_atendimento}`
     })
   }
 
