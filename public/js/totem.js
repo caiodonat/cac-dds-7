@@ -16,13 +16,12 @@ function EmitirSenha(servicosGeral) {
       'Accept': 'application/json'
     },
     body: JSON.stringify({
-      "id_servicos": `${servicosGeral}`
+      "id_servicos": servicosGeral
     })
   }).then((r) =>
     r.json().then((r) => {
       if (r.success) {
         alert("Ação realizada com Exito");
-        location.href = "totem";
       } else {
         alert("Falha");
       }
