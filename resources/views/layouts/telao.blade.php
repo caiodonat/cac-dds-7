@@ -30,11 +30,7 @@
         </main>
     </div>
     @stack('myjs')
-    <h6 id="endPont" value={{ env('APP_URL') }}>.</h6>
-    <!-- Scripts -->
-    <script src="{{ asset('js/script.js') }}" defer></script>
-    <script src="{{ asset('js/app.js') }}" defer></script>
-    <script src="{{ asset('js/mesa.js') }}" defer></script>
+    <h6 id="endPoint" value={{ env('APP_URL') }}>.</h6>
 </body>
 
 <script type="text/javascript">
