@@ -1,5 +1,5 @@
 
-function teste() {
+function observer() {
 /*
   url = endPoint_local + `api/atendimentos/queue/already_called/`
 
@@ -40,4 +40,4 @@ function teste() {
 }
 
 //observer
-setInterval('teste()', 1000);
+setInterval('observer()', 1000);

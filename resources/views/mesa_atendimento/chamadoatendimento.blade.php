@@ -17,7 +17,7 @@
       </div>
       <div class="tabelaProx">
         <ul id="proximo"></ul>
-        <button class="btn btn-block btn-atd" onclick="myFunction()"><i class="fas  fa-bullhorn fa-fw"></i> Chamar
+        <button class="btn btn-block btn-atd" onclick="chamarSenha()"><i class="fas  fa-bullhorn fa-fw"></i> Chamar
           Novamente</button>
         <button class="btn  btn-block btn-atd" onclick="iniciarAtendimento()"><i class="fas fa-play fa-fw"></i> Iniciar
           Atendimento </button>

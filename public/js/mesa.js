@@ -1,10 +1,10 @@
 function navbar() {
-  nav = document.getElementById("myTab")
-  nav.innerHTML = " "
+  nav = document.getElementById("myTab");
+  nav.innerHTML = " ";
 
   nav.innerHTML += `<li class="nav-item">
     <a class="nav-link active" id="home-tab" data-toggle="tab" href="/mesa_atendimento/principal" role="tab" aria-controls="home" aria-selected="true">
-      <img src="https://senaies.com.br/wp-content/uploads/2019/11/logo_senai_novo.svg" alt="Senai - ES" class="logo-img" style="height: 32px"></a>
+      <img src="../img/LOGO_LOGO.png" alt="Logo-ES" class="logo-img" style="height: 32px"></a>
   </li>
   <li class="nav-item">
     <a class="nav-link" id="profile-tab" data-toggle="tab" href="/mesa_atendimento/atendimento" role="tab" aria-controls="profile"
@@ -21,44 +21,45 @@ function navbar() {
   <li class="nav-item">
     <a class="nav-link" id="contact-tab" data-toggle="tab" href="/mesa_atendimento/configuracoes" role="tab" aria-controls="contact"
       aria-selected="false">Configuracao</a>
-  </li>`
+  </li>`;
 }
 
 function setGuiche() {
   const guiche = document.getElementById("guicheNum");
-  guiche.innerHTML = " "
+  guiche.innerHTML = " ";
 
-  var select = document.getElementById('number_desk');
+  var select = document.getElementById("number_desk");
   var value = select.options[select.selectedIndex].value;
 
-  guiche.innerHTML += `<h1 class="numero" id="guicheNum">${value}</h1>`
-
-
+  guiche.innerHTML += `<h1 class="numero" id="guicheNum">${value}</h1>`;
 }
 
+// function postServiceDesk(number_desk, id_user){
+//     const url =  endPoint_local + `api/service_desk/post/`
+
 function putServiceDesk(number_desk, id_user) {
-  const url = endPoint_local + `api/user/set/number_desk`
+  const url = endPoint_local + `api/user/set/number_desk`;
 
   console.log(number_desk, id_user);
   fetch(url, {
-    method: 'PUT',
+    method: "PUT",
     headers: {
-      'Content-Type': 'application/json'
+      "Content-Type": "application/json",
     },
     body: JSON.stringify({
-      "number_desk": `${number_desk}`,
-      "id_user": `${id_user}`
-    })
-  })
-    .then(r => r.json().then(r => {
+      number_desk: `${number_desk}`,
+      id_user: `${id_user}`,
+    }),
+  }).then((r) =>
+    r.json().then((r) => {
       if (r.success) {
         alert("Ação realizada com Exito");
         location.href = "principal";
       } else {
         alert("Falha");
       }
-    }))
-
+    })
+  );
 }
 
 //  function iniciarAtendimento(){
@@ -75,8 +76,8 @@ function putServiceDesk(number_desk, id_user) {
 
 function salvar() {
   const bot = document.getElementById("campo-texto");
-  localStorage.setItem("senha", bot.value)
-  alert(localStorage.getItem("senha"))
+  localStorage.setItem("senha", bot.value);
+  alert(localStorage.getItem("senha"));
 }
 
 // function GetData() {
@@ -146,7 +147,6 @@ function salvar() {
 
 //         console.log(itemLista)
 
-
 //         loader.classList.remove("progresso");
 
 //         btnBuscar.removeAttribute("disabled");
@@ -159,8 +159,6 @@ function salvar() {
 //       btnBuscar.removeAttribute("disabled");
 //       console.log(e);
 //     })
-
-
 
 // }
 
@@ -250,50 +248,45 @@ function getProximos() {
   const url = endPoint_local + `api/atendimentos/queue/next/`
 
   fila = document.getElementById("fila_espera");
-  fila.innerHTML = " "
+  fila.innerHTML = " ";
 
-  const uri = `https://central-atendimento-cliente.herokuapp.com/api/atendimentos/queue/next`
-  resp = fetch(uri)
-    .then(r => r.json().then(r => {
+  const uri = `https://central-atendimento-cliente.herokuapp.com/api/atendimentos/queue`;
+  resp = fetch(uri).then((r) =>
+    r.json().then((r) => {
       if (r.success) {
-        r.r.forEach(r1 => {
-          fila.innerHTML += `<li class="list-group-item"> Senha:  ${r1.numero_atendimento}${r1.sufixo_atendimento}</li>`
+        r.r.forEach((r1) => {
+          fila.innerHTML += `<li class="list-group-item w-90"> Senha:  ${r1.numero_atendimento}${r1.sufixo_atendimento}</li>`;
         });
       } else {
         console.log("falha -> " + r.r[0]);
       }
     })
-    )
-
+  );
 }
 
 function salvarID() {
   const url = endPoint_local + `api/atendimentos/queue/already_called/`
-  const uri = `http://central-atendimento-cliente.herokuapp.com/api/atendimentos/queue/next/already_called`
-  fetch(uri).then(r => r.json().then(r => {
+  const uri = `http://central-atendimento-cliente.herokuapp.com/api/atendimentos/queue/next/already_called`;
+  fetch(uri).then((r) =>
+    r.json().then((r) => {
+      console.log(r.r.id_atendimento);
 
-    console.log(r.r.id_atendimento)
+      sessionStorage.setItem("id_atendimento", r.r.id_atendimento);
 
-    sessionStorage.setItem("id_atendimento", r.r.id_atendimento)
+      var id_atendimento = sessionStorage.getItem("id_atendimento");
+      console.log(id_atendimento);
+      // var userDesk = {{ Auth::user()->number_desk }}
+      // console.log(userDesk)
 
-    var id_atendimento = sessionStorage.getItem("id_atendimento")
-    console.log(id_atendimento)
-    // var userDesk = {{ Auth::user()->number_desk }}
-    // console.log(userDesk)
-
-    eval(chamarSenha)();
-
-  }))
-
+      eval(chamarSenha)();
+    })
+  );
 }
 // function tt2(){
 //   window.userID =  {{ Auth::user()->number_desk }};
 //   var phpVar = window.userID
 //   console.log(phpVar);
 //   }
-
-
-
 
 // function getRequerimento(){
 
@@ -333,9 +326,7 @@ function salvarID() {
 //   itemLista = document.getElementById("proximo");
 //   itemLista.innerHTML = ""
 
-
 //   const uris = `https://central-atendimento-cliente.herokuapp.com/api/atendimento/queue_next`
-
 
 //   fetch(uris).then(r => r.json().then(r => {
 
@@ -343,7 +334,6 @@ function salvarID() {
 //     itemLista.innerHTML += `<li class="list-group-item"> Senha:  ${r.numero_atendimento}${r.sufixo_atendimento}</li>`
 //     itemLista.innerHTML += `<li class="list-group-item"> Data e Hora Emissao:  ${r.date_time_emissao_atendimento}</li>`
 //     itemLista.innerHTML += `<li class="list-group-item"> Observacoes:  ${r.observacoes}</li>`
-
 
 //   }))
 // }
@@ -365,58 +355,65 @@ function salvarID() {
 //   }))
 // }
 
-
-
 function iniciarAtendimento() {
+
+  var id_atendimento = sessionStorage.getItem("id_atendimento")
+  console.log(id_atendimento)
+
   const uri = `https://central-atendimento-cliente.herokuapp.com/api/atendimento/begin`
   dataObject = {
-    method: 'PUT',
+    method: "PUT",
     // mode: 'no-cors',
     headers: {
       // 'Accept': 'application/json',
-      'Content-Type': 'application/json'
+      "Content-Type": "application/json",
     },
     body: JSON.stringify({
       "id_service_desk": `{{ Auth::user()->number_desk }}`,
-      "id_atendimento": `${idAtendimento} `
+      "id_atendimento": `${id_atendimento} `
     })
   }
 
   fetch(uri, dataObject)
-    .then(response => { console.log(response) })
-    .then(json => console.log(json))
+    .then((response) => {
+      console.log(response);
+    })
+    .then((json) => console.log(json));
 
-    location.href = "inicioatendimento"
+  location.href = "inicioatendimento";
 }
 
 function chamarSenha() {
+  var id_atendimento = sessionStorage.getItem("id_atendimento");
+  console.log(id_atendimento);
 
-  var id_atendimento = sessionStorage.getItem("id_atendimento")
-  console.log(id_atendimento)  
-
-  const url = endPoint_local + `api/atendimento/call_next`
- // const uri = `https://central-atendimento-cliente.herokuapp.com/api/atendimento/call_next`;
-dataObject = {
-  method: 'PUT',
-  // mode: 'no-cors',
-  headers: {
-    // 'Accept': 'application/json',
-    'Content-Type': 'application/json'
-  },
-  body: JSON.stringify({
-    "id_service_desk": `{{ Auth::user()->number_desk }}`,
-      "id_atendimento": `${id_atendimento}`
-    })
-  }
+  const url = endPoint_local + `api/atendimento/call_next`;
+  // const uri = `https://central-atendimento-cliente.herokuapp.com/api/atendimento/call_next`;
+  dataObject = {
+    method: "PUT",
+    // mode: 'no-cors',
+    headers: {
+      // 'Accept': 'application/json',
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({
+      id_service_desk: `{{ Auth::user()->number_desk }}`,
+      id_atendimento: `${id_atendimento}`,
+    }),
+  };
 
   fetch(url, dataObject)
     .then(response => { console.log(response) })
-    .then(location.href = "inicioatendimento")
+    .then(location.href = "chamadoatendimento")
     .then(json => console.log(json))
 }
 
 function encerrarAtendimento() {
-  const uri = `https://central-atendimento-cliente.herokuapp.com/api/atendimento/finish/${id_atendimento}&${$estado_fim_atendimento}`;
+
+  var id_atendimento = sessionStorage.getItem("id_atendimento")
+  console.log(id_atendimento)
+
+  const uri = `https://central-atendimento-cliente.herokuapp.com/api/atendimento/finish`;
 dataObject = {
   method: 'PUT',
   // mode: 'no-cors',
@@ -426,13 +423,16 @@ dataObject = {
   },
   body: JSON.stringify({
     "id_service_desk": `{{ Auth::user()->number_desk }}`,
-      "id_atendimento": `${id_atendimento}`
+    "id_atendimento": `${id_atendimento}`,
+    "status_atendimento": `concluido`
     })
   }
 
   fetch(uri, dataObject)
-    .then(response => { console.log(response) })
-    .then(json => console.log(json))
+    .then((response) => {
+      console.log(response);
+    })
+    .then((json) => console.log(json));
 
-    location.href = "atendimento"
+  location.href = "atendimento";
 }
