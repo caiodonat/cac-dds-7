@@ -39,7 +39,7 @@ function setGuiche() {
 }
 
 function putServiceDesk(number_desk, id_user) {
-  const url = endPoint_local + `api/user/set/number_desk`;
+  url = endPoint_local + `api/user/set/number_desk`;
 
   console.log(number_desk, id_user);
   fetch(url, {
@@ -273,33 +273,32 @@ function salvarID() {
 }
 
 function iniciarAtendimento() {
+  url = endPoint + `api/atendimento/begin`;
 
   var id_atendimento = sessionStorage.getItem("id_atendimento")
   var user_number_desk = document.getElementById("guiche").innerHTML;
 
   console.log(id_atendimento, user_number_desk)
 
-  const uri = `https://central-atendimento-cliente.herokuapp.com/api/atendimento/begin`
-  dataObject = {
+  fetch(url, {
     method: "PUT",
-    mode: 'no-cors',
     headers: {
-      // 'Accept': 'application/json',
       "Content-Type": "application/json",
     },
     body: JSON.stringify({
       "id_service_desk": `${user_number_desk}`,
       "id_atendimento": `${id_atendimento} `
     })
-  }
-
-  fetch(uri, dataObject)
-    .then((response) => {
-      console.log(response);
+  }).then((r) =>
+    r.json().then((r) => {
+      if (r.success) {
+        alert("Ação realizada com Exito");
+        location.href = "inicioatendimento";
+      } else {
+        alert("Falha");
+      }
     })
-    .then((json) => console.log(json));
-
-  location.href = "inicioatendimento";
+  );
 }
 
 function chamarSenha() {
@@ -328,32 +327,26 @@ function chamarSenha() {
 }
 
 function encerrarAtendimento() {
+  url = endPoint + `api/atendimento/finish`;
 
-  var id_atendimento = sessionStorage.getItem("id_atendimento")
-  var user_number_desk = document.getElementById("guiche").innerHTML;
-
-  console.log(id_atendimento, user_number_desk)
-
-  const uri = `https://central-atendimento-cliente.herokuapp.com/api/atendimento/finish`;
-dataObject = {
-  method: 'PUT',
-  // mode: 'no-cors',
-  headers: {
-    // 'Accept': 'application/json',
-    'Content-Type': 'application/json'
-  },
-  body: JSON.stringify({
-    "id_service_desk": `{{ Auth::user()->number_desk }}`,
-    "id_atendimento": `${id_atendimento}`,
-    "status_atendimento": `concluido`
+  fetch(url, {
+    method: 'PUT',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify({
+      "id_service_desk": document.getElementById("guiche").innerHTML,
+      "id_atendimento": sessionStorage.getItem("id_atendimento"),
+      "status_atendimento": `concluido`
     })
-  }
-
-  fetch(uri, dataObject)
-    .then((response) => {
-      console.log(response);
+  }).then((r) =>
+    r.json().then((r) => {
+      if (r.success) {
+        alert("Ação realizada com Exito");
+        location.href = "inicioatendimento";
+      } else {
+        alert("Falha");
+      }
     })
-    .then((json) => console.log(json));
-
-  location.href = "atendimento";
+  );
 }
