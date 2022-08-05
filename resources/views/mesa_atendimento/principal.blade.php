@@ -5,11 +5,11 @@
 <ul class="nav nav-tabs" id="myTab" role="tablist">
   </ul>
   <div>
-    <h1 class="mt-5">Bem-vindo - Guiche: {{ Auth::user()->number_desk }}</h1>
+    <h1 class="mt-5">Bem-vindo - Guichê: {{ Auth::user()->number_desk }}</h1>
   </div>
   <div class="my-5">
     <h2 class="">Unidade</h2>
-    <p class="">Visualize abaixo os modulos para sua unidade.</p>
+    <p class="">Visualize abaixo os módulos para sua unidade.</p>
   </div>
   <div class=" mt-5 icons">
     <a class="mx-5" href="{{ url('/mesa_atendimento/atendimento') }}"> <img src="../img/agente-de-call-center.png" alt=""></a>

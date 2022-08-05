@@ -24,7 +24,7 @@ function navbar() {
   </li>
   <li class="nav-item">
     <a class="nav-link" id="contact-tab" data-toggle="tab" href="/mesa_atendimento/configuracoes" role="tab" aria-controls="contact"
-      aria-selected="false">Configuracao</a>
+      aria-selected="false">Configuração</a>
   </li>`;
 }
 

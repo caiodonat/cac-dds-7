@@ -20,7 +20,7 @@
 
                 <div class="col-md-6">
                   <h5>TOTEM</h5>
-                  <p>Impressao de Senha</p>
+                  <p>Impressão de Senha</p>
                 </div>
               </div>
 
@@ -49,7 +49,7 @@
                   <a href="{{ url('/telao/telao') }}"><img src="../img/smart-tv.png" alt=""></label></a>
 
                 <div class="col-md-6">
-                  <h5>TELAO</h5>
+                  <h5>TELÃO</h5>
                   <p>Chamados de Senha</p>
                 </div>
               </div>

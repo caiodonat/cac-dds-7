@@ -5,7 +5,7 @@
   <ul class="nav nav-tabs" id="myTab" role="tablist">
   </ul>
   <div>
-    <h3 class="mt-5">CONFIGURACOES</h3>
+    <h3 class="mt-5">CONFIGURAÇÕES</h3>
   </div>
   <div class="card-body">
     Módulo para modificar os serviços dos determinados setores.

@@ -40,7 +40,7 @@
 
               <!-- Modal body -->
               <div class="modal-body">
-                Voce deseja encerrar o atendimento?
+                Você deseja encerrar o atendimento?
               </div>
 
               <!-- Modal footer -->
@@ -52,7 +52,7 @@
         </div>
       </div>
       <div class="my-5">
-        <h4>Senhas atual:</h4>
+        <h4>Senha atual:</h4>
         <table class="w-75 table table-hover">
           <thead>
             <tr>

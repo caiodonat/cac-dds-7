@@ -6,7 +6,7 @@
   <ul class="nav nav-tabs" id="myTab" role="tablist"></ul>
   <div>
     <h3 class=" mt-5" onclick="tt2()">ATENDIMENTO</h3>
-    <p class="mb-5">Efetue os atendimentos às senhas distribuidas dos servicos que voce atende</p>
+    <p class="mb-5">Efetue os atendimentos às senhas distribuidas dos serviços que você atende.</p>
     <div class="row">
 
       <div class="col-md-3">
