@@ -40,6 +40,7 @@ function putServiceDesk(number_desk, id_user) {
   console.log(number_desk, id_user);
   fetch(url, {
     method: "PUT",
+    mode: 'no-cors',
     headers: {
       "Content-Type": "application/json",
     },
@@ -278,7 +279,7 @@ function iniciarAtendimento() {
   const uri = `https://central-atendimento-cliente.herokuapp.com/api/atendimento/begin`
   dataObject = {
     method: "PUT",
-    // mode: 'no-cors',
+    mode: 'no-cors',
     headers: {
       // 'Accept': 'application/json',
       "Content-Type": "application/json",
