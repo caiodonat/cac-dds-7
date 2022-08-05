@@ -70,6 +70,7 @@ Route::put('/atendimento/call_next', [Atendimento::class, 'callNext']);
 
 Route::post('/servicos/post/', [ServicosController::class, 'post']);
 
+Route::get('/servicos/id/{id}', [ServicosController::class, 'getId']);
 Route::get('/servicos/pdg', [ServicosController::class, 'getPDG']);
 Route::get('/servicos/fcr', [ServicosController::class, 'getFCR']);
 Route::get('/servicos/sct', [ServicosController::class, 'getSCT']);

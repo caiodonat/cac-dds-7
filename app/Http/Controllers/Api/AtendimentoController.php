@@ -44,10 +44,14 @@ class AtendimentoController extends Controller
         }
       }
 
-      if ($newA->servicos = $rt->input('servicos')) {
+      if ($newA->id_servicos = $rt->input('id_servicos')) {
         $newA->sufixo_atendimento = DB::table('tb_servicos')
-          ->where('id_servicos', $rt->input('servicos'))
+          ->where('id_servicos', $rt->input('id_servicos'))
           ->value('setor');
+
+        $newA->servico = DB::table('tb_servicos')
+        ->where('id_servicos', $rt->input('id_servicos'))
+        ->value('servico');
       } else {
         $newA->sufixo_atendimento = "OTS";
       }

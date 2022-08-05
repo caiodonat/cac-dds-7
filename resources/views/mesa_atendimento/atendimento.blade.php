@@ -22,6 +22,7 @@
       </div>
 
       <div class="col-md-9 mt-2">
+
         <button class="btn-block btn-chamar" onclick="salvarID()"><i class="fas  fa-bullhorn fa-fw"></i> Chamar próximo</button>
       </div>
 
@@ -29,8 +30,18 @@
 
     <div class="my-5">
       <h4>Minha fila (todos):</h4>
-      <ul class="w-75" id="fila_espera">
-      </ul>
+      <table class="w-75 table table-hover"">
+        <thead>
+          <tr>
+            <th scope="col">ID</th>
+            <th scope="col">Senha</th>
+            <th scope="col">Servico</th>
+          </tr>
+        </thead>
+        <tbody id="table_espera">
+          <!-- input here -->
+        </tbody>
+      </table>
     </div>
   </div>
 </div>

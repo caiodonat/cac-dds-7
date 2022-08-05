@@ -236,15 +236,17 @@ function salvar() {
 function getProximos() {
   const url = endPoint_local + `api/atendimentos/queue/next/`
 
-  fila = document.getElementById("fila_espera");
-  fila.innerHTML = " ";
+  fila = document.getElementById("table_espera");
 
   const uri = `https://central-atendimento-cliente.herokuapp.com/api/atendimentos/queue`;
-  resp = fetch(uri).then((r) =>
+  fetch(uri).then((r) =>
     r.json().then((r) => {
       if (r.success) {
         r.r.forEach((r1) => {
-          fila.innerHTML += `<li class="list-group-item w-90"> Senha:  ${r1.numero_atendimento}${r1.sufixo_atendimento}</li>`;
+          fila.innerHTML +=
+            `<td>${r1.id_atendimento}</td>
+            <td>${r1.numero_atendimento} - ${r1.sufixo_atendimento}</td>
+            <td>${r1.servico}</td>`
         });
       } else {
         console.log("falha -> " + r.r[0]);
@@ -273,7 +275,7 @@ function salvarID() {
 }
 
 function iniciarAtendimento() {
-  url = endPoint + `api/atendimento/begin`;
+  url = endPoint_local + `api/atendimento/begin`;
 
   var id_atendimento = sessionStorage.getItem("id_atendimento")
   var user_number_desk = document.getElementById("guiche").innerHTML;
@@ -343,7 +345,7 @@ function encerrarAtendimento() {
     r.json().then((r) => {
       if (r.success) {
         alert("Ação realizada com Exito");
-        location.href = "inicioatendimento";
+        location.href = "atendimento";
       } else {
         alert("Falha");
       }
