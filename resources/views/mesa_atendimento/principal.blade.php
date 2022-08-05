@@ -17,12 +17,12 @@
     <a class="mx-5" href="{{ url('/mesa_atendimento/triagem') }}"><img src="../img/browser.png" alt=""></a>
     <a class="mx-5" href="{{ url('/mesa_atendimento/configuracoes') }}"><img src="../img/contexto.png" alt=""></a>
   </div>
-  <div>
+  <!-- <div>
     <p class="atendimento">Atendimento</p>
     <p class="monitor">Monitor</p>
     <p class="triagem">Triagem</p>
     <p class="config">Configuracoes</p>
-  </div>
+  </div> -->
   </div>
 
 @endsection
