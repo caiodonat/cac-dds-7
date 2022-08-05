@@ -12,7 +12,7 @@
 
   <!-- Scripts -->
   <script src="{{ asset('js/script.js') }}" defer></script>
-  <script src="{{ asset('js/mesa.js') }}" defer></script>
+  <script src="{{ asset('js/telao.js') }}" defer></script>
 
   <!-- Fonts -->
   <link rel="dns-prefetch" href="//fonts.gstatic.com">

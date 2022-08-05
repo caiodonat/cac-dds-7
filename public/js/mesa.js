@@ -36,10 +36,6 @@ function setGuiche() {
 
 }
 
-
-// function postServiceDesk(number_desk, id_user){
-//     const url =  endPoint_local + `api/service_desk/post/`
-
 function putServiceDesk(number_desk, id_user) {
   const url = endPoint_local + `api/user/set/number_desk`
 
@@ -64,8 +60,6 @@ function putServiceDesk(number_desk, id_user) {
     }))
 
 }
-
-
 
 //  function iniciarAtendimento(){
 //     location.href = "inicioatendimento"
@@ -253,6 +247,7 @@ function salvar() {
 // }
 
 function getProximos() {
+  const url = endPoint_local + `api/atendimentos/queue/next/`
 
   fila = document.getElementById("fila_espera");
   fila.innerHTML = " "
@@ -273,6 +268,7 @@ function getProximos() {
 }
 
 function salvarID() {
+  const url = endPoint_local + `api/atendimentos/queue/already_called/`
   const uri = `http://central-atendimento-cliente.herokuapp.com/api/atendimentos/queue/next/already_called`
   fetch(uri).then(r => r.json().then(r => {
 
