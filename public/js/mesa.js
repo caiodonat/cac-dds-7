@@ -1,3 +1,7 @@
+endPoint = document.getElementById("endPoint").innerHTML;
+endPoint_local = document.getElementById("endPoint").innerHTML;
+var last_atendimento = 0;
+
 function navbar() {
   nav = document.getElementById("myTab");
   nav.innerHTML = " ";

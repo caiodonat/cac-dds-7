@@ -1,3 +1,7 @@
+endPoint = document.getElementById("endPoint").innerHTML;
+endPoint_local = document.getElementById("endPoint").innerHTML;
+var last_atendimento = 0;
+
 document.addEventListener("DOMContentLoaded", function (evt) {
     document.getElementById("btn-buscar-triagem").addEventListener("click", function () {
         const id = document.getElementById("buscar-triagem")

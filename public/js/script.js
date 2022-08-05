@@ -1,5 +1,5 @@
-const endPoint = document.getElementById("endPoint").innerHTML;
-const endPoint_local = `http://127.0.0.1:8000/`;
+endPoint = document.getElementById("endPoint").innerHTML;
+endPoint_local = document.getElementById("endPoint").innerHTML;
 var last_atendimento = 0;
 
 
