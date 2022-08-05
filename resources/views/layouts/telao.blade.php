@@ -30,7 +30,7 @@
         </main>
     </div>
     @stack('myjs')
-    <h6 id="endPoint" value={{ env('APP_URL') }}>.</h6>
+    <h6 id="endPoint" value={{ env('APP_URL') }}></h6>
 </body>
 
 <script type="text/javascript">
