@@ -74,7 +74,7 @@ Route::get('/totem/financeiro', function () {
 
 Route::get('/totem/totem', function () {
   return view('totem.totem');
-})->name('inicio');
+})->name('totem');
 
 Route::get('/totem/outros', function () {
   return view('totem.outros');

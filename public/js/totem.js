@@ -16,7 +16,7 @@ function EmitirSenha(servicosGeral) {
     },
     body: JSON.stringify({
       id_servicos: servicosGeral
-    }),
+    })
   }).then((r) =>
     r.json().then((r) => {
       if (r.success) {
@@ -81,7 +81,7 @@ function servicoFinanceiro() {
       if (r.success) {
         r.r.forEach(r1 => {
           servicos.innerHTML += `
-                            <div class="box-opt">
+                      <div class="box-opt">
                                 <label for="opt1" id="">
                                     <input type="radio" class="messageCheckbox" value="${r1.id_servicos}" name="opt" id="sGeral">
                                     ${r1.servico}
@@ -174,8 +174,6 @@ function servicoOutrosServicos() {
     })
     )
 }
-
-
 
 function optionsChecked() {
 
