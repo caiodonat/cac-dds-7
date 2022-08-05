@@ -40,7 +40,6 @@ function putServiceDesk(number_desk, id_user) {
   console.log(number_desk, id_user);
   fetch(url, {
     method: "PUT",
-    mode: 'no-cors',
     headers: {
       "Content-Type": "application/json",
     },

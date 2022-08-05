@@ -1,4 +1,4 @@
-const endPoint = `https://cac-dds-7.herokuapp.com/`;
+const endPoint = document.getElementById("endPoint").innerHTML;
 const endPoint_local = `http://127.0.0.1:8000/`;
 var last_atendimento = 0;
 
