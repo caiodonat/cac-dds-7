@@ -7,17 +7,17 @@ function callAlert() {
 }
 
 function EmitirSenha(servicosGeral) {
-  url = endPoint + `api/atendimento/post/`;
+  url = endPoint + `api/atendimento/post`;
 
   fetch(url, {
-    method: 'POST',
+    method: "post",
     headers: {
       "Content-Type": "application/json",
-      'Accept': 'application/json'
+      'Accept': '*/*'
     },
     body: JSON.stringify({
       "id_servicos": servicosGeral
-    })
+    }),
   }).then((r) =>
     r.json().then((r) => {
       if (r.success) {
@@ -181,10 +181,6 @@ function optionsChecked() {
   var checkedValue = null;
   var inputElements = document.getElementsByClassName('messageCheckbox');
   for (var i = 0; inputElements[i]; ++i) {
-    console.log(
-      inputElements[i].value
-      + " opcoesFcr");
-
     if (inputElements[i].checked) {
       checkedValue = inputElements[i].value;
       break;
