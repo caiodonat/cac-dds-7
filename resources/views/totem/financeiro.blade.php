@@ -25,9 +25,6 @@
           <!-- innerHTML.options -->
         </div>
       </div>
-      <!-- <div class="box-btns"> -->
-      <!-- <button class="btn btn-primary" id="emitir-senha" onclick="callAlert()">teste</button> -->
-      <!-- </div> -->
     </div>
   </div>
   <br>
